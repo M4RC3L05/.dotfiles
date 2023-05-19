@@ -1,0 +1,13 @@
+[user]
+	email = 15786310+M4RC3L05@users.noreply.github.com
+	name = m4rc3l05
+	useConfigOnly = true
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[core]
+	editor = vim
