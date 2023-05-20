@@ -28,14 +28,8 @@ if status is-interactive
     set -g hydro_color_duration yellow
 
     # aliases
-
-    # Alias batcat to regular bat
-    if which batcat >/dev/null
-        alias bat="batcat"
-    end
-
-    alias cat="bat --style=plain"
-    alias ls="exa --color=auto --header --icons"
+    alias bat="bat --style=plain"
+    alias exa="exa --color=auto --header --icons --git"
 
     # asdf config
     source ~/.asdf/asdf.fish
