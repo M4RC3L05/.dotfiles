@@ -27,6 +27,16 @@ if status is-interactive
     set -g hydro_color_prompt magenta
     set -g hydro_color_duration yellow
 
+    # aliases
+
+    # Alias batcat to regular bat
+    if which batcat >/dev/null
+        alias bat="batcat"
+    end
+
+    alias cat="bat --style=plain"
+    alias ls="exa --color=auto --header --icons"
+
     # asdf config
     source ~/.asdf/asdf.fish
 end
