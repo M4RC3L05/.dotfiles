@@ -9,5 +9,5 @@ Clone repo to home dir /home/\<username>
 Run stow
 
 ```bash
-stow .
+stow files
 ```
