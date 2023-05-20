@@ -13,7 +13,7 @@ if status is-interactive
                 echo "removing previous socket..."
                 rm $SSH_AUTH_SOCK
             end
-
+            
             echo "Starting SSH-Agent relay..."
             # setsid to force new session to keep running
             # set socat to listen on $SSH_AUTH_SOCK and forward to npiperelay which then forwards to openssh-ssh-agent on windows
@@ -21,7 +21,12 @@ if status is-interactive
             setsid sh -c 'socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"$cmd",nofork' >/dev/null 2>&1 &
         end
     end
-    
+
+    # Hydro
+    set -g hydro_color_pwd green
+    set -g hydro_color_prompt magenta
+    set -g hydro_color_duration yellow
+
     # asdf config
     source ~/.asdf/asdf.fish
 end
