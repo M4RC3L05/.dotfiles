@@ -22,6 +22,6 @@ if status is-interactive
         end
     end
     
-    ## asdf config
+    # asdf config
     source ~/.asdf/asdf.fish
 end
