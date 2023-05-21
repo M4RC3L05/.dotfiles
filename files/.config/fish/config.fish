@@ -33,4 +33,7 @@ if status is-interactive
 
     # asdf config
     source ~/.asdf/asdf.fish
+
+    # nix config
+    source ~/.nix-profile/etc/profile.d/nix.fish
 end
