@@ -4,8 +4,7 @@ My dotfiles to be configured with GNU Stow
 
 ## Dependencies
 
-The setup requires `xz` and `curl` to run to successfully.
-For WLS `socat` must be installed has well.
+The setup requires `curl` and `git` to run successfully.
 
 ## How to use
 
