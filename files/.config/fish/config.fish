@@ -8,6 +8,6 @@ if status is-interactive
     alias bat="bat --style=plain"
     alias exa="exa --color=auto --header --icons --git"
 
-    # brew config
-    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    # asdf
+    source ~/.asdf/asdf.fish
 end
