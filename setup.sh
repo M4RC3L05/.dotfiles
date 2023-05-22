@@ -2,17 +2,9 @@
 
 set -e
 
-# Install brew
-echo "==> Installing brew"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# Disable brew analitics
-brew analytics off
-
 # Setup fish shell
 echo "==> Install fish shell"
-brew install fish
+yay -S --noconfirm fish
 
 echo "==> Add fish shell to shells"
 sudo sh -c "echo $(which fish) >> /etc/shells"
@@ -22,16 +14,28 @@ chsh -s $(which fish)
 
 # Install packages
 echo "==> Installing packages"
-brew install \
+yay -S --noconfirm \
+  base-devel \
   stow \
   bat \
   exa \
-  asdf \
   git \
-  fisher
+  vim
 
 # Stow
 echo "==> Stowing"
 stow --no-folding files
+
+# Install fisher
+echo "==> Install fisher"
+fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
+
+## Install asdf
+echo "==> Install asdf"
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
+
+# Init fish
+echo "==> Sourcing fish"
+fish -c "source ~/.config/fish/config.fish"
 
 echo "==> All done, you can reload/restart"
