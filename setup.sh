@@ -22,6 +22,10 @@ yay -S --noconfirm \
   git \
   vim
 
+## Install asdf
+echo "==> Install asdf"
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
+
 # Stow
 echo "==> Stowing"
 stow --no-folding files
@@ -29,10 +33,6 @@ stow --no-folding files
 # Install fisher
 echo "==> Install fisher"
 fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
-
-## Install asdf
-echo "==> Install asdf"
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
 
 # Init fish
 echo "==> Sourcing fish"
