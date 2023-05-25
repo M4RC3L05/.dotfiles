@@ -5,8 +5,9 @@ if status is-interactive
     set -g hydro_color_duration yellow
 
     # aliases
-    alias bat="bat --style=plain"
-    alias exa="exa --color=auto --header --icons --git"
+    alias cat "bat --style=plain"
+    alias ls "exa --color=auto --header --git"
+    alias code="codium --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto"
 
     # asdf
     source ~/.asdf/asdf.fish
