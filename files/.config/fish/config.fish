@@ -6,6 +6,9 @@ if status is-interactive
 
     fish_add_path ~/AppImages
 
+    # Docker
+    set -gx DOCKER_HOST unix://$XDG_RUNTIME_DIR/docker.sock
+
     # aliases
     alias cat "bat --style=plain"
     alias ls "exa --color=auto --header --git"
