@@ -8,10 +8,13 @@ The setup requires `curl` and `git` to run successfully.
 
 ## How to use
 
-Clone repo to home dir /home/\<username>
+Install homebrew.
 
-Run setup.sh
-
+Install deps with brew:
 ```bash
-./setup.sh
+brew bundle install
 ```
+
+Set fish has default fish shell
+
+Install fisher
