@@ -1,0 +1,119 @@
+{
+    "buckets": [
+        {
+            "Name": "aquaproj",
+            "Source": "https://github.com/aquaproj/scoop-bucket",
+            "Updated": "2023-12-19T22:11:44+00:00",
+            "Manifests": 0
+        },
+        {
+            "Name": "extras",
+            "Source": "https://github.com/ScoopInstaller/Extras",
+            "Updated": "2023-12-29T08:25:38+00:00",
+            "Manifests": 1892
+        },
+        {
+            "Name": "games",
+            "Source": "https://github.com/Calinou/scoop-games",
+            "Updated": "2023-12-29T08:26:50+00:00",
+            "Manifests": 294
+        },
+        {
+            "Name": "main",
+            "Source": "https://github.com/ScoopInstaller/Main",
+            "Updated": "2023-12-29T04:25:43+00:00",
+            "Manifests": 1268
+        },
+        {
+            "Name": "nerd-fonts",
+            "Source": "https://github.com/matthewjberger/scoop-nerd-fonts",
+            "Updated": "2023-12-14T13:23:36+00:00",
+            "Manifests": 327
+        },
+        {
+            "Name": "nonportable",
+            "Source": "https://github.com/ScoopInstaller/Nonportable",
+            "Updated": "2023-12-28T12:44:38+00:00",
+            "Manifests": 127
+        }
+    ],
+    "apps": [
+        {
+            "Name": "7zip",
+            "Version": "23.01",
+            "Updated": "2023-12-27T15:38:14.098998+00:00",
+            "Source": "main",
+            "Info": ""
+        },
+        {
+            "Name": "Cascadia-Code",
+            "Version": "2111.01",
+            "Updated": "2023-12-27T15:42:38.229928+00:00",
+            "Source": "nerd-fonts",
+            "Info": ""
+        },
+        {
+            "Name": "CascadiaCode-NF",
+            "Version": "3.1.1",
+            "Updated": "2023-12-27T15:47:01.2545408+00:00",
+            "Source": "nerd-fonts",
+            "Info": ""
+        },
+        {
+            "Name": "ffmpeg",
+            "Version": "6.1",
+            "Updated": "2023-12-29T11:45:51.2892246+00:00",
+            "Source": "main",
+            "Info": ""
+        },
+        {
+            "Name": "git",
+            "Version": "2.43.0",
+            "Updated": "2023-12-27T15:38:33.2045363+00:00",
+            "Source": "main",
+            "Info": ""
+        },
+        {
+            "Name": "icaros-np",
+            "Version": "3.3.2",
+            "Updated": "2023-12-29T11:36:27.7795693+00:00",
+            "Source": "nonportable",
+            "Info": ""
+        },
+        {
+            "Name": "mpv",
+            "Version": "0.37.0",
+            "Updated": "2023-12-29T11:35:08.4399067+00:00",
+            "Source": "extras",
+            "Info": ""
+        },
+        {
+            "Name": "oh-my-posh",
+            "Version": "19.3.0",
+            "Updated": "2023-12-27T15:43:02.3903086+00:00",
+            "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
+            "Info": ""
+        },
+        {
+            "Name": "sudo",
+            "Version": "0.2020.01.26",
+            "Updated": "2023-12-29T11:36:22.4872787+00:00",
+            "Source": "main",
+            "Info": ""
+        },
+        {
+            "Name": "syncthingtray",
+            "Version": "1.4.11",
+            "Updated": "2023-12-29T11:32:38.7070773+00:00",
+            "Source": "extras",
+            "Info": ""
+        },
+        {
+            "Name": "yt-dlp",
+            "Version": "2023.11.16",
+            "Updated": "2023-12-29T11:45:34.8796872+00:00",
+            "Source": "main",
+            "Info": ""
+        }
+    ]
+}
