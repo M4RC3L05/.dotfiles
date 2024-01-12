@@ -18,3 +18,9 @@ brew bundle install
 Set fish has default fish shell
 
 Install fisher
+
+Run stow
+```bash
+stow --no-folding files
+```
+
