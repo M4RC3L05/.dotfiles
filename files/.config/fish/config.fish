@@ -12,7 +12,7 @@ if status is-interactive
 
     # aliases
     alias cat "bat --plain"
-    alias ls "exa --color=auto --header --git --icons"
+    alias ls "eza --color=auto --header --git --icons"
     alias prime-run "__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only"
 
     # asdf
