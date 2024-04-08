@@ -8,7 +8,7 @@ if status is-interactive
     fish_add_path ~/.local/bin
 
     # Docker
-    # set -gx DOCKER_HOST unix://$XDG_RUNTIME_DIR/docker.sock
+    set -gx DOCKER_HOST unix://$XDG_RUNTIME_DIR/docker.sock
 
     # aliases
     alias cat "bat --plain"
