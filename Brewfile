@@ -23,6 +23,8 @@ brew "neofetch"
 brew "neovim"
 brew "oha"
 brew "rsync"
+brew "sdl2_image"
+brew "sdl2_ttf"
 brew "stow"
 brew "syncthing", restart_service: true
 brew "tldr"
