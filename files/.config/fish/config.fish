@@ -20,6 +20,9 @@ if status is-interactive
     # asdf
     source /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.fish
 
+    # Gnome key ring ssh-agent
+    set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/gcr/ssh
+
     # brew
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv) 
 end
