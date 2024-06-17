@@ -7,9 +7,6 @@ if status is-interactive
     fish_add_path ~/AppImages
     fish_add_path ~/.local/bin
 
-    # Docker
-    set -gx DOCKER_HOST unix://$XDG_RUNTIME_DIR/docker.sock
-
     # aliases
     alias cat "bat --plain"
     alias ls "eza --color=auto --header --git --icons"
@@ -20,9 +17,6 @@ if status is-interactive
 
     # asdf
     source /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.fish
-
-    # Gnome key ring ssh-agent
-    set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/gcr/ssh
 
     # brew
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv) 
