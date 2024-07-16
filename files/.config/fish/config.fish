@@ -1,9 +1,10 @@
 if status is-interactive
-    # Hydro
+    # hydro
     set -g hydro_color_pwd green
     set -g hydro_color_prompt magenta
     set -g hydro_color_duration yellow
 
+    # binary paths
     fish_add_path ~/AppImages
     fish_add_path ~/.local/bin
 
@@ -15,9 +16,6 @@ if status is-interactive
     alias pacman "without_user_paths pacman"
     alias apt "without_user_paths apt"
 
-    # asdf
-    source /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.fish
-
     # brew
-    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv) 
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
