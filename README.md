@@ -1,26 +1,15 @@
 # Personal dotfiles
 
-My dotfiles to be configured with GNU Stow
+My dotfiles to be configured with GNU Stow + Brew
 
 ## Dependencies
 
-The setup requires `curl` and `git` to run successfully.
+Brew dependencies: https://docs.brew.sh/Homebrew-on-Linux#requirements
 
-## How to use
+## Run
 
-Install homebrew.
+Just run the setup script.
 
-Install deps with brew:
-```bash
-brew bundle install
+```cmd
+./setup.sh
 ```
-
-Set fish has default fish shell
-
-Install fisher
-
-Run stow
-```bash
-stow --no-folding files
-```
-
