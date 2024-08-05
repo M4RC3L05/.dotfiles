@@ -2,10 +2,15 @@
 
 set -e
 
-BOLD='\033[1m'
-GREEN='\033[32m'
-CYAN='\033[36m'
-RESET='\033[0m'
+###
+# UTILS & VARS
+###
+
+BOLD="\033[1m"
+CYAN="\033[36m"
+GREEN="\033[32m"
+RED="\033[31m"
+RESET="\033[0m"
 
 run_and_print() {
   printf "+ %s\n" "$*"
@@ -14,12 +19,16 @@ run_and_print() {
 }
 
 print_title() {
-  printf "${GREEN}==>${RESET} ${BOLD}%s${RESET}\n" "$1"
+  printf "%b==>%b %b%s%b\n" "$GREEN" "$RESET" "$BOLD" "$1" "$RESET"
 }
 
 print_sub_title() {
-  printf "${CYAN}=>${RESET} %s\n" "$1"
+  printf "%b=>%b %s\n" "$CYAN" "$RESET" "$1"
 }
+
+###
+# STEPS
+###
 
 install_homebrew_step() {
   if command -v /home/linuxbrew/.linuxbrew/bin/brew > /dev/null 2>&1; then
@@ -39,7 +48,8 @@ install_brew_packages_step() {
 }
 
 stow_files_step() {
-  run_and_print stow --no-folding files
+  run_and_print stow --adopt --no-folding files
+  run_and_print git restore files
 }
 
 install_fisher_and_plugins_step() {
@@ -50,26 +60,9 @@ install_fisher_and_plugins_step() {
   fi
 }
 
-add_fish_shell_as_shell_option_step() {
-  shell_to_check="/home/linuxbrew/.linuxbrew/bin/fish"
-
-  if grep -q "^$shell_to_check$" /etc/shells; then
-    print_sub_title "Fish shell already on /etc/shells, skipping"
-  else
-    run_and_print sudo bash -c "echo \"/home/linuxbrew/.linuxbrew/bin/fish\" >> /etc/shells"
-  fi
-}
-
-change_default_shell_step() {
-  user_login_shell="$(grep "^$(whoami):" /etc/passwd | cut -d: -f7)"
-
-  if [ "$user_login_shell" = '/home/linuxbrew/.linuxbrew/bin/fish' ]; then
-    print_sub_title "Fish shell is already your login shell, skipping"
-  else
-    run_and_print chsh -s /home/linuxbrew/.linuxbrew/bin/fish
-  fi
-}
-
+###
+# MAIN
+###
 
 print_title "Install homebrew"
 install_homebrew_step
@@ -91,12 +84,4 @@ print_title "Install fisher & Plugins"
 install_fisher_and_plugins_step
 echo
 
-print_title "Add fish shell as shell option"
-add_fish_shell_as_shell_option_step
-echo
-
-print_title "Change default shell"
-change_default_shell_step
-echo
-
-echo "All done, open a new shell to get started !!!"
+printf "%b✓%b All done, open a new shell to get started !!!\n" "$GREEN" "$RESET"
