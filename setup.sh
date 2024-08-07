@@ -31,7 +31,7 @@ print_sub_title() {
 ###
 
 install_homebrew_step() {
-  if command -v /home/linuxbrew/.linuxbrew/bin/brew > /dev/null 2>&1; then
+  if command -v brew > /dev/null 2>&1; then
     print_sub_title "Brew already installed, skipping"
   else
     run_and_print bash -c "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | NONINTERACTIVE=1 bash"
@@ -94,7 +94,7 @@ print_title "Stow files"
 stow_files_step
 echo
 
-print_title "Install fisher & Plugins"
+print_title "Install fisher & plugins"
 install_fisher_and_plugins_step
 echo
 
