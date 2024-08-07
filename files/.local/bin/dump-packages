@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+set -x
+
+DOTFILES_DIR="$HOME/.dotfiles"
+BREWFILE_PATH="$DOTFILES_DIR/Brewfile"
+FLATPAK_APPS_FILE_PATH="$DOTFILES_DIR/FlatpakApps"
+FLATPAK_RUNTIMES_FILE_PATH="$DOTFILES_DIR/FlatpakRuntimes"
+
+brew bundle dump --force --file "$BREWFILE_PATH"
+sed -i '/^vscode /d' "$BREWFILE_PATH"
+
+flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
