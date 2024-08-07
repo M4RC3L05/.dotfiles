@@ -7,7 +7,6 @@ com.mattjakeman.ExtensionManager
 com.valvesoftware.Steam
 io.kinvolk.Headlamp
 io.mpv.Mpv
-org.gnome.Boxes
 org.gnome.Calculator
 org.gnome.Loupe
 org.gnome.TextEditor
