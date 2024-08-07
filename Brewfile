@@ -2,45 +2,87 @@ tap "homebrew/bundle"
 tap "homebrew/linux-fonts"
 tap "homebrew/services"
 tap "jdx/tap"
+# General-purpose data compression with high compression ratio
 brew "xz"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# Bash, Zsh and Fish completion for Docker
 brew "docker-completion"
+# Pack, ship and run any application as a lightweight container
 brew "docker"
+# Docker CLI plugin for extended build capabilities with BuildKit
 brew "docker-buildx"
+# Platform keystore credential helper for Docker
 brew "docker-credential-helper"
+# Command-line DNS Client for Humans
 brew "doggo"
+# Modern, maintained replacement for ls
 brew "eza"
+# Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# GNU compiler collection
 brew "gcc"
+# Low-level access to audio, keyboard, mouse, joystick, and graphics
 brew "sdl2"
+# Play, record, convert, and stream audio and video
 brew "ffmpeg"
+# User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
+# Distributed revision control system
 brew "git"
+# Git extension for versioning large files
 brew "git-lfs"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
+# Kubernetes command-line interface
 brew "kubernetes-cli"
+# Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Interactive GPU process monitor
 brew "nvtop"
+# HTTP load generator, inspired by rakyll/hey with tui animation
 brew "oha"
+# Utility that provides fast incremental file transfer
 brew "rsync"
+# Library for loading images as SDL surfaces and textures
 brew "sdl2_image"
+# Abstract soundfile decoder for SDL
 brew "sdl2_sound"
+# Library for using TrueType fonts in SDL applications
 brew "sdl2_ttf"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
+# Open source continuous file synchronization application
 brew "syncthing"
+# Simplified and community-driven man pages
 brew "tldr"
+# Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Internet file retriever
 brew "wget"
+# Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Cascadia code font
 brew "homebrew/linux-fonts/font-cascadia-code"
+# Cascadia code nf font
 brew "homebrew/linux-fonts/font-cascadia-code-nf"
+# Cascadia code pl font
 brew "homebrew/linux-fonts/font-cascadia-code-pl"
+# Cascadia mono font
 brew "homebrew/linux-fonts/font-cascadia-mono"
+# Cascadia mono nf font
 brew "homebrew/linux-fonts/font-cascadia-mono-nf"
+# Cascadia mono pl font
 brew "homebrew/linux-fonts/font-cascadia-mono-pl"
+# Jetbrainsmono nerd font families (jetbrains mono) font
 brew "homebrew/linux-fonts/font-jetbrains-mono-nerd-font"
+# Tool for CLIs
 brew "jdx/tap/usage"
