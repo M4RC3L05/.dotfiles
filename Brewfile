@@ -31,7 +31,7 @@ brew "sdl2_image"
 brew "sdl2_sound"
 brew "sdl2_ttf"
 brew "stow"
-brew "syncthing", restart_service: true
+brew "syncthing"
 brew "tldr"
 brew "tree"
 brew "wget"
