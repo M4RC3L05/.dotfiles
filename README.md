@@ -17,4 +17,4 @@ Just run the setup script.
 
 ## Final words
 
-This dotfiles assumes your default login shell if bash which will start fish shell interactivelly.
+This dotfiles assumes your default login shell is bash which will start fish shell interactivelly.
