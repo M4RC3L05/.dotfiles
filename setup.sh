@@ -47,6 +47,16 @@ install_brew_packages_step() {
   run_and_print brew bundle install --no-lock -v --describe --no-upgrade
 }
 
+install_flatpak_apps_and_runtimes_step() {
+  if command -v flatpak > /dev/null 2>&1; then
+    run_and_print flatpak install -y --noninteractive $(cat FlatpackApps)
+    echo
+    run_and_print flatpak install -y --noninteractive $(cat FlatpackRuntimes)
+  else
+    print_sub_title "Flatpak is not installed, skipping"
+  fi
+}
+
 stow_files_step() {
   run_and_print stow --adopt --no-folding files
   run_and_print git restore files
@@ -74,6 +84,10 @@ echo
 
 print_title "Install brew packages"
 install_brew_packages_step
+echo
+
+print_title "Install flatpak apps and runtimes"
+install_flatpak_apps_and_runtimes_step
 echo
 
 print_title "Stow files"
