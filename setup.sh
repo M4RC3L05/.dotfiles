@@ -61,8 +61,8 @@ install_flatpak_apps_and_runtimes_step() {
 }
 
 stow_files_step() {
-  run_and_print stow --adopt --no-folding -v files
-  run_and_print git restore files
+  run_and_print stow --adopt --no-folding -v home
+  run_and_print git restore home
 }
 
 install_fisher_and_plugins_step() {
