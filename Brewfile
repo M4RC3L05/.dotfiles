@@ -10,6 +10,8 @@ brew "bat"
 brew "btop"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# Tool for exploring each layer in a docker image
+brew "dive"
 # Bash, Zsh and Fish completion for Docker
 brew "docker-completion"
 # Pack, ship and run any application as a lightweight container
