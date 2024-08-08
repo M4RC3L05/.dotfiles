@@ -1,4 +1,6 @@
 if status is-interactive
+  set fish_greeting
+
   # hydro
   set -g hydro_color_pwd green
   set -g hydro_color_prompt magenta
