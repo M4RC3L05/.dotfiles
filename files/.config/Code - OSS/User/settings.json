@@ -1,0 +1,13 @@
+{
+  "editor.tabSize": 2,
+  "files.autoSave": "onFocusChange",
+  "window.dialogStyle": "custom",
+  "window.titleBarStyle": "custom",
+  "editor.fontFamily": "'Cascadia Code', 'monospace', monospace",
+  "editor.fontLigatures": true,
+  "terminal.integrated.fontFamily": "'Cascadia Code NF', 'monospace', monospace",
+  "editor.formatOnSave": true,
+  "terminal.integrated.env.linux": {
+    "SHLVL": "0"
+  }
+}
