@@ -70,6 +70,17 @@ install_fisher_and_plugins_step() {
   fi
 }
 
+install_vscode_extensions_step() {
+  if command -v code > /dev/null 2>&1; then
+    while IFS= read -r line; do
+      run_and_print code --install-extension "$line"
+    done < "CodeExtensions"
+
+  else
+    print_sub_title "VSCode is not installed, skipping"
+  fi
+}
+
 ###
 # MAIN
 ###
@@ -96,6 +107,10 @@ echo
 
 print_title "Install fisher & plugins"
 install_fisher_and_plugins_step
+echo
+
+print_title "Install vscode extensions"
+install_vscode_extensions_step
 echo
 
 printf "%b✓%b All done, open a new shell to get started !!!\n" "$GREEN" "$RESET"
