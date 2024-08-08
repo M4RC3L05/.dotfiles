@@ -9,7 +9,6 @@ set -e
 BOLD="\033[1m"
 CYAN="\033[36m"
 GREEN="\033[32m"
-RED="\033[31m"
 RESET="\033[0m"
 
 DIR_NAME="$(realpath "$(dirname "$0")")"
