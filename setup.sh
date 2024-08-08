@@ -12,6 +12,9 @@ GREEN="\033[32m"
 RED="\033[31m"
 RESET="\033[0m"
 
+DIR_NAME="$(realpath "$(dirname "$0")")"
+PACKAGES_DIR="$DIR_NAME/packages"
+
 run_and_print() {
   printf "+ %s\n" "$*"
 
@@ -44,21 +47,21 @@ load_brew_env_step() {
 }
 
 install_brew_packages_step() {
-  run_and_print brew bundle install --no-lock -v --describe --no-upgrade
+  run_and_print brew bundle install --no-lock -v --describe --no-upgrade --file "$PACKAGES_DIR/brew-packages"
 }
 
 install_flatpak_apps_and_runtimes_step() {
   if command -v flatpak > /dev/null 2>&1; then
-    run_and_print flatpak install -y --noninteractive $(cat FlatpakApps)
+    run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-apps")
     echo
-    run_and_print flatpak install -y --noninteractive $(cat FlatpakRuntimes)
+    run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes")
   else
     print_sub_title "Flatpak is not installed, skipping"
   fi
 }
 
 stow_files_step() {
-  run_and_print stow --adopt --no-folding files
+  run_and_print stow --adopt --no-folding -v files
   run_and_print git restore files
 }
 
@@ -74,7 +77,7 @@ install_vscode_extensions_step() {
   if command -v code > /dev/null 2>&1; then
     while IFS= read -r line; do
       run_and_print code --install-extension "$line"
-    done < "CodeExtensions"
+    done < "$PACKAGES_DIR/vscode-extensions"
 
   else
     print_sub_title "VSCode is not installed, skipping"

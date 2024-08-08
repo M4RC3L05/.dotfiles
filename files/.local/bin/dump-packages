@@ -2,16 +2,12 @@
 
 set -x
 
-DOTFILES_DIR="$HOME/.dotfiles"
-BREWFILE_PATH="$DOTFILES_DIR/Brewfile"
-FLATPAK_APPS_FILE_PATH="$DOTFILES_DIR/FlatpakApps"
-FLATPAK_RUNTIMES_FILE_PATH="$DOTFILES_DIR/FlatpakRuntimes"
-VSCODE_EXTENSIONS_FILE_PATH="$DOTFILES_DIR/CodeExtensions"
+PACKAGES_DIR="$HOME/.dotfiles/packages"
+BREWFILE_PATH="$PACKAGES_DIR/brew-packages"
+FLATPAK_APPS_FILE_PATH="$PACKAGES_DIR/flatpak-apps"
+VSCODE_EXTENSIONS_FILE_PATH="$PACKAGES_DIR/vscode-extensions"
 
-test -d "$HOME/.linuxbrew" && eval "$($HOME/.linuxbrew/bin/brew shellenv)"
-test -d "/home/linuxbrew/.linuxbrew" && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-brew bundle dump --describe --no-restart --force --file "$BREWFILE_PATH"
+/home/linuxbrew/.linuxbrew/bin/brew bundle dump --describe --no-restart --force --file "$BREWFILE_PATH"
 sed -i '/^vscode /d' "$BREWFILE_PATH"
 
 flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
