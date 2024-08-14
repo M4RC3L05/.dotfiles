@@ -8,6 +8,8 @@ brew "xz"
 brew "bat"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Cross-platform make
+brew "cmake"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Tool for exploring each layer in a docker image
