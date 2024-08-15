@@ -9,5 +9,6 @@
   "editor.formatOnSave": true,
   "terminal.integrated.env.linux": {
     "SHLVL": "0"
-  }
+  },
+  "extensions.ignoreRecommendations": true
 }
