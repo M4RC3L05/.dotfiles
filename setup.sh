@@ -74,10 +74,19 @@ install_fisher_and_plugins_step() {
 
 install_vscode_extensions_step() {
   if command -v code > /dev/null 2>&1; then
-    while IFS= read -r line; do
-      run_and_print code --install-extension "$line"
+    extension_flags=""
+
+    while IFS= read -r extension; do
+      if [ -n "$extension" ]; then
+        extension_flags="$extension_flags --install-extension $extension"
+      fi
     done < "$PACKAGES_DIR/vscode-extensions"
 
+    if [ -n "$extension_flags" ]; then
+      run_and_print code $extension_flags
+    else
+      print_sub_title "No extensions to install, skipping"
+    fi
   else
     print_sub_title "VSCode is not installed, skipping"
   fi
