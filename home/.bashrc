@@ -10,6 +10,10 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  . $HOME/.nix-profile/etc/profile.d/nix.sh;
+fi
+
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 if type brew &>/dev/null
