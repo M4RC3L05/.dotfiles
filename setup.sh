@@ -38,11 +38,16 @@ install_homebrew_step() {
   else
     run_and_print bash -c "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | NONINTERACTIVE=1 bash"
   fi
-}
 
-load_brew_env_step() {
-  run_and_print test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-  run_and_print test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  print_sub_title "Load brew env"
+
+  if [ -d "~/.linuxbrew" ]; then
+    run_and_print eval "$(~/.linuxbrew/bin/brew shellenv)"
+  fi
+
+  if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    run_and_print eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
 }
 
 install_brew_packages_step() {
@@ -107,10 +112,6 @@ install_vscode_extensions_step() {
 
 print_title "Install homebrew"
 install_homebrew_step
-echo
-
-print_title "Load brew ENV"
-load_brew_env_step
 echo
 
 print_title "Install brew packages"
