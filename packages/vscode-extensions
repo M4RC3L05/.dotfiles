@@ -1,5 +1,9 @@
 denoland.vscode-deno
 editorconfig.editorconfig
 esbenp.prettier-vscode
+jetpack-io.devbox
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-ssh-edit
+ms-vscode.remote-explorer
 rust-lang.rust-analyzer
 tamasfe.even-better-toml
