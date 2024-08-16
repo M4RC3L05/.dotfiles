@@ -86,6 +86,26 @@ install_fisher_and_plugins_step() {
   fi
 }
 
+install_devbox_step() {
+  if command -v nix > /dev/null 2>&1; then
+    print_sub_title "Nix already installed, skipping"
+  else
+    run_and_print bash -c "sh <(curl -L https://nixos.org/nix/install) --no-daemon"
+    run_and_print git restore home
+    echo
+  fi
+
+  if command -v devbox > /dev/null 2>&1; then
+    print_sub_title "Devbox already installed, skipping"
+  else
+    run_and_print bash -c "curl -fsSL https://get.jetify.com/devbox | bash"
+    echo
+
+    print_sub_title "Install devbox shell completions"
+    run_and_print bash -c "devbox completion fish > ~/.config/fish/completions/devbox.fish"
+  fi
+}
+
 install_vscode_extensions_step() {
   if command -v code > /dev/null 2>&1; then
     extension_flags=""
@@ -128,6 +148,10 @@ echo
 
 print_title "Install fisher & plugins"
 install_fisher_and_plugins_step
+echo
+
+print_title "Install devbox"
+install_devbox_step
 echo
 
 print_title "Install vscode extensions"
