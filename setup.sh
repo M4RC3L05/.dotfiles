@@ -51,9 +51,18 @@ install_brew_packages_step() {
 
 install_flatpak_apps_and_runtimes_step() {
   if command -v flatpak > /dev/null 2>&1; then
+    if [ -n "$(cat "$PACKAGES_DIR/flatpak-apps")" ]; then
     run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-apps")
     echo
+    else
+      print_sub_title "No flatpak apps to install, skipping"
+    fi
+
+    if [ -n "$(cat "$PACKAGES_DIR/flatpak-runtimes")" ]; then
     run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes")
+    else
+      print_sub_title "No flatpak runtimes to install, skipping"
+    fi
   else
     print_sub_title "Flatpak is not installed, skipping"
   fi
