@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+if [ "$#" -eq 0 ]; then
+  echo "No command provided to execute."
+  exit 1
+fi
+
+filtered_path=$(echo "$PATH" | tr ':' '\n' | sed '/^\/home\/main/d; /^\/home\/linuxbrew/d' | tr '\n' ':' | sed 's/:$//')
+filtered_manpath=$(echo "$MANPATH" | tr ':' '\n' | sed '/^\/home\/linuxbrew/d' | tr '\n' ':' | sed 's/:$//')
+filtered_infopath=$(echo "$INFOPATH" | tr ':' '\n' | sed '/^\/home\/linuxbrew/d' | tr '\n' ':' | sed 's/:$//')
+
+# Execute the command with the filtered environment variables
+env PATH="$filtered_path" MANPATH="$filtered_manpath" INFOPATH="$filtered_infopath" HOMEBREW_PREFIX="" HOMEBREW_CELLAR="" HOMEBREW_REPOSITORY="" "$@"
