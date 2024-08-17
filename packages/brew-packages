@@ -48,8 +48,6 @@ brew "k9s"
 brew "kubernetes-cli"
 # Utility to list open files
 brew "lsof"
-# Polyglot runtime manager (asdf rust clone)
-brew "mise"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Interactive GPU process monitor
@@ -92,5 +90,3 @@ brew "homebrew/linux-fonts/font-cascadia-mono-nf"
 brew "homebrew/linux-fonts/font-cascadia-mono-pl"
 # Jetbrainsmono nerd font families (jetbrains mono) font
 brew "homebrew/linux-fonts/font-jetbrains-mono-nerd-font"
-# Tool for CLIs
-brew "jdx/tap/usage"
