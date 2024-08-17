@@ -8,4 +8,7 @@ if status is-interactive
 
   # aliases
   source $HOME/.alias
+
+  # brew
+  eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
