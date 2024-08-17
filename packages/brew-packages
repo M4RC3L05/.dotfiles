@@ -1,15 +1,10 @@
 tap "homebrew/bundle"
 tap "homebrew/linux-fonts"
 tap "homebrew/services"
-tap "jdx/tap"
-# General-purpose data compression with high compression ratio
-brew "xz"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Cross-platform make
-brew "cmake"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Tool for exploring each layer in a docker image
@@ -28,10 +23,6 @@ brew "doggo"
 brew "eza"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
-# GNU compiler collection
-brew "gcc"
-# Low-level access to audio, keyboard, mouse, joystick, and graphics
-brew "sdl2"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg"
 # User-friendly command-line shell for UNIX-like operating systems
@@ -56,12 +47,6 @@ brew "nvtop"
 brew "oha"
 # Utility that provides fast incremental file transfer
 brew "rsync"
-# Library for loading images as SDL surfaces and textures
-brew "sdl2_image"
-# Abstract soundfile decoder for SDL
-brew "sdl2_sound"
-# Library for using TrueType fonts in SDL applications
-brew "sdl2_ttf"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
 # Open source continuous file synchronization application
@@ -72,8 +57,6 @@ brew "tldr"
 brew "tokei"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
-# Internet file retriever
-brew "wget"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
 # Cascadia code font
