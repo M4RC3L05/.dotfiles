@@ -107,10 +107,10 @@ install_devbox_step() {
   else
     run_and_print bash -c "curl -fsSL https://get.jetify.com/devbox | bash"
     echo
-
-    print_sub_title "Install devbox shell completions"
-    run_and_print bash -c "devbox completion fish > ~/.config/fish/completions/devbox.fish"
   fi
+
+  print_sub_title "Install devbox shell completions"
+  run_and_print bash -c "devbox completion fish > ~/.config/fish/completions/devbox.fish"
 }
 
 install_vscode_extensions_step() {
