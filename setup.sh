@@ -52,6 +52,13 @@ install_homebrew_step() {
 
 install_brew_packages_step() {
   run_and_print brew bundle install --no-lock -v --describe --no-upgrade --file "$PACKAGES_DIR/brew-packages"
+
+  if [ ! -L "$HOME/.local/share/fonts" ] || [ ! -d "$HOME/.local/share/fonts" ]; then
+    print_sub_title "Setup fonts"
+    run_and_print mkdir -p $HOME/.local/share
+    run_and_print ln -s /home/linuxbrew/.linuxbrew/share/fonts -t ~/.local/share
+    run_and_print fc-cache -f
+  fi
 }
 
 install_flatpak_apps_and_runtimes_step() {
