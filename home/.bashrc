@@ -1,6 +1,12 @@
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  . $HOME/.nix-profile/etc/profile.d/nix.sh;
+fi
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} && ${SHLVL} == 1 ]]; then
   shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=''
-  exec /home/linuxbrew/.linuxbrew/bin/fish $LOGIN_OPTION
+  exec env SHELL="$(which fish)" $(which fish) $LOGIN_OPTION
 fi
 
 # If not running interactively, don't do anything
@@ -9,12 +15,6 @@ fi
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
-
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-  . $HOME/.nix-profile/etc/profile.d/nix.sh;
-fi
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 if type brew &>/dev/null
 then
