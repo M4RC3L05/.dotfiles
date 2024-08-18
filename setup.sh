@@ -71,9 +71,9 @@ install_devbox_step() {
     run_and_print mkdir -p ~/.config/fish/completions
     run_and_print "devbox completion fish > ~/.config/fish/completions/devbox.fish"
 
-    print_sub_title "Link services"
-    run_and_print rm -rf ~/.local/share/systemd
-    run_and_print ln -s "$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/share/systemd" -t ~/.local/share
+    print_sub_title "Systemd files"
+    run_and_print mkdir -p ~/.config/systemd
+    run_and_print "printf '[Manager]\nManagerEnvironment=\"XDG_DATA_DIRS=%s/.local/share/devbox/global/default/.devbox/nix/profile/default/share:/usr/local/share:/usr/share\"' \"$HOME\" > ~/.config/systemd/user.conf"
   fi
 }
 
@@ -174,8 +174,8 @@ print_title "Install vscode extensions"
 install_vscode_extensions_step
 echo
 
-# print_title "Install flatpak apps and runtimes"
-# install_flatpak_apps_and_runtimes_step
-# echo
+print_title "Install flatpak apps and runtimes"
+install_flatpak_apps_and_runtimes_step
+echo
 
 printf "%b✓%b All done, open a new shell to get started !!!\n" "$GREEN" "$RESET"
