@@ -1,7 +1,8 @@
 # start fish shell
 if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} && ${SHLVL} == 1 ]]; then
   shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=''
-  exec env SHELL="$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/fish" "$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/fish" $LOGIN_OPTION
+  home="$(getent passwd "$USER" | cut -d: -f6)"
+  exec env SHELL="$home/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/fish" "$home/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/fish" $LOGIN_OPTION
 fi
 
 # If not running interactively, don't do anything
