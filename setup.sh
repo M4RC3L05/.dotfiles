@@ -71,9 +71,9 @@ install_devbox_step() {
     run_and_print mkdir -p ~/.config/fish/completions
     run_and_print "devbox completion fish > ~/.config/fish/completions/devbox.fish"
 
-    print_sub_title "Link fonts"
-    run_and_print ln -s "$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/share/fonts" -t ~/.local/share
-    run_and_print fc-cache -fv
+    print_sub_title "Link services"
+    run_and_print rm -rf ~/.local/share/systemd
+    run_and_print ln -s "$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/share/systemd" -t ~/.local/share
   fi
 }
 

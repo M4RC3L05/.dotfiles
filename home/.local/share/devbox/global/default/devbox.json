@@ -28,7 +28,8 @@
     "tree@latest",
     "yt-dlp@latest",
     "mpv@latest",
-    "cascadia-code@latest"
+    "cascadia-code@latest",
+    "syncthing@latest"
   ],
   "shell": {
     "init_hook": [],

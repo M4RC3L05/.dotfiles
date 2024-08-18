@@ -1471,6 +1471,54 @@
         }
       }
     },
+    "syncthing@latest": {
+      "last_modified": "2024-07-31T08:48:38Z",
+      "resolved": "github:NixOS/nixpkgs/c3392ad349a5227f4a3464dce87bcc5046692fce#syncthing",
+      "source": "devbox-search",
+      "version": "1.27.9",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/x3ab09c69ygs3fzadwfgskg8h3a6885v-syncthing-1.27.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/x3ab09c69ygs3fzadwfgskg8h3a6885v-syncthing-1.27.9"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/l1gkcn9f5vha3dh85bf91sfzq2azix7s-syncthing-1.27.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/l1gkcn9f5vha3dh85bf91sfzq2azix7s-syncthing-1.27.9"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/nc7wlvj5r0cl1rw7x9drx9s75jvzk8y4-syncthing-1.27.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/nc7wlvj5r0cl1rw7x9drx9s75jvzk8y4-syncthing-1.27.9"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/wdkg2v1860ymmwwalj4va3gh0hy5avjs-syncthing-1.27.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/wdkg2v1860ymmwwalj4va3gh0hy5avjs-syncthing-1.27.9"
+        }
+      }
+    },
     "tldr@latest": {
       "last_modified": "2024-07-31T08:48:38Z",
       "resolved": "github:NixOS/nixpkgs/c3392ad349a5227f4a3464dce87bcc5046692fce#tldr",
