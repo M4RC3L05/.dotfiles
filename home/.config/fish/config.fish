@@ -9,6 +9,6 @@ if status is-interactive
   # aliases
   source $HOME/.alias
 
-  # brew
-  eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  # devbox global
+  devbox global shellenv --init-hook | source
 end

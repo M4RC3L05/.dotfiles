@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+if [ "$(id -u)" -eq 0 ]; then
+  echo "This script cannot be run as root. It will call sudo as needed"
+  exit 1
+fi
+
 set -e
 
 ###
@@ -17,7 +22,11 @@ PACKAGES_DIR="$DIR_NAME/packages"
 run_and_print() {
   printf "+ %s\n" "$*"
 
-  "$@"
+  if [ "$#" -eq 1 ]; then
+    eval "$1"
+  else
+    "$@"
+  fi
 }
 
 print_title() {
@@ -32,52 +41,41 @@ print_sub_title() {
 # STEPS
 ###
 
-install_homebrew_step() {
-  if command -v brew > /dev/null 2>&1; then
-    print_sub_title "Brew already installed, skipping"
+install_nix_step() {
+  if command -v nix > /dev/null 2>&1; then
+    print_sub_title "Nix already installed, skipping"
   else
-    run_and_print bash -c "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | NONINTERACTIVE=1 bash"
-  fi
+    run_and_print "curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile"
+    run_and_print git restore home
+    run_and_print ". ~/.nix-profile/etc/profile.d/nix.sh"
+    echo
 
-  print_sub_title "Load brew env"
-
-  if [ -d "~/.linuxbrew" ]; then
-    run_and_print eval "$(~/.linuxbrew/bin/brew shellenv)"
-  fi
-
-  if [ -d "/home/linuxbrew/.linuxbrew" ]; then
-    run_and_print eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    print_sub_title "Install nixGl"
+    run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
+    run_and_print nix-channel --update
+    run_and_print nix-env -iA nixgl.auto.nixGLDefault nixgl.nixGLIntel
   fi
 }
 
-install_brew_packages_step() {
-  run_and_print brew bundle install --no-lock -v --describe --no-upgrade --file "$PACKAGES_DIR/brew-packages"
+install_devbox_step() {
+  if command -v devbox > /dev/null 2>&1; then
+    print_sub_title "Devbox already installed, skipping"
+  else
+    run_and_print "curl -fsSL https://get.jetify.com/devbox | bash"
+    echo
 
-  if [ ! -L "$HOME/.local/share/fonts" ] || [ ! -d "$HOME/.local/share/fonts" ]; then
-    print_sub_title "Setup fonts"
-    run_and_print mkdir -p $HOME/.local/share
-    run_and_print ln -s /home/linuxbrew/.linuxbrew/share/fonts -t ~/.local/share
-    run_and_print fc-cache -f
+    print_sub_title "Install devbox shell completions"
+    run_and_print mkdir -p ~/.config/fish/completions
+    run_and_print "devbox completion fish > ~/.config/fish/completions/devbox.fish"
   fi
 }
 
-install_flatpak_apps_and_runtimes_step() {
-  if command -v flatpak > /dev/null 2>&1; then
-    if [ -n "$(cat "$PACKAGES_DIR/flatpak-apps")" ]; then
-      run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-apps")
-      echo
-    else
-      print_sub_title "No flatpak apps to install, skipping"
-    fi
-
-    if [ -n "$(cat "$PACKAGES_DIR/flatpak-runtimes")" ]; then
-      run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes")
-    else
-      print_sub_title "No flatpak runtimes to install, skipping"
-    fi
-  else
-    print_sub_title "Flatpak is not installed, skipping"
-  fi
+install_global_packages_step() {
+  run_and_print mkdir -p ~/.local/share/devbox/global/default
+  run_and_print cp -f ./home/.local/share/devbox/global/default/devbox.json ~/.local/share/devbox/global/default/devbox.json
+  run_and_print cp -f ./home/.local/share/devbox/global/default/devbox.lock ~/.local/share/devbox/global/default/devbox.lock
+  run_and_print devbox global install
+  run_and_print "eval \"\$(devbox global shellenv --init-hook)\""
 }
 
 stow_files_step() {
@@ -91,26 +89,6 @@ install_fisher_and_plugins_step() {
   else
     run_and_print fish --command "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
   fi
-}
-
-install_devbox_step() {
-  if command -v nix > /dev/null 2>&1; then
-    print_sub_title "Nix already installed, skipping"
-  else
-    run_and_print bash -c "sh <(curl -L https://nixos.org/nix/install) --no-daemon"
-    run_and_print git restore home
-    echo
-  fi
-
-  if command -v devbox > /dev/null 2>&1; then
-    print_sub_title "Devbox already installed, skipping"
-  else
-    run_and_print bash -c "curl -fsSL https://get.jetify.com/devbox | bash"
-    echo
-  fi
-
-  print_sub_title "Install devbox shell completions"
-  run_and_print bash -c "devbox completion fish > ~/.config/fish/completions/devbox.fish"
 }
 
 install_vscode_extensions_step() {
@@ -133,20 +111,39 @@ install_vscode_extensions_step() {
   fi
 }
 
+install_flatpak_apps_and_runtimes_step() {
+  if command -v flatpak > /dev/null 2>&1; then
+    if [ -n "$(cat "$PACKAGES_DIR/flatpak-apps")" ]; then
+      run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-apps")
+      echo
+    else
+      print_sub_title "No flatpak apps to install, skipping"
+    fi
+
+    if [ -n "$(cat "$PACKAGES_DIR/flatpak-runtimes")" ]; then
+      run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes")
+    else
+      print_sub_title "No flatpak runtimes to install, skipping"
+    fi
+  else
+    print_sub_title "Flatpak is not installed, skipping"
+  fi
+}
+
 ###
 # MAIN
 ###
 
-print_title "Install homebrew"
-install_homebrew_step
+print_title "Install nix"
+install_nix_step
 echo
 
-print_title "Install brew packages"
-install_brew_packages_step
+print_title "Install devbox"
+install_devbox_step
 echo
 
-print_title "Install flatpak apps and runtimes"
-install_flatpak_apps_and_runtimes_step
+print_title "Install global packages"
+install_global_packages_step
 echo
 
 print_title "Stow files"
@@ -157,12 +154,12 @@ print_title "Install fisher & plugins"
 install_fisher_and_plugins_step
 echo
 
-print_title "Install devbox"
-install_devbox_step
-echo
-
 print_title "Install vscode extensions"
 install_vscode_extensions_step
 echo
+
+# print_title "Install flatpak apps and runtimes"
+# install_flatpak_apps_and_runtimes_step
+# echo
 
 printf "%b✓%b All done, open a new shell to get started !!!\n" "$GREEN" "$RESET"
