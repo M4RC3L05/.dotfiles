@@ -27,8 +27,7 @@
     "tokei@latest",
     "tree@latest",
     "yt-dlp@latest",
-    "mpv@latest",
-    "docker@latest"
+    "mpv@latest"
   ],
   "shell": {
     "init_hook": [],
