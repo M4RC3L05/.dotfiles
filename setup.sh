@@ -71,6 +71,7 @@ install_devbox_step() {
     run_and_print mkdir -p ~/.config/fish/completions
     run_and_print "devbox completion fish > ~/.config/fish/completions/devbox.fish"
 
+    # https://unix.stackexchange.com/questions/349199/how-does-nix-manage-systemd-modules-on-a-non-nixos#answer-696035
     print_sub_title "Systemd files"
     run_and_print mkdir -p ~/.config/systemd
     run_and_print "printf '[Manager]\nManagerEnvironment=\"XDG_DATA_DIRS=%s/.local/share/devbox/global/default/.devbox/nix/profile/default/share:/usr/local/share:/usr/share\"' \"$HOME\" > ~/.config/systemd/user.conf"
