@@ -97,6 +97,54 @@
         }
       }
     },
+    "cascadia-code@latest": {
+      "last_modified": "2024-07-31T08:48:38Z",
+      "resolved": "github:NixOS/nixpkgs/c3392ad349a5227f4a3464dce87bcc5046692fce#cascadia-code",
+      "source": "devbox-search",
+      "version": "2404.23",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/aqbqrym6gs4pbxyrbxfk9796jgwn06i2-cascadia-code-2404.23",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/aqbqrym6gs4pbxyrbxfk9796jgwn06i2-cascadia-code-2404.23"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/90dxxvh2cbkaz7pfq36marrjg65nyxc2-cascadia-code-2404.23",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/90dxxvh2cbkaz7pfq36marrjg65nyxc2-cascadia-code-2404.23"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5imjai2nfyhy87bb5m3iyjxn25dywbr3-cascadia-code-2404.23",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5imjai2nfyhy87bb5m3iyjxn25dywbr3-cascadia-code-2404.23"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/qk22vxw8y9l468xmrmxkrgfg509sl0fp-cascadia-code-2404.23",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/qk22vxw8y9l468xmrmxkrgfg509sl0fp-cascadia-code-2404.23"
+        }
+      }
+    },
     "curl@latest": {
       "last_modified": "2024-08-14T02:42:29Z",
       "resolved": "github:NixOS/nixpkgs/daf7bb95821b789db24fc1ac21f613db0c1bf2cb#curl",

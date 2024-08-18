@@ -27,7 +27,8 @@
     "tokei@latest",
     "tree@latest",
     "yt-dlp@latest",
-    "mpv@latest"
+    "mpv@latest",
+    "cascadia-code@latest"
   ],
   "shell": {
     "init_hook": [],
