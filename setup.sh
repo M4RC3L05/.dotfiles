@@ -11,6 +11,9 @@ set -e
 # UTILS & VARS
 ###
 
+CURRENT_SHELL_NAME="$(ps -p $$ -o args= | awk '{print $1}')"
+FULL_PATH_CURRENT_SHELL_NAME="$(which $CURRENT_SHELL_NAME)"
+
 BOLD="\033[1m"
 CYAN="\033[36m"
 GREEN="\033[32m"
@@ -72,10 +75,19 @@ install_devbox_step() {
 
 install_global_packages_step() {
   run_and_print mkdir -p ~/.local/share/devbox/global/default
+
+  if [ -f ~/.local/share/devbox/global/default/devbox.json ]; then
+    run_and_print rm ~/.local/share/devbox/global/default/devbox.json
+  fi
+
+  if [ -f ~/.local/share/devbox/global/default/devbox.lock ]; then
+    run_and_print rm ~/.local/share/devbox/global/default/devbox.lock
+  fi
+
   run_and_print cp -f ./home/.local/share/devbox/global/default/devbox.json ~/.local/share/devbox/global/default/devbox.json
   run_and_print cp -f ./home/.local/share/devbox/global/default/devbox.lock ~/.local/share/devbox/global/default/devbox.lock
   run_and_print devbox global install
-  run_and_print "eval \"\$(devbox global shellenv --init-hook)\""
+  run_and_print "eval \"\$(SHELL=\"$FULL_PATH_CURRENT_SHELL_NAME\" devbox global shellenv --init-hook)\""
 }
 
 stow_files_step() {
@@ -158,8 +170,8 @@ print_title "Install vscode extensions"
 install_vscode_extensions_step
 echo
 
-# print_title "Install flatpak apps and runtimes"
-# install_flatpak_apps_and_runtimes_step
-# echo
+print_title "Install flatpak apps and runtimes"
+install_flatpak_apps_and_runtimes_step
+echo
 
 printf "%b✓%b All done, open a new shell to get started !!!\n" "$GREEN" "$RESET"
