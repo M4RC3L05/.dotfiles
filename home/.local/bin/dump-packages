@@ -8,4 +8,4 @@ VSCODE_EXTENSIONS_FILE_PATH="$PACKAGES_DIR/vscode-extensions"
 
 sed -i '/^vscode /d' "$BREWFILE_PATH"
 flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
-code --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
+$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/code --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
