@@ -29,7 +29,8 @@
     "yt-dlp@latest",
     "mpv@latest",
     "cascadia-code@latest",
-    "syncthing@latest"
+    "syncthing@latest",
+    "zed-editor@latest"
   ],
   "shell": {
     "init_hook": [],

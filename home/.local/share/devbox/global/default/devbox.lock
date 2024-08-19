@@ -1774,6 +1774,34 @@
           "store_path": "/nix/store/216rfls0xac7cy1hqwy612680n8v2bxy-yt-dlp-2024.8.6"
         }
       }
+    },
+    "zed-editor@latest": {
+      "last_modified": "2024-08-18T12:44:29Z",
+      "resolved": "github:NixOS/nixpkgs/ff1c2669bbb4d0dd9e62cc94f0968cfa652ceec1#zed-editor",
+      "source": "devbox-search",
+      "version": "0.148.1",
+      "systems": {
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5rnilg68gf8b9kkfjy61fmwvbaz8d8qw-zed-0.148.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5rnilg68gf8b9kkfjy61fmwvbaz8d8qw-zed-0.148.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/g2zzfgbzh3xw5s17884zfcv6nffimjak-zed-0.148.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/g2zzfgbzh3xw5s17884zfcv6nffimjak-zed-0.148.1"
+        }
+      }
     }
   }
 }
