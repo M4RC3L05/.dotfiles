@@ -56,7 +56,7 @@ install_nix_step() {
     print_sub_title "Install nixGl"
     run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
     run_and_print nix-channel --update
-    run_and_print nix-env -iA nixgl.auto.nixGLDefault nixgl.nixGLIntel
+    run_and_print nix-env -iA nixgl.auto.nixGLDefault nixgl.nixGLIntel nixgl.auto.nixVulkanNvidia nixgl.nixVulkanIntel
   fi
 }
 
