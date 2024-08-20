@@ -10,5 +10,6 @@
   "terminal.integrated.env.linux": {
     "SHLVL": "0"
   },
-  "extensions.ignoreRecommendations": true
+  "extensions.ignoreRecommendations": true,
+  "devbox.autoShellOnTerminal": false,
 }
