@@ -12,4 +12,5 @@
   },
   "extensions.ignoreRecommendations": true,
   "devbox.autoShellOnTerminal": false,
+  "diffEditor.ignoreTrimWhitespace": true
 }
