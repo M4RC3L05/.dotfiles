@@ -20,7 +20,6 @@
     "lsof@latest",
     "neovim@latest",
     "nvtop@latest",
-    "oha@latest",
     "rsync@latest",
     "stow@latest",
     "tldr@latest",
@@ -30,7 +29,8 @@
     "mpv@latest",
     "cascadia-code@latest",
     "syncthing@latest",
-    "zed-editor@latest"
+    "zed-editor@latest",
+    "wrk@latest"
   ],
   "shell": {
     "init_hook": [],
