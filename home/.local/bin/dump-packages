@@ -1,10 +1,15 @@
 #!/usr/bin/env sh
 
-set -x
-
 PACKAGES_DIR="$HOME/.dotfiles/packages"
 FLATPAK_APPS_FILE_PATH="$PACKAGES_DIR/flatpak-apps"
 VSCODE_EXTENSIONS_FILE_PATH="$PACKAGES_DIR/vscode-extensions"
 
+set -x
 flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
-$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/code --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
+set +x
+
+eval "$(/usr/local/bin/devbox global shellenv --recompute)"
+
+set -x
+/usr/local/bin/devbox global run code -- --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
+set +x
