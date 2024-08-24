@@ -2,7 +2,6 @@ denoland.vscode-deno
 editorconfig.editorconfig
 esbenp.prettier-vscode
 golang.go
-jetpack-io.devbox
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
 ms-vscode.remote-explorer
