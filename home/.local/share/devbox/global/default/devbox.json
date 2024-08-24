@@ -30,7 +30,8 @@
     "cascadia-code@latest",
     "syncthing@latest",
     "zed-editor@latest",
-    "wrk@latest"
+    "wrk@latest",
+    "mise@latest"
   ],
   "shell": {
     "init_hook": [],

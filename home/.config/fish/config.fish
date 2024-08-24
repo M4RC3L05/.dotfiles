@@ -11,4 +11,7 @@ if status is-interactive
 
   # devbox global
   devbox global shellenv --init-hook | source
+
+  # mise
+  mise activate fish | source
 end

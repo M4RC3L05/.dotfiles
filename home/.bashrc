@@ -16,6 +16,9 @@ fi
 # devbox global
 eval "$(devbox global shellenv --init-hook)"
 
+# mise
+eval "$(mise activate bash)"
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
