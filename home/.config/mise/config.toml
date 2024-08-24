@@ -3,3 +3,4 @@ usage = "latest"
 
 [settings]
 experimental = true
+cargo_binstall = true
