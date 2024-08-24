@@ -8,6 +8,7 @@ com.usebottles.bottles
 com.valvesoftware.Steam
 io.github.seadve.Kooha
 io.kinvolk.Headlamp
+net.mullvad.MullvadBrowser
 org.gnome.Calculator
 org.gnome.Loupe
 org.gnome.TextEditor
