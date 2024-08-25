@@ -59,6 +59,7 @@ in {
           (nixGLWrap nixgl.nixVulkanIntel nixpkgs.zed-editor)
           nixpkgs.wrk
           nixpkgs.mise
+          nixpkgs.any-nix-shell
 
           (writeScriptBin "nix-rebuild" ''
             #!${stdenv.shell}

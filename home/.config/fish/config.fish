@@ -11,4 +11,7 @@ if status is-interactive
 
   # mise
   mise activate fish | source
+
+  # nix-shell
+  any-nix-shell fish --info-right | source
 end
