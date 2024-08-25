@@ -4,7 +4,7 @@ My dotfiles
 
 ## Dependencies
 
-- Flatpak: https://flatpak.org/setup/
+- Flatpak: https://flatpak.org/setup
   - To install flatpak apps
 
 - VSCode

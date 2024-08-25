@@ -9,9 +9,6 @@ if status is-interactive
   # aliases
   source $HOME/.alias
 
-  # devbox global
-  devbox global shellenv --init-hook --recompute | source
-
   # mise
   mise activate fish | source
 end

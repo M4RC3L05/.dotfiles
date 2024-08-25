@@ -8,8 +8,8 @@ set -x
 flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
 set +x
 
-eval "$(/usr/local/bin/devbox global shellenv --recompute)"
+. $HOME/.nix-profile/etc/profile.d/nix.sh;
 
 set -x
-/usr/local/bin/devbox global run code -- --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
+code --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
 set +x
