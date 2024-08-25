@@ -47,7 +47,6 @@ install_nix_step() {
   else
     run_and_print "curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile"
     run_and_print ". ~/.nix-profile/etc/profile.d/nix.sh"
-    run_and_print nix-env --install --file '<nixpkgs>' --attr nix -I nixpkgs=channel:nixpkgs-unstable
     run_and_print nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
     run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
     run_and_print nix-channel --update
@@ -60,8 +59,9 @@ install_nix_step() {
 
     run_and_print cp ./home/.config/nixpkgs/config.nix ~/.config/nixpkgs/config.nix
 
-    run_and_print nix-env -iA nixgl.auto.nixGLDefault nixgl.nixGLIntel nixgl.auto.nixVulkanNvidia nixgl.nixVulkanIntel
-    run_and_print nix-env -iA nixpkgs.mainPackages
+    run_and_print nix-env -iAr nixpkgs.mainPackages
+
+    run_and_print mkdir -p ~/.config/systemd
     run_and_print "printf '[Manager]\nManagerEnvironment=\"XDG_DATA_DIRS=%s/.nix-profile/share:/usr/local/share:/usr/share\"' \"$HOME\" > ~/.config/systemd/user.conf"
   fi
 }
