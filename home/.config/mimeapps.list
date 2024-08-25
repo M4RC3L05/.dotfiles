@@ -1,2 +1,13 @@
 [Default Applications]
 inode/directory=org.gnome.Nautilus.desktop;
+x-scheme-handler/http=org.mozilla.firefox.desktop
+text/html=org.mozilla.firefox.desktop
+application/xhtml+xml=org.mozilla.firefox.desktop
+x-scheme-handler/https=org.mozilla.firefox.desktop
+
+[Added Associations]
+video/x-matroska=umpv.desktop;
+x-scheme-handler/http=org.mozilla.firefox.desktop;
+text/html=org.mozilla.firefox.desktop;
+application/xhtml+xml=org.mozilla.firefox.desktop;
+x-scheme-handler/https=org.mozilla.firefox.desktop;
