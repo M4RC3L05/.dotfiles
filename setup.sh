@@ -11,9 +11,6 @@ set -e
 # UTILS & VARS
 ###
 
-CURRENT_SHELL_NAME="$(ps -p $$ -o args= | awk '{print $1}')"
-FULL_PATH_CURRENT_SHELL_NAME="$(which $CURRENT_SHELL_NAME)"
-
 BOLD="\033[1m"
 CYAN="\033[36m"
 GREEN="\033[32m"

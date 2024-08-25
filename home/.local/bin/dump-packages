@@ -8,7 +8,7 @@ set -x
 flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
 set +x
 
-. $HOME/.nix-profile/etc/profile.d/nix.sh;
+. $HOME/.nix-profile/etc/profile.d/nix.sh
 
 set -x
 code --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
