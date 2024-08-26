@@ -66,6 +66,23 @@ install_nix_step() {
   fi
 }
 
+install_mise_step() {
+  if command -v mise > /dev/null 2>&1; then
+    print_sub_title "Mise already installed, skipping"
+  else
+    run_and_print "curl https://mise.run | sh"
+    run_and_print mkdir -p ~/.config/mise
+    run_and_print cp ./home/.config/mise/config.toml ~/.config/mise/config.toml
+    run_and_print ~/.local/bin/mise install
+
+    print_sub_title "Install mise completions"
+    run_and_print mkdir -p ~/.config/fish/completions
+    run_and_print mkdir -p ~/.local/share/bash-completion/completions
+    run_and_print "~/.local/bin/mise completion fish > ~/.config/fish/completions/mise.fish"
+    run_and_print "~/.local/bin/mise completion bash > ~/.local/share/bash-completion/completions/mise.bash"
+  fi
+}
+
 stow_files_step() {
   run_and_print stow --adopt --no-folding -v home
   run_and_print git restore home
@@ -124,6 +141,10 @@ install_flatpak_apps_and_runtimes_step() {
 
 print_title "Install nix"
 install_nix_step
+echo
+
+print_title "Install mise"
+install_mise_step
 echo
 
 print_title "Stow files"
