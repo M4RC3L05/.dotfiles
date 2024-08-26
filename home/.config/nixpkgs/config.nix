@@ -57,8 +57,7 @@ in {
           nixpkgs.cascadia-code
           nixpkgs.syncthing
           (nixGLWrap nixgl.nixVulkanIntel nixpkgs.zed-editor)
-          nixpkgs.wrk
-          nixpkgs.mise
+          nixpkgs.oha
           nixpkgs.any-nix-shell
 
           (writeScriptBin "nix-rebuild" ''
