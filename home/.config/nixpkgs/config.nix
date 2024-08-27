@@ -9,8 +9,8 @@ let
     rm $out/bin
     mkdir $out/bin
     for bin in ${pkg}/bin/*; do
-      wrapped_bin=$out/bin/$(basename $bin)
-      echo "exec ${nixpkgs.lib.getExe nixGLCommand} $bin \$@" > $wrapped_bin
+      wrapped_bin="$out/bin/$(basename $bin)"
+      printf "#!${nixpkgs.stdenv.shell}\n\nexec ${nixpkgs.lib.getExe nixGLCommand} %s \$@" "$bin" > $wrapped_bin
       chmod +x $wrapped_bin
     done
   '');
