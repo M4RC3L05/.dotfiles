@@ -17,8 +17,8 @@ let
 in {
   allowUnfree = true;
 
-  packageOverrides = pkgs: with pkgs; {
-      mainPackages = pkgs.buildEnv {
+  packageOverrides = nixpkgs: with nixpkgs; {
+      mainPackages = nixpkgs.buildEnv {
         name = "main-packages";
         paths = [
           nixpkgs.nix
