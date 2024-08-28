@@ -59,6 +59,7 @@ in {
           (nixGLWrap nixgl.nixVulkanIntel nixpkgs.zed-editor)
           nixpkgs.oha
           nixpkgs.any-nix-shell
+          nixpkgs.docker-credential-helpers
 
           (writeScriptBin "nix-rebuild" ''
             #!${stdenv.shell}
