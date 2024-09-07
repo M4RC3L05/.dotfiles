@@ -16,3 +16,4 @@ org.gnome.seahorse.Application
 org.libreoffice.LibreOffice
 org.mozilla.firefox
 org.qbittorrent.qBittorrent
+org.raspberrypi.rpi-imager
