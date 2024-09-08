@@ -48,6 +48,7 @@ install_nix_step() {
     run_and_print "curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile"
     run_and_print ". ~/.nix-profile/etc/profile.d/nix.sh"
     run_and_print nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+    run_and_print nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs-2405-stable
     run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
     run_and_print nix-channel --update
 
