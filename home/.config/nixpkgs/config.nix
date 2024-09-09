@@ -1,7 +1,6 @@
 let
   nixgl = import <nixgl> {};
   nixpkgs = import <nixpkgs-unstable> {};
-  stableNixpkgs = import <nixpkgs-2405-stable> {};
 
   # https://github.com/nix-community/nixGL/issues/44#issuecomment-1361524862
   nixGLWrap = (nixGLCommand: pkg: nixpkgs.runCommand "${pkg.name}-${nixGLCommand.name}-wrapper" {} ''
@@ -56,7 +55,7 @@ in {
           nixpkgs.yt-dlp
           (nixGLWrap nixgl.nixGLIntel nixpkgs.mpv)
           nixpkgs.cascadia-code
-          stableNixpkgs.syncthing
+          nixpkgs.syncthing
           (nixGLWrap nixgl.nixVulkanIntel nixpkgs.zed-editor)
           nixpkgs.oha
           nixpkgs.any-nix-shell
