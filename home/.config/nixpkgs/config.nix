@@ -14,6 +14,23 @@ let
       chmod +x $wrapped_bin
     done
   '');
+
+  waylandElectronWrapper = { pkg, disableGpu ? "false" }:
+    nixpkgs.runCommand "${pkg.name}-wayland-electron-wrapper" {} ''
+      mkdir $out
+      ln -s ${pkg}/* $out
+      rm $out/bin
+      mkdir $out/bin
+      for bin in ${pkg}/bin/*; do
+        wrapped_bin="$out/bin/$(basename $bin)"
+        gpuFlag=""
+        if [ "${disableGpu}" = "true" ]; then
+          gpuFlag="--disable-gpu"
+        fi
+        printf "#!${nixpkgs.stdenv.shell}\n\nexec %s --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform-hint=wayland %s \$@" "$bin" "$gpuFlag" > $wrapped_bin
+        chmod +x $wrapped_bin
+      done
+    '';
 in {
   allowUnfree = true;
 
@@ -29,7 +46,7 @@ in {
           nixgl.auto.nixVulkanNvidia
           nixgl.nixVulkanIntel
 
-          (nixGLWrap nixgl.nixGLIntel nixpkgs.vscode)
+          (waylandElectronWrapper { pkg = (nixGLWrap nixgl.nixGLIntel nixpkgs.vscode); })
           nixpkgs.ffmpeg_7-full
           nixpkgs.bat
           nixpkgs.btop
@@ -60,6 +77,7 @@ in {
           nixpkgs.oha
           nixpkgs.any-nix-shell
           nixpkgs.docker-credential-helpers
+          (waylandElectronWrapper { pkg = nixpkgs.youtube-music; disableGpu = "true"; })
 
           (writeScriptBin "nix-rebuild" ''
             #!${stdenv.shell}
