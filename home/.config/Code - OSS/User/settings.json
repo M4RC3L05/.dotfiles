@@ -1,5 +1,6 @@
 {
   "editor.tabSize": 2,
+  "editor.fontSize": 13,
   "files.autoSave": "onFocusChange",
   "window.dialogStyle": "custom",
   "window.titleBarStyle": "custom",
@@ -11,6 +12,8 @@
     "SHLVL": "0"
   },
   "extensions.ignoreRecommendations": true,
-  "devbox.autoShellOnTerminal": false,
-  "diffEditor.ignoreTrimWhitespace": true
+  "diffEditor.ignoreTrimWhitespace": true,
+  "workbench.preferredDarkColorTheme": "Default Dark Modern",
+  "workbench.preferredLightColorTheme": "Default Light Modern",
+  "window.autoDetectColorScheme": true
 }
