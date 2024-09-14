@@ -127,7 +127,7 @@ in {
           })
 
           (writeScriptBin "nix-rebuild" ''
-            #!${stdenv.shell}
+            #!${nixpkgs.stdenv.shell}
 
             exec nix-env -iAr nixpkgs.mainPackages "$@"
           '')
