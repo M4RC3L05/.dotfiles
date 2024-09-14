@@ -94,6 +94,7 @@ in {
           (wrap {
             this = {
               pkg = nixpkgs.mpv;
+              bins = ["mpv" "umpv"];
             };
             using = {
               pkg = nixgl.nixGLIntel;
