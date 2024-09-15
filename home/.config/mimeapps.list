@@ -26,6 +26,7 @@ image/svg+xml-compressed=org.gnome.Loupe.desktop
 image/avif=org.gnome.Loupe.desktop
 image/heic=org.gnome.Loupe.desktop
 image/jxl=org.gnome.Loupe.desktop
+application/zip=org.gnome.FileRoller.desktop
 
 [Added Associations]
 video/x-matroska=umpv.desktop;
@@ -54,3 +55,6 @@ image/svg+xml-compressed=org.gnome.Loupe.desktop;
 image/avif=org.gnome.Loupe.desktop;
 image/heic=org.gnome.Loupe.desktop;
 image/jxl=org.gnome.Loupe.desktop;
+video/webm=umpv.desktop;
+video/mp2t=umpv.desktop;
+application/zip=org.gnome.FileRoller.desktop;
