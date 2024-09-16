@@ -126,6 +126,7 @@ in {
               pkg = nixpkgs.youtube-music;
             };
           })
+          nixpkgs.wget
 
           (writeScriptBin "nix-rebuild" ''
             #!${nixpkgs.stdenv.shell}
