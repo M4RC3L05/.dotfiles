@@ -67,7 +67,7 @@ in {
           nixpkgs.curl
           nixpkgs.podman
           nixpkgs.fish
-          nixpkgs.doggo
+          nixpkgs.q
           nixpkgs.eza
           nixpkgs.fastfetch
           nixpkgs.git
