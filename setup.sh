@@ -96,6 +96,21 @@ install_fisher_and_plugins_step() {
   fi
 }
 
+install_eget_packages_step() {
+  if [ -n "$(cat "$PACKAGES_DIR/eget-executables")" ]; then
+
+    while IFS= read -r package; do
+      if [ -n "$package" ]; then
+        run_and_print eget $package --upgrade-only
+        echo
+      fi
+    done < "$PACKAGES_DIR/eget-executables"
+
+  else
+    print_sub_title "No eget packages to install, skipping"
+  fi
+}
+
 install_flatpak_apps_and_runtimes_step() {
   if command -v flatpak > /dev/null 2>&1; then
     if [ -n "$(cat "$PACKAGES_DIR/flatpak-apps")" ]; then
@@ -155,9 +170,14 @@ print_title "Install fisher & plugins"
 install_fisher_and_plugins_step
 echo
 
+print_title "Install eget packages"
+install_eget_packages_step
+echo
+
 print_title "Install flatpak apps and runtimes"
 install_flatpak_apps_and_runtimes_step
 echo
+
 
 print_title "Install vscode extensions"
 install_vscode_extensions_step
