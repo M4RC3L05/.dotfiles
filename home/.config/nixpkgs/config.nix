@@ -137,6 +137,7 @@ in {
             };
           })
           nixpkgs.eget
+          nixpkgs.dive
 
           (writeScriptBin "nix-rebuild" ''
             #!${nixpkgs.stdenv.shell}
