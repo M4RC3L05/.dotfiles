@@ -136,6 +136,7 @@ in {
               pkg = nixpkgs.act;
             };
           })
+          nixpkgs.eget
 
           (writeScriptBin "nix-rebuild" ''
             #!${nixpkgs.stdenv.shell}
