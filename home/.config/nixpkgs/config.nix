@@ -3,9 +3,14 @@ let
   nixpkgs = import <nixpkgs-unstable> {};
 
   # https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
-  wrap = { this, using }: nixpkgs.runCommand "${this.pkg.name}-${using.pkg.name}-wrapper" {
-    buildInputs = [nixpkgs.makeWrapper];
-  } ''
+  wrap = { this, using }:
+  let
+    thisEnv = this.env or [];
+    thisEnvNormalized = if thisEnv == [] then thisEnv else (thisEnv ++ [""]);
+
+    thisFlags = this.flags or [];
+    thisFlagsNormalized = if thisFlags == [] then thisFlags else ([""] ++ thisFlags ++ [""]);
+  in nixpkgs.runCommand "${this.pkg.name}-${using.pkg.name}-wrapper" {} ''
     mkdir $out
 
     ln -s ${this.pkg}/* $out
@@ -23,15 +28,8 @@ let
       wrapped_destination_path="$out/bin/${bin}"
       rm "$wrapped_destination_path"
 
-      ${if this.pkg.drvPath == using.pkg.drvPath then
-        ''
-          makeWrapper "$wrapped_source_path" "$wrapped_destination_path" --add-flags "$(printf "%s" "${nixpkgs.lib.concatStringsSep " " (this.flags or [])}")"
-        ''
-        else
-        ''
-          printf "#!${nixpkgs.stdenv.shell}\n\nexec ${nixpkgs.lib.getExe using.pkg} %s %s \"\$@\"" "$wrapped_source_path" "${nixpkgs.lib.concatStringsSep " " (this.flags or [])}" > $wrapped_destination_path
-          chmod +x $wrapped_destination_path
-        ''}
+      printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg} %s%s\"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" "$wrapped_source_path" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
+      chmod +x $wrapped_destination_path
     '') this.bins or [this.pkg.meta.mainProgram])}
   '';
 in {
@@ -127,6 +125,17 @@ in {
             };
           })
           nixpkgs.wget
+          (wrap {
+            this = {
+              pkg = nixpkgs.act;
+              env = [
+                ''DOCKER_HOST=\"unix://\$XDG_RUNTIME_DIR/podman/podman.sock\"''
+              ];
+            };
+            using = {
+              pkg = nixpkgs.act;
+            };
+          })
 
           (writeScriptBin "nix-rebuild" ''
             #!${nixpkgs.stdenv.shell}
