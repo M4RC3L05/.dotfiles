@@ -99,9 +99,9 @@ install_fisher_and_plugins_step() {
 install_eget_packages_step() {
   if [ -n "$(cat "$PACKAGES_DIR/eget-executables")" ]; then
 
-    while IFS= read -r package; do
-      if [ -n "$package" ]; then
-        run_and_print eget $package --upgrade-only
+    while IFS= read -r executable; do
+      if [ -n "$executable" ]; then
+        run_and_print eget $executable --upgrade-only
         echo
       fi
     done < "$PACKAGES_DIR/eget-executables"
