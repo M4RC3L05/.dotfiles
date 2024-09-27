@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+set -ex
+
+PACKAGES_DIR="$HOME/.dotfiles/packages"
+EGET_EXECUTABLES="$PACKAGES_DIR/eget-executables"
+
+nix-channel --update
+nix-rebuild
+mise self-update
+
+set +x
+while IFS= read -r executable; do
+  if [ -n "$executable" ]; then
+    (set -x; eget $executable --upgrade-only)
+  fi
+done < "$EGET_EXECUTABLES"
