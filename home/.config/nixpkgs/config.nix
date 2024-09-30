@@ -9,7 +9,8 @@ let
     thisEnvNormalized = if thisEnv == [] then thisEnv else (thisEnv ++ [""]);
 
     thisFlags = this.flags or [];
-    thisFlagsNormalized = if thisFlags == [] then thisFlags else ([""] ++ thisFlags ++ [""]);
+    thisFlagsNormalized = if thisFlags == [] then thisFlags else ([""] ++ thisFlags);
+
   in nixpkgs.runCommand "${this.pkg.name}-${using.pkg.name}-wrapper" {} ''
     mkdir $out
 
@@ -28,8 +29,16 @@ let
       wrapped_destination_path="$out/bin/${bin}"
       rm "$wrapped_destination_path"
 
-      printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg} %s%s\"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" "$wrapped_source_path" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
-      chmod +x $wrapped_destination_path
+      ${if this.pkg.drvPath == using.pkg.drvPath then
+        ''
+          printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg}%s \"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
+          chmod +x $wrapped_destination_path
+        ''
+        else
+        ''
+          printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg}%s%s \"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" " $wrapped_source_path" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
+          chmod +x $wrapped_destination_path
+        ''}
     '') this.bins or [this.pkg.meta.mainProgram])}
   '';
 in {
