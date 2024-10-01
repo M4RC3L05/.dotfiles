@@ -15,5 +15,6 @@
   "diffEditor.ignoreTrimWhitespace": true,
   "workbench.preferredDarkColorTheme": "Default Dark Modern",
   "workbench.preferredLightColorTheme": "Default Light Modern",
-  "window.autoDetectColorScheme": true
+  "window.autoDetectColorScheme": true,
+  "telemetry.telemetryLevel": "off"
 }
