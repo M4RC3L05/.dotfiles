@@ -76,9 +76,7 @@ install_mise_step() {
     run_and_print ~/.local/bin/mise install
 
     print_sub_title "Install mise completions"
-    run_and_print mkdir -p ~/.config/fish/completions
     run_and_print mkdir -p ~/.local/share/bash-completion/completions
-    run_and_print "~/.local/bin/mise completion fish > ~/.config/fish/completions/mise.fish"
     run_and_print "~/.local/bin/mise completion bash > ~/.local/share/bash-completion/completions/mise.bash"
   fi
 }
@@ -86,14 +84,6 @@ install_mise_step() {
 stow_files_step() {
   run_and_print stow --adopt --no-folding -v home
   run_and_print git restore home
-}
-
-install_fisher_and_plugins_step() {
-  if [ -e ~/.config/fish/functions/fisher.fish ]; then
-    print_sub_title "Fisher already installed, skipping"
-  else
-    run_and_print fish --command "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
-  fi
 }
 
 install_eget_packages_step() {
@@ -164,10 +154,6 @@ echo
 
 print_title "Stow files"
 stow_files_step
-echo
-
-print_title "Install fisher & plugins"
-install_fisher_and_plugins_step
 echo
 
 print_title "Install eget packages"

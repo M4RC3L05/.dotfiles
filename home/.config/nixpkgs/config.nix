@@ -73,7 +73,6 @@ in {
           nixpkgs.btop
           nixpkgs.curl
           nixpkgs.podman
-          nixpkgs.fish
           nixpkgs.q
           nixpkgs.eza
           nixpkgs.fastfetch
@@ -147,6 +146,7 @@ in {
           })
           nixpkgs.eget
           nixpkgs.dive
+          nixpkgs.bash-completion
 
           (writeScriptBin "nix-rebuild" ''
             #!${nixpkgs.stdenv.shell}
