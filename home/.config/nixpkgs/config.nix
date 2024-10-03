@@ -117,7 +117,6 @@ in {
             };
           })
           nixpkgs.oha
-          nixpkgs.any-nix-shell
           nixpkgs.docker-credential-helpers
           (wrap {
             this = {
