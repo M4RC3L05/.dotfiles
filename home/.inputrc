@@ -8,6 +8,7 @@ set menu-complete-display-prefix on
 
 set show-all-if-ambiguous on
 set completion-ignore-case on
+set completion-map-case on
 
 set enable-bracketed-paste on
 
