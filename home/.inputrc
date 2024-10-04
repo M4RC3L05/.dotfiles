@@ -11,7 +11,7 @@ set completion-ignore-case on
 set completion-map-case on
 set skip-completed-text on
 
-set enable-bracketed-paste on
+set enable-bracketed-paste off
 
 "\e[A": history-search-backward
 "\e[B": history-search-forward
