@@ -176,4 +176,4 @@ print_title "Install vscode extensions"
 install_vscode_extensions_step
 echo
 
-printf "%b✓%b All done, open a new shell to get started !!!\n" "$GREEN" "$RESET"
+printf "%b✓%b All done, restart/relogin and open a new shell to get started !!!\n" "$GREEN" "$RESET"
