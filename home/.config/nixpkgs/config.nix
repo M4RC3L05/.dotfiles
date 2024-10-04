@@ -1,50 +1,57 @@
 let
-  nixgl = import <nixgl> {};
-  nixpkgs = import <nixpkgs-unstable> {};
+  nixgl = import <nixgl> { };
+  nixpkgs = import <nixpkgs-unstable> { };
 
   # https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
-  wrap = { this, using }:
-  let
-    thisEnv = this.env or [];
-    thisEnvNormalized = if thisEnv == [] then thisEnv else (thisEnv ++ [""]);
+  wrap =
+    { this, using }:
+    let
+      thisEnv = this.env or [ ];
+      thisEnvNormalized = if thisEnv == [ ] then thisEnv else (thisEnv ++ [ "" ]);
 
-    thisFlags = this.flags or [];
-    thisFlagsNormalized = if thisFlags == [] then thisFlags else ([""] ++ thisFlags);
+      thisFlags = this.flags or [ ];
+      thisFlagsNormalized = if thisFlags == [ ] then thisFlags else ([ "" ] ++ thisFlags);
+    in
+    nixpkgs.runCommand "${this.pkg.name}-${using.pkg.name}-wrapper" { } ''
+      mkdir $out
 
-  in nixpkgs.runCommand "${this.pkg.name}-${using.pkg.name}-wrapper" {} ''
-    mkdir $out
+      ln -s ${this.pkg}/* $out
 
-    ln -s ${this.pkg}/* $out
+      rm $out/bin
 
-    rm $out/bin
+      mkdir $out/bin
 
-    mkdir $out/bin
+      ln -s ${this.pkg}/bin/* $out/bin
 
-    ln -s ${this.pkg}/bin/* $out/bin
+      ${nixpkgs.lib.concatStringsSep " " (
+        nixpkgs.lib.map (bin: ''
+          echo "=> Wrapping ${bin} using ${using.pkg.name}"
 
-    ${nixpkgs.lib.concatStringsSep " " (nixpkgs.lib.map(bin: ''
-      echo "=> Wrapping ${bin} using ${using.pkg.name}"
+          wrapped_source_path="${this.pkg}/bin/${bin}"
+          wrapped_destination_path="$out/bin/${bin}"
+          rm "$wrapped_destination_path"
 
-      wrapped_source_path="${this.pkg}/bin/${bin}"
-      wrapped_destination_path="$out/bin/${bin}"
-      rm "$wrapped_destination_path"
-
-      ${if this.pkg.drvPath == using.pkg.drvPath then
-        ''
-          printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg}%s \"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
-          chmod +x $wrapped_destination_path
-        ''
-        else
-        ''
-          printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg}%s%s \"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" " $wrapped_source_path" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
-          chmod +x $wrapped_destination_path
-        ''}
-    '') this.bins or [this.pkg.meta.mainProgram])}
-  '';
-in {
+          ${
+            if this.pkg.drvPath == using.pkg.drvPath then
+              ''
+                printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg}%s \"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
+                chmod +x $wrapped_destination_path
+              ''
+            else
+              ''
+                printf "#!${nixpkgs.stdenv.shell}\n\n%sexec ${nixpkgs.lib.getExe using.pkg}%s%s \"\$@\"" "${nixpkgs.lib.concatStringsSep " " thisEnvNormalized}" " $wrapped_source_path" "${nixpkgs.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
+                chmod +x $wrapped_destination_path
+              ''
+          }
+        '') this.bins or [ this.pkg.meta.mainProgram ]
+      )}
+    '';
+in
+{
   allowUnfree = true;
 
-  packageOverrides = nixpkgs: with nixpkgs; {
+  packageOverrides =
+    nixpkgs: with nixpkgs; {
       mainPackages = nixpkgs.buildEnv {
         name = "main-packages";
         paths = [
@@ -100,7 +107,10 @@ in {
           (wrap {
             this = {
               pkg = nixpkgs.mpv;
-              bins = ["mpv" "umpv"];
+              bins = [
+                "mpv"
+                "umpv"
+              ];
             };
             using = {
               pkg = nixgl.nixGLIntel;
@@ -147,6 +157,8 @@ in {
           nixpkgs.dive
           nixpkgs.bash-completion
           nixpkgs.nix-bash-completions
+          nixpkgs.nil
+          nixpkgs.nixfmt-rfc-style
 
           (writeScriptBin "nix-rebuild" ''
             #!${nixpkgs.stdenv.shell}
