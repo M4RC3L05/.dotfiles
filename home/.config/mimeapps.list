@@ -27,6 +27,7 @@ image/avif=org.gnome.Loupe.desktop
 image/heic=org.gnome.Loupe.desktop
 image/jxl=org.gnome.Loupe.desktop
 application/zip=org.gnome.FileRoller.desktop
+audio/flac=com.github.neithern.g4music.desktop
 
 [Added Associations]
 video/x-matroska=umpv.desktop;
@@ -58,3 +59,5 @@ image/jxl=org.gnome.Loupe.desktop;
 video/webm=umpv.desktop;
 video/mp2t=umpv.desktop;
 application/zip=org.gnome.FileRoller.desktop;
+audio/flac=com.github.neithern.g4music.desktop;
+video/mp4=umpv.desktop;
