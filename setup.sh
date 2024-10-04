@@ -65,11 +65,11 @@ install_nix_step() {
     run_and_print "printf '[Manager]\nManagerEnvironment=\"XDG_DATA_DIRS=%s/.nix-profile/share:/usr/local/share:/usr/share\"' \"$HOME\" > ~/.config/systemd/user.conf"
 
     # support fonts installed from nix in flatpaks
-    if [ -d "$HOME/.local/share/fonts" ]; then
-      rm -r $HOME/.local/share/fonts
+    if [ ! -d "$HOME/.local/share/fonts" ]; then
+      run_and_print mkdir -p $HOME/.local/share/fonts
     fi
 
-    run_and_print ln -s $HOME/.nix-profile/share/fonts/ $HOME/.local/share/fonts
+    run_and_print ln -s $HOME/.nix-profile/share/fonts/ $HOME/.local/share/fonts/nix
   fi
 }
 
