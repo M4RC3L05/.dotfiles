@@ -9,7 +9,7 @@ BLUE="\033[34m"
 MAGENTA="\033[35m"
 RESET="\033[0m"
 
-# Append to hostory
+# Append to history
 shopt -s histappend;
 
 # Exports
