@@ -9,6 +9,9 @@ BLUE="\033[34m"
 MAGENTA="\033[35m"
 RESET="\033[0m"
 
+# Append to hostory
+shopt -s histappend;
+
 # Exports
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 
