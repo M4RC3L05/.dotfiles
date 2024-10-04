@@ -146,6 +146,7 @@ in {
           nixpkgs.eget
           nixpkgs.dive
           nixpkgs.bash-completion
+          nixpkgs.nix-bash-completions
 
           (writeScriptBin "nix-rebuild" ''
             #!${nixpkgs.stdenv.shell}
