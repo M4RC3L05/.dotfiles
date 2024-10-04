@@ -30,3 +30,4 @@ fi
 
 # Greeting
 the-office-quote
+echo
