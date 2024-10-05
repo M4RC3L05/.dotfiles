@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   nixgl = import <nixgl> { };
   nixpkgsUnstable = import <nixpkgs-unstable> { };
@@ -61,6 +66,20 @@ in
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
+
+  home.activation = {
+    copyFonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p $HOME/.local/share/fonts
+
+      if [ -d "$HOME/.local/share/fonts/nix" ]; then
+        rm -r $HOME/.local/share/fonts/nix
+      fi
+
+      mkdir -p $HOME/.local/share/fonts/nix
+      cp -rL $HOME/.nix-profile/share/fonts/* $HOME/.local/share/fonts/nix
+      chmod -R u+rw,g+rw $HOME/.local/share/fonts/nix
+    '';
+  };
 
   home.packages = [
     nixgl.auto.nixGLNvidia
