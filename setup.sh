@@ -77,6 +77,15 @@ install_nix_step() {
 
   run_and_print nix-env -iA nixpkgs-unstable.nix nixpkgs-unstable.cacert
   run_and_print home-manager switch -b backup
+
+  # support fonts installed from nix in flatpaks
+  run_and_print mkdir -p $HOME/.local/share/fonts
+
+  if [ -d "$HOME/.local/share/fonts/nix" ]; then
+    run_and_print rm $HOME/.local/share/fonts/nix
+  fi
+
+  run_and_print ln -s $HOME/.nix-profile/share/fonts/ $HOME/.local/share/fonts/nix
 }
 
 install_eget_packages_step() {
