@@ -7,7 +7,3 @@ VSCODE_EXTENSIONS_FILE_PATH="$PACKAGES_DIR/vscode-extensions"
 set -x
 flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
 set +x
-
-set -x
-$HOME/.nix-profile/bin/code --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
-set +x
