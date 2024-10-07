@@ -180,20 +180,56 @@ in
         ls = "eza --color=auto --header --git --icons";
       };
       bashrcExtra = ''
-        RED="\\033[31m";
-        GREEN="\\033[32m";
-        YELLOW="\\033[33m";
-        BLUE="\\033[34m";
-        MAGENTA="\\033[35m";
-        RESET="\\033[0m";
-
         export TERM="xterm-256color";
 
         eval "$(${nixpkgsUnstable.lib.getExe nixpkgsUnstable.bat-extras.batman} --export-env)"
       '';
       initExtra = ''
+        # Git prompt
+        . ~/.nix-profile/share/git/contrib/completion/git-prompt.sh
+
         # Prompt
-        PS1="\[$RED\][\[$YELLOW\]\u\[$GREEN\]@\[$BLUE\]\h\[$RESET\] \[$MAGENTA\]\w\[$RED\]]\[$RESET\]\$ "
+        prompt() {
+          local color_red="\001\e[31m\002"
+          local color_green='\001\e[32m\002'
+          local color_grey='\001\e[37m\002'
+          local color_reset='\001\e[0m\002'
+
+          local error="no"
+          local exit_statuses=("$@")
+          local username="''${USER:-$(whoami)}"
+          local hostname="''${HOSTNAME:-$(hostname)}"
+          local home="''${HOME:-$(echo ~)}"
+          local path="''${PWD:-$(pwd)}"
+          path="''${path/#$home/'~'}"
+          path="$(echo "$path" | awk -F'/' '{for(i=1;i<NF;i++) printf "%s/", substr($i,1,1); print $NF}')"
+          local git_branch="$(__git_ps1 " $color_grey%s$color_reset")"
+
+          echo -en "$color_green$path$color_reset"
+          echo -en "$git_branch"
+
+          if [[ -n "$git_branch" ]] && [[ -n "$(git status --porcelain)" ]]; then
+            echo -en "*"
+          fi
+
+          echo -en " "
+
+          for exit_status in "''${exit_statuses[@]}"; do
+            if [[ "$exit_status" != "0" ]]; then
+              error="yes"
+              break
+            fi
+          done
+
+          if [[ "$error" == "yes" ]]; then
+            local exit_statuses_joined="''${exit_statuses[*]}"
+            echo -en "$color_red[''${exit_statuses_joined// / | }]❱$color_reset"
+          else
+            echo -en "❱"
+          fi
+        }
+
+        PS1='$(prompt "''${PIPESTATUS[@]}") '
 
         # Greeting
         the-office-quote
@@ -212,7 +248,6 @@ in
       package = nixpkgsUnstable.git;
       userName = "m4rc3l05";
       userEmail = "15786310+M4RC3L05@users.noreply.github.com";
-
       extraConfig = {
         user = {
           useConfigOnly = true;
