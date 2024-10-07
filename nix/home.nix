@@ -193,7 +193,7 @@ in
       '';
       initExtra = ''
         # Prompt
-        PS1="$RED[$YELLOW\u$GREEN@$BLUE\h$RESET $MAGENTA\w$RED]$RESET\$ "
+        PS1="\[$RED\][\[$YELLOW\]\u\[$GREEN\]@\[$BLUE\]\h\[$RESET\] \[$MAGENTA\]\w\[$RED\]]\[$RESET\]\$ "
 
         # Greeting
         the-office-quote
