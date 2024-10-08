@@ -110,7 +110,7 @@ in
     nixpkgsUnstable.tldr
     nixpkgsUnstable.tokei
     nixpkgsUnstable.tree
-    nixpkgsUnstable.vim
+    nixpkgsUnstable.micro-full
     nixpkgsUnstable.wget
     nixpkgsUnstable.yt-dlp
     nixpkgsUnstable.procps
@@ -289,7 +289,7 @@ in
           defaultBranch = "main";
         };
         core = {
-          editor = "vim";
+          editor = "micro";
         };
       };
 
