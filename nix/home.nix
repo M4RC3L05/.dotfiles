@@ -113,6 +113,8 @@ in
     nixpkgsUnstable.vim
     nixpkgsUnstable.wget
     nixpkgsUnstable.yt-dlp
+    nixpkgsUnstable.procps
+    nixpkgsUnstable.nix-your-shell
 
     (wrap {
       this = {
@@ -185,6 +187,12 @@ in
         eval "$(${nixpkgsUnstable.lib.getExe nixpkgsUnstable.bat-extras.batman} --export-env)"
       '';
       initExtra = ''
+        if [[ $(${nixpkgsUnstable.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+          exec ${nixpkgsUnstable.fish}/bin/fish $LOGIN_OPTION
+        fi
+
         # Git prompt
         . ~/.nix-profile/share/git/contrib/completion/git-prompt.sh
 
@@ -241,6 +249,31 @@ in
       enable = true;
       package = nixpkgsUnstable.bat;
       extraPackages = [ nixpkgsUnstable.bat-extras.batman ];
+    };
+
+    fish = {
+      enable = true;
+      package = nixpkgsUnstable.fish;
+      shellAliases = {
+        cat = "bat --plain";
+        ls = "eza --color=auto --header --git --icons";
+      };
+      functions = {
+        fish_greeting = "the-office-quote; echo";
+      };
+      interactiveShellInit = ''
+        ${nixpkgsUnstable.lib.getExe nixpkgsUnstable.nix-your-shell} fish | source
+
+        set -g hydro_color_pwd green
+        set -g hydro_color_prompt magenta
+        set -g hydro_color_duration yellow
+      '';
+      plugins = [
+        {
+          name = "hydro";
+          src = nixpkgsUnstable.fishPlugins.hydro.src;
+        }
+      ];
     };
 
     git = {
