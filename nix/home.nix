@@ -239,6 +239,8 @@ in
 
         PS1='$(prompt "''${PIPESTATUS[@]}") '
 
+        eval "$(~/.local/bin/mise activate bash)"
+
         # Greeting
         the-office-quote
         echo
@@ -262,11 +264,13 @@ in
         fish_greeting = "the-office-quote; echo";
       };
       interactiveShellInit = ''
-        ${nixpkgsUnstable.lib.getExe nixpkgsUnstable.nix-your-shell} fish | source
-
         set -g hydro_color_pwd green
         set -g hydro_color_prompt magenta
         set -g hydro_color_duration yellow
+
+        ${nixpkgsUnstable.lib.getExe nixpkgsUnstable.nix-your-shell} fish | source
+
+        ~/.local/bin/mise activate fish | source
       '';
       plugins = [
         {
@@ -300,20 +304,6 @@ in
 
     home-manager = {
       enable = true;
-    };
-
-    mise = {
-      package = nixpkgsUnstable.mise;
-      enable = true;
-      enableBashIntegration = true;
-      globalConfig = {
-        settings = {
-          experimental = true;
-        };
-        tools = {
-          usage = "latest";
-        };
-      };
     };
 
     mpv = {
