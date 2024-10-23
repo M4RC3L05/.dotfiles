@@ -376,9 +376,7 @@ in
       );
       extensions = [
         nixpkgsUnstable.vscode-extensions.denoland.vscode-deno
-        nixpkgsUnstable.vscode-extensions.esbenp.prettier-vscode
         nixpkgsUnstable.vscode-extensions.jnoortheen.nix-ide
-        nixpkgsUnstable.vscode-extensions.rust-lang.rust-analyzer
         nixpkgsUnstable.vscode-extensions.tamasfe.even-better-toml
       ];
       userSettings = {
