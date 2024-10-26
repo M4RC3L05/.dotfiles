@@ -37,18 +37,20 @@ let
           wrapped_destination_path="$out/bin/${bin}"
           rm "$wrapped_destination_path"
 
-          ${
+          wrap="${
             if this.pkg.drvPath == using.pkg.drvPath then
-              ''
-                printf "#!${nixpkgsUnstable.stdenv.shell}\n\n%sexec ${nixpkgsUnstable.lib.getExe using.pkg}%s \"\$@\"" "${nixpkgsUnstable.lib.concatStringsSep " " thisEnvNormalized}" "${nixpkgsUnstable.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
-                chmod +x $wrapped_destination_path
-              ''
+              ''#!${nixpkgsUnstable.stdenv.shell}\n\n${nixpkgsUnstable.lib.concatStringsSep " " thisEnvNormalized}exec $wrapped_source_path${nixpkgsUnstable.lib.concatStringsSep " " thisFlagsNormalized}''
             else
-              ''
-                printf "#!${nixpkgsUnstable.stdenv.shell}\n\n%sexec ${nixpkgsUnstable.lib.getExe using.pkg}%s%s \"\$@\"" "${nixpkgsUnstable.lib.concatStringsSep " " thisEnvNormalized}" " $wrapped_source_path" "${nixpkgsUnstable.lib.concatStringsSep " " thisFlagsNormalized}" > $wrapped_destination_path
-                chmod +x $wrapped_destination_path
-              ''
-          }
+              ''#!${nixpkgsUnstable.stdenv.shell}\n\n${nixpkgsUnstable.lib.concatStringsSep " " thisEnvNormalized}exec ${nixpkgsUnstable.lib.getExe using.pkg} $wrapped_source_path${nixpkgsUnstable.lib.concatStringsSep " " thisFlagsNormalized}''
+          }"
+
+          printf "$wrap \"\$@\"" > "$wrapped_destination_path"
+          chmod +x $wrapped_destination_path
+
+          printf "==> ---- START WRAP CONTENT ----\n"
+          cat $wrapped_destination_path | sed 's/^/    /'
+          printf "\n"
+          printf "==> ---- END WRAP CONTENT ----\n"
         '') this.bins or [ this.pkg.meta.mainProgram ]
       )}
     '';
