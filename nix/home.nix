@@ -409,9 +409,6 @@ in
   services = {
     syncthing = {
       enable = true;
-      tray = {
-        enable = true;
-      };
     };
   };
 
@@ -441,14 +438,6 @@ in
           };
           Install = {
             WantedBy = [ "timers.target" ];
-          };
-        };
-      };
-      targets = {
-        tray = {
-          Unit = {
-            Description = "Home Manager System Tray";
-            Requires = [ "graphical-session-pre.target" ];
           };
         };
       };
