@@ -115,6 +115,7 @@ in
     nixpkgsUnstable.yt-dlp
     nixpkgsUnstable.procps
     nixpkgsUnstable.nix-your-shell
+    nixpkgsUnstable.hyperfine
 
     (wrap {
       this = {
