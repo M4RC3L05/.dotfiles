@@ -19,55 +19,53 @@ let
       envVarsStr = lib.concatStringsSep " " (envVars);
       thisFlagsStr = lib.concatStringsSep " " (this.flags or [ ]);
     in
-    nixpkgsUnstable.runCommand "${this.package.name}-${using.package.name}-wrapper"
-      this.derivarionEnv or { }
-      ''
-         mkdir $out
+    pkgs.runCommand "${this.package.name}-${using.package.name}-wrapper" this.derivarionEnv or { } ''
+       mkdir $out
 
-         ln -s ${this.package}/* $out
+       ln -s ${this.package}/* $out
 
-         rm $out/bin
+       rm $out/bin
 
-         mkdir $out/bin
+       mkdir $out/bin
 
-         ln -s ${this.package}/bin/* $out/bin
+       ln -s ${this.package}/bin/* $out/bin
 
-        ${lib.concatStringsSep " " (
-          lib.map (
-            bin:
-            let
-              wrapContentJoined = lib.concatStringsSep " " (
-                lib.lists.filter (s: (lib.trim s) != "") ([
-                  envVarsStr
-                  (
-                    if this.package.drvPath == using.package.drvPath then
-                      "exec $wrapped_source_path"
-                    else
-                      "exec ${lib.getExe using.package} $wrapped_source_path"
-                  )
-                  thisFlagsStr
-                  ''\"\$@\"''
-                ])
-              );
-            in
-            ''
-              echo "=> Wrapping ${bin} using ${using.package.name}"
+      ${lib.concatStringsSep " " (
+        lib.map (
+          bin:
+          let
+            wrapContentJoined = lib.concatStringsSep " " (
+              lib.lists.filter (s: (lib.trim s) != "") ([
+                envVarsStr
+                (
+                  if this.package.drvPath == using.package.drvPath then
+                    "exec $wrapped_source_path"
+                  else
+                    "exec ${lib.getExe using.package} $wrapped_source_path"
+                )
+                thisFlagsStr
+                ''\"\$@\"''
+              ])
+            );
+          in
+          ''
+            echo "=> Wrapping ${bin} using ${using.package.name}"
 
-              wrapped_source_path="${this.package}/bin/${bin}"
-              wrapped_destination_path="$out/bin/${bin}"
-              rm "$wrapped_destination_path"
+            wrapped_source_path="${this.package}/bin/${bin}"
+            wrapped_destination_path="$out/bin/${bin}"
+            rm "$wrapped_destination_path"
 
-              printf "#!${pkgs.stdenv.shell}\n\n${wrapContentJoined}" > "$wrapped_destination_path"
-              chmod +x $wrapped_destination_path
+            printf "#!${pkgs.stdenv.shell}\n\n${wrapContentJoined}" > "$wrapped_destination_path"
+            chmod +x $wrapped_destination_path
 
-              printf "==> ---- START WRAP CONTENT ----\n"
-              cat $wrapped_destination_path
-              printf "\n"
-              printf "==> ---- END WRAP CONTENT ----\n"
-            ''
-          ) this.bins or [ this.package.meta.mainProgram ]
-        )}
-      '';
+            printf "==> ---- START WRAP CONTENT ----\n"
+            cat $wrapped_destination_path
+            printf "\n"
+            printf "==> ---- END WRAP CONTENT ----\n"
+          ''
+        ) this.bins or [ this.package.meta.mainProgram ]
+      )}
+    '';
 
 in
 {
