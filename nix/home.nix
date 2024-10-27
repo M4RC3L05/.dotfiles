@@ -87,7 +87,7 @@ in
 
         if [ -d "$HOME/.local/share/fonts/nix" ]; then
           run rm -r $HOME/.local/share/fonts/nix
-      fi
+        fi
 
         run mkdir -p $HOME/.local/share/fonts/nix
         run cp -rL $HOME/.nix-profile/share/fonts/* $HOME/.local/share/fonts/nix
