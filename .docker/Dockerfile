@@ -15,5 +15,5 @@ WORKDIR /home/main
 
 COPY --chown=main:main . ./.dotfiles
 
-ENTRYPOINT ["/home/main/.dotfiles/entrypoint.sh"]
+ENTRYPOINT ["/home/main/.dotfiles/.docker/entrypoint.sh"]
 CMD ["/bin/bash"]

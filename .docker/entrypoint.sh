@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-set -x
+set -ex
 
 export USER="$(whoami)"
 
@@ -10,6 +10,6 @@ flatpak remote-add --user flathub https://dl.flathub.org/repo/flathub.flatpakrep
 git config --global user.email "foo@bar.com"
 git config --global user.name "foo"
 
-cd ~/.dotfiles && git add . && git commit -sm "wip" -n && cd
+cd /home/main/.dotfiles && git add . && git commit -sm "wip" -n && cd /home/main
 
 exec "$@"
