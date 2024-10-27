@@ -15,3 +15,7 @@ while IFS= read -r executable; do
     (set -x; eget $executable --upgrade-only)
   fi
 done < "$EGET_EXECUTABLES"
+
+set -x
+
+mise upgrade --bump
