@@ -44,7 +44,7 @@ print_sub_title() {
 install_nix_step() {
   if ! command -v nix > /dev/null 2>&1; then
     run_and_print "curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile"
-    run_and_print ". ~/.nix-profile/etc/profile.d/nix.sh"
+    run_and_print ". $HOME/.nix-profile/etc/profile.d/nix.sh"
     run_and_print nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
     run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
     run_and_print nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
@@ -77,18 +77,27 @@ install_nix_step() {
 
   run_and_print nix-env -iA nixpkgs-unstable.nix nixpkgs-unstable.cacert
   run_and_print home-manager switch -b backup
+
+  print_sub_title "Copy fonts"
+  run_and_print mkdir -p $HOME/.local/share/fonts
+
+  if [ -d "$HOME/.local/share/fonts/nix" ]; then
+    run_and_print rm -r $HOME/.local/share/fonts/nix
+  fi
+
+  run_and_print mkdir -p $HOME/.local/share/fonts/nix
+  run_and_print cp -rL $HOME/.nix-profile/share/fonts/* $HOME/.local/share/fonts/nix
+  run_and_print chmod -R u+rw,g+rw $HOME/.local/share/fonts/nix
 }
 
 install_eget_packages_step() {
   if [ -n "$(cat "$PACKAGES_DIR/eget-executables")" ]; then
-
     while IFS= read -r executable; do
       if [ -n "$executable" ]; then
         run_and_print eget $executable --upgrade-only
         echo
       fi
     done < "$PACKAGES_DIR/eget-executables"
-
   else
     print_sub_title "No eget packages to install, skipping"
   fi
