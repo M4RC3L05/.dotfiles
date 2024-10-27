@@ -10,50 +10,64 @@ let
 
   # https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
   wrap =
-    { this, using }:
+    {
+      this,
+      using,
+      envVars ? [ ],
+    }:
     let
-      thisEnv = this.env or [ ];
-      thisEnvNormalized = if thisEnv == [ ] then thisEnv else (thisEnv ++ [ "" ]);
-
-      thisFlags = this.flags or [ ];
-      thisFlagsNormalized = if thisFlags == [ ] then thisFlags else ([ "" ] ++ thisFlags);
+      envVarsStr = lib.concatStringsSep " " (envVars);
+      thisFlagsStr = lib.concatStringsSep " " (this.flags or [ ]);
     in
-    nixpkgsUnstable.runCommand "${this.pkg.name}-${using.pkg.name}-wrapper" this.derivarionEnv or { } ''
-       mkdir $out
+    nixpkgsUnstable.runCommand "${this.package.name}-${using.package.name}-wrapper"
+      this.derivarionEnv or { }
+      ''
+         mkdir $out
 
-       ln -s ${this.pkg}/* $out
+         ln -s ${this.package}/* $out
 
-       rm $out/bin
+         rm $out/bin
 
-       mkdir $out/bin
+         mkdir $out/bin
 
-       ln -s ${this.pkg}/bin/* $out/bin
+         ln -s ${this.package}/bin/* $out/bin
 
-      ${nixpkgsUnstable.lib.concatStringsSep " " (
-        nixpkgsUnstable.lib.map (bin: ''
-          echo "=> Wrapping ${bin} using ${using.pkg.name}"
+        ${lib.concatStringsSep " " (
+          lib.map (
+            bin:
+            let
+              wrapContentJoined = lib.concatStringsSep " " (
+                lib.lists.filter (s: (lib.trim s) != "") ([
+                  envVarsStr
+                  (
+                    if this.package.drvPath == using.package.drvPath then
+                      "exec $wrapped_source_path"
+                    else
+                      "exec ${lib.getExe using.package} $wrapped_source_path"
+                  )
+                  thisFlagsStr
+                  ''\"\$@\"''
+                ])
+              );
+            in
+            ''
+              echo "=> Wrapping ${bin} using ${using.package.name}"
 
-          wrapped_source_path="${this.pkg}/bin/${bin}"
-          wrapped_destination_path="$out/bin/${bin}"
-          rm "$wrapped_destination_path"
+              wrapped_source_path="${this.package}/bin/${bin}"
+              wrapped_destination_path="$out/bin/${bin}"
+              rm "$wrapped_destination_path"
 
-          wrap="${
-            if this.pkg.drvPath == using.pkg.drvPath then
-              ''#!${nixpkgsUnstable.stdenv.shell}\n\n${nixpkgsUnstable.lib.concatStringsSep " " thisEnvNormalized}exec $wrapped_source_path${nixpkgsUnstable.lib.concatStringsSep " " thisFlagsNormalized}''
-            else
-              ''#!${nixpkgsUnstable.stdenv.shell}\n\n${nixpkgsUnstable.lib.concatStringsSep " " thisEnvNormalized}exec ${nixpkgsUnstable.lib.getExe using.pkg} $wrapped_source_path${nixpkgsUnstable.lib.concatStringsSep " " thisFlagsNormalized}''
-          }"
+              printf "#!${pkgs.stdenv.shell}\n\n${wrapContentJoined}" > "$wrapped_destination_path"
+              chmod +x $wrapped_destination_path
 
-          printf "$wrap \"\$@\"" > "$wrapped_destination_path"
-          chmod +x $wrapped_destination_path
-
-          printf "==> ---- START WRAP CONTENT ----\n"
-          cat $wrapped_destination_path | sed 's/^/    /'
-          printf "\n"
-          printf "==> ---- END WRAP CONTENT ----\n"
-        '') this.bins or [ this.pkg.meta.mainProgram ]
-      )}
-    '';
+              printf "==> ---- START WRAP CONTENT ----\n"
+              cat $wrapped_destination_path
+              printf "\n"
+              printf "==> ---- END WRAP CONTENT ----\n"
+            ''
+          ) this.bins or [ this.package.meta.mainProgram ]
+        )}
+      '';
 
 in
 {
@@ -121,25 +135,25 @@ in
 
     (wrap {
       this = {
-        pkg = nixpkgsUnstable.nvtopPackages.full;
+        package = nixpkgsUnstable.nvtopPackages.full;
       };
       using = {
-        pkg = nixgl.auto.nixGLNvidia;
+        package = nixgl.auto.nixGLNvidia;
       };
     })
 
     (wrap {
       this = {
-        pkg = nixpkgsUnstable.zed-editor;
+        package = nixpkgsUnstable.zed-editor;
       };
       using = {
-        pkg = nixgl.nixVulkanIntel;
+        package = nixgl.nixVulkanIntel;
       };
     })
 
     (wrap {
       this = {
-        pkg = nixpkgsUnstable.youtube-music;
+        package = nixpkgsUnstable.youtube-music;
         flags = [
           "--enable-features=UseOzonePlatform,WaylandWindowDecorations"
           "--ozone-platform-hint=wayland"
@@ -147,7 +161,7 @@ in
         ];
       };
       using = {
-        pkg = nixpkgsUnstable.youtube-music;
+        package = nixpkgsUnstable.youtube-music;
       };
     })
   ];
@@ -314,14 +328,14 @@ in
       package = (
         wrap {
           this = {
-            pkg = nixpkgsUnstable.mpv;
+            package = nixpkgsUnstable.mpv;
             bins = [
               "mpv"
               "umpv"
             ];
           };
           using = {
-            pkg = nixgl.nixGLIntel;
+            package = nixgl.nixGLIntel;
           };
         }
       );
@@ -366,14 +380,14 @@ in
                 mainProgram = "${nixpkgsUnstable.vscode.name}-${nixgl.nixGLIntel.name}-wrapper";
               };
             };
-            pkg = nixpkgsUnstable.vscode;
+            package = nixpkgsUnstable.vscode;
             flags = [
               "--enable-features=UseOzonePlatform,WaylandWindowDecorations"
               "--ozone-platform-hint=wayland"
             ];
           };
           using = {
-            pkg = nixgl.nixGLIntel;
+            package = nixgl.nixGLIntel;
           };
         }
       );
