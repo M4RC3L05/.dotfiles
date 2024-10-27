@@ -66,7 +66,6 @@ let
         ) this.bins or [ this.package.meta.mainProgram ]
       )}
     '';
-
 in
 {
   home.username = "main";
