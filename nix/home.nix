@@ -375,9 +375,7 @@ in
             derivarionEnv = {
               pname = nixpkgsUnstable.vscode.pname;
               version = nixpkgsUnstable.vscode.version;
-              meta = {
-                mainProgram = "${nixpkgsUnstable.vscode.name}-${nixgl.nixGLIntel.name}-wrapper";
-              };
+              meta = nixpkgsUnstable.vscode.meta;
             };
             package = nixpkgsUnstable.vscode;
             flags = [
