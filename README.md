@@ -12,8 +12,18 @@ My dotfiles
 Just run the setup script.
 
 ```cmd
-./setup.sh
+./setup
 ```
+
+## Testing
+
+Build and run the docker image on `.docker` folder
+
+```cmd
+podman build -t dotfiles:latest . -f ./.docker/Dockerfile && podman run -it --rm --init dotfiles:latest
+```
+
+Once inside the running docker image, cd into `~/.dotfiles` and execute `./setup`
 
 ## Final words
 
