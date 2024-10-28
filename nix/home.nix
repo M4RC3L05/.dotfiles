@@ -413,9 +413,12 @@ in
       );
       extensions = [
         nixpkgsUnstable.vscode-extensions.denoland.vscode-deno
-        nixpkgsUnstable.vscode-extensions.jnoortheen.nix-ide
         nixpkgsUnstable.vscode-extensions.tamasfe.even-better-toml
+        nixpkgsUnstable.vscode-extensions.skyapps.fish-vscode
+        nixpkgsUnstable.vscode-extensions.jnoortheen.nix-ide
       ];
+      enableUpdateCheck = false;
+      enableExtensionUpdateCheck = false;
       userSettings = {
         "diffEditor.ignoreTrimWhitespace" = true;
         "editor.cursorSmoothCaretAnimation" = "on";
