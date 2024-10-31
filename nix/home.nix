@@ -192,9 +192,6 @@ in
     #firefox
     MOZ_ENABLE_WAYLAND = 1;
 
-    # gnome
-    GSK_RENDERER = "ngl";
-
     # bin paths
     PATH = "$PATH:$HOME/AppImages:$HOME/.local/bin";
 
@@ -474,9 +471,6 @@ in
 
         #firefox
         MOZ_ENABLE_WAYLAND = 1;
-
-        # gnome
-        GSK_RENDERER = "ngl";
 
         # bin paths
         PATH = "$PATH:$HOME/AppImages:$HOME/.local/bin";
