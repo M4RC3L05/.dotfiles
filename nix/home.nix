@@ -118,7 +118,6 @@ in
     nixpkgsUnstable.lsof
     nixpkgsUnstable.nil
     nixpkgsUnstable.nixfmt-rfc-style
-    nixpkgsUnstable.oha
     nixpkgsUnstable.podman
     nixpkgsUnstable.q
     nixpkgsUnstable.rsync
@@ -131,6 +130,7 @@ in
     nixpkgsUnstable.procps
     nixpkgsUnstable.nix-your-shell
     nixpkgsUnstable.hyperfine
+    nixpkgsUnstable.wrk
 
     (wrap {
       this = {
