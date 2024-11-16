@@ -143,15 +143,6 @@ in
 
     (wrap {
       this = {
-        package = nixpkgsUnstable.zed-editor;
-      };
-      using = {
-        package = nixgl.nixVulkanIntel;
-      };
-    })
-
-    (wrap {
-      this = {
         package = nixpkgsUnstable.youtube-music;
         flags = [
           "--enable-features=UseOzonePlatform,WaylandWindowDecorations"
