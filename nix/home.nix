@@ -97,11 +97,6 @@ in
   };
 
   home.packages = [
-    nixgl.auto.nixGLNvidia
-    nixgl.auto.nixVulkanNvidia
-    nixgl.nixGLIntel
-    nixgl.nixVulkanIntel
-
     nixpkgsUnstable.act
     nixpkgsUnstable.btop
     nixpkgsUnstable.cascadia-code
@@ -131,29 +126,19 @@ in
     nixpkgsUnstable.nix-your-shell
     nixpkgsUnstable.hyperfine
     nixpkgsUnstable.wrk
+    (config.lib.nixGL.wrappers.nvidia nixpkgsUnstable.nvtopPackages.full)
+    (config.lib.nixGL.wrappers.mesa nixpkgsUnstable.zed-editor)
 
-    (wrap {
-      this = {
-        package = nixpkgsUnstable.nvtopPackages.full;
-      };
-      using = {
-        package = nixgl.auto.nixGLNvidia;
-      };
-    })
-
-    (wrap {
+    (config.lib.nixGL.wrappers.mesa (wrap {
+      envVars = [ "NIXOS_OZONE_WL=1" ];
       this = {
         package = nixpkgsUnstable.youtube-music;
-        flags = [
-          "--enable-features=UseOzonePlatform,WaylandWindowDecorations"
-          "--ozone-platform-hint=wayland"
-          "--disable-gpu"
-        ];
+        flags = [ "--disable-gpu" ];
       };
       using = {
         package = nixpkgsUnstable.youtube-music;
       };
-    })
+    }))
   ];
 
   home.file = {
@@ -199,6 +184,14 @@ in
     fontconfig = {
       enable = true;
     };
+  };
+
+  nixGL = {
+    packages = nixgl;
+    vulkan = {
+      enable = true;
+    };
+
   };
 
   programs = {
@@ -335,20 +328,7 @@ in
 
     mpv = {
       enable = true;
-      package = (
-        wrap {
-          this = {
-            package = nixpkgsUnstable.mpv;
-            bins = [
-              "mpv"
-              "umpv"
-            ];
-          };
-          using = {
-            package = nixgl.nixGLIntel;
-          };
-        }
-      );
+      package = (config.lib.nixGL.wrappers.mesa nixpkgsUnstable.mpv);
       config = {
         force-window = true;
         profile = "gpu-hq";
@@ -381,7 +361,8 @@ in
     vscode = {
       enable = true;
       package = (
-        wrap {
+        config.lib.nixGL.wrappers.mesa (wrap {
+          envVars = [ "NIXOS_OZONE_WL=1" ];
           this = {
             derivarionEnv = {
               pname = nixpkgsUnstable.vscode.pname;
@@ -389,15 +370,11 @@ in
               meta = nixpkgsUnstable.vscode.meta;
             };
             package = nixpkgsUnstable.vscode;
-            flags = [
-              "--enable-features=UseOzonePlatform,WaylandWindowDecorations"
-              "--ozone-platform-hint=wayland"
-            ];
           };
           using = {
-            package = nixgl.nixGLIntel;
+            package = nixpkgsUnstable.vscode;
           };
-        }
+        })
       );
       extensions = [
         nixpkgsUnstable.vscode-extensions.denoland.vscode-deno
