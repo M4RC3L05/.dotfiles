@@ -10,62 +10,30 @@ let
 
   # https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
   wrap =
-    {
-      this,
-      using,
-      envVars ? [ ],
-    }:
-    let
-      envVarsStr = lib.concatStringsSep " " (envVars);
-      thisFlagsStr = lib.concatStringsSep " " (this.flags or [ ]);
-    in
-    pkgs.runCommand "${this.package.name}-${using.package.name}-wrapper" this.derivarionEnv or { } ''
-       mkdir $out
+    pkg: env: flags: environment:
+    pkgs.runCommand "${pkg.name}-custom-wrapper"
+      (lib.attrsets.mergeAttrsList [
+        (environment)
+        ({ buildInputs = [ pkgs.makeWrapper ]; })
+      ])
+      ''
+        mkdir $out
+        ln -s ${pkg}/* $out
+        rm $out/bin
+        mkdir $out/bin
+        ln -s ${pkg}/bin/* $out/bin
 
-       ln -s ${this.package}/* $out
+        for file in ${pkg}/bin/*; do
+          prog="$(basename "$file")"
+          rm "$out/bin/$prog"
 
-       rm $out/bin
-
-       mkdir $out/bin
-
-       ln -s ${this.package}/bin/* $out/bin
-
-      ${lib.concatStringsSep " " (
-        lib.map (
-          bin:
-          let
-            wrapContentJoined = lib.concatStringsSep " " (
-              lib.lists.filter (s: (lib.trim s) != "") ([
-                envVarsStr
-                (
-                  if this.package.drvPath == using.package.drvPath then
-                    "exec $wrapped_source_path"
-                  else
-                    "exec ${lib.getExe using.package} $wrapped_source_path"
-                )
-                thisFlagsStr
-                ''\"\$@\"''
-              ])
-            );
-          in
-          ''
-            echo "=> Wrapping ${bin} using ${using.package.name}"
-
-            wrapped_source_path="${this.package}/bin/${bin}"
-            wrapped_destination_path="$out/bin/${bin}"
-            rm "$wrapped_destination_path"
-
-            printf "#!${pkgs.stdenv.shell}\n\n${wrapContentJoined}" > "$wrapped_destination_path"
-            chmod +x $wrapped_destination_path
-
-            printf "==> ---- START WRAP CONTENT ----\n"
-            cat $wrapped_destination_path
-            printf "\n"
-            printf "==> ---- END WRAP CONTENT ----\n"
-          ''
-        ) this.bins or [ this.package.meta.mainProgram ]
-      )}
-    '';
+          makeWrapper "${lib.getExe pkg}" "$out/bin/$prog" --add-flags "$file" ${
+            lib.concatStringsSep " " (lib.map (val: ''--add-flags "${val}"'') (flags))
+          } ${
+            lib.concatStringsSep " " (lib.attrsets.mapAttrsToList (var: val: ''--set "${var}" "${val}"'') env)
+          }
+        done
+      '';
 in
 {
   home.username = "main";
@@ -129,16 +97,11 @@ in
     (config.lib.nixGL.wrappers.nvidia nixpkgsUnstable.nvtopPackages.full)
     (config.lib.nixGL.wrappers.mesa nixpkgsUnstable.zed-editor)
 
-    (config.lib.nixGL.wrappers.mesa (wrap {
-      envVars = [ "NIXOS_OZONE_WL=1" ];
-      this = {
-        package = nixpkgsUnstable.youtube-music;
-        flags = [ "--disable-gpu" ];
-      };
-      using = {
-        package = nixpkgsUnstable.youtube-music;
-      };
-    }))
+    (config.lib.nixGL.wrappers.mesa (
+      wrap nixpkgsUnstable.youtube-music {
+        NIXOS_OZONE_WL = "1";
+      } [ "--disable-gpu" ] { }
+    ))
   ];
 
   home.file = {
@@ -361,20 +324,18 @@ in
     vscode = {
       enable = true;
       package = (
-        config.lib.nixGL.wrappers.mesa (wrap {
-          envVars = [ "NIXOS_OZONE_WL=1" ];
-          this = {
-            derivarionEnv = {
+        config.lib.nixGL.wrappers.mesa (
+          wrap nixpkgsUnstable.vscode
+            {
+              NIXOS_OZONE_WL = "1";
+            }
+            [ ]
+            {
               pname = nixpkgsUnstable.vscode.pname;
               version = nixpkgsUnstable.vscode.version;
               meta = nixpkgsUnstable.vscode.meta;
-            };
-            package = nixpkgsUnstable.vscode;
-          };
-          using = {
-            package = nixpkgsUnstable.vscode;
-          };
-        })
+            }
+        )
       );
       extensions = [
         nixpkgsUnstable.vscode-extensions.denoland.vscode-deno
