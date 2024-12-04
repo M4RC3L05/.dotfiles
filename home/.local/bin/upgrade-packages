@@ -18,4 +18,4 @@ done < "$EGET_EXECUTABLES"
 
 set -x
 
-mise upgrade --bump
+mise upgrade
