@@ -318,6 +318,11 @@ in
       enable = true;
     };
 
+    kubecolor = {
+      enable = true;
+      package = nixpkgsUnstable.kubecolor;
+    };
+
     mpv = {
       enable = true;
       package = (config.lib.nixGL.wrappers.mesa nixpkgsUnstable.mpv);
