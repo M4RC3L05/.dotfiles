@@ -205,7 +205,7 @@ in
         fi
 
         # Git prompt
-        . ~/.nix-profile/share/git/contrib/completion/git-prompt.sh
+        . ${nixpkgsUnstable.git}/share/git/contrib/completion/git-prompt.sh
 
         # Prompt
         prompt() {
