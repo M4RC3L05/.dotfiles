@@ -116,7 +116,6 @@ in
     nixpkgsUnstable.wget
     nixpkgsUnstable.yt-dlp
     nixpkgsUnstable.procps
-    nixpkgsUnstable.nix-your-shell
     nixpkgsUnstable.hyperfine
     nixpkgsUnstable.wrk
     nixpkgsUnstable.zip
@@ -334,6 +333,10 @@ in
         hwdec = "auto";
         ytdl-format = "bestvideo+bestaudio";
       };
+    };
+
+    nix-your-shell = {
+      enable = true;
     };
 
     ssh = {
