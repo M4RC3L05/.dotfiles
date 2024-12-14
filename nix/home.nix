@@ -169,6 +169,9 @@ in
     QT_QPA_PLATFORM = "wayland;xcb";
     CLUTTER_BACKEND = "wayland";
     SDL_VIDEODRIVER = "wayland,x11";
+
+    # bitwarden
+    SSH_AUTH_SOCK = "$HOME/.bitwarden-ssh-agent.sock";
   };
 
   fonts = {
@@ -448,6 +451,9 @@ in
         QT_QPA_PLATFORM = ''"wayland;xcb"'';
         CLUTTER_BACKEND = "wayland";
         SDL_VIDEODRIVER = ''"wayland,x11"'';
+
+        # bitwarden
+        SSH_AUTH_SOCK = "$HOME/.bitwarden-ssh-agent.sock";
       };
       timers = {
         dump-packages = {
