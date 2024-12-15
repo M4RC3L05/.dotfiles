@@ -19,7 +19,6 @@ org.gnome.TextEditor
 org.gnome.seahorse.Application
 org.libreoffice.LibreOffice
 org.localsend.localsend_app
-org.mozilla.firefox
 org.prismlauncher.PrismLauncher
 org.qbittorrent.qBittorrent
 org.raspberrypi.rpi-imager
