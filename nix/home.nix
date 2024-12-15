@@ -347,6 +347,10 @@ in
                   name = "Home";
                   url = "https://home.gufu.duckdns.org";
                 }
+                {
+                  name = "Syncthing";
+                  url = "http://127.0.0.1:8384";
+                }
               ];
             }
           ];
