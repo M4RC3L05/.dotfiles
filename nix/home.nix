@@ -459,8 +459,6 @@ in
         set -g hydro_color_prompt magenta
         set -g hydro_color_duration yellow
 
-        ${nixpkgsUnstable.lib.getExe nixpkgsUnstable.nix-your-shell} fish | source
-
         ~/.local/bin/mise activate fish | source
       '';
       plugins = [
@@ -517,6 +515,7 @@ in
 
     nix-your-shell = {
       enable = true;
+      enableFishIntegration = true;
     };
 
     readline = {
