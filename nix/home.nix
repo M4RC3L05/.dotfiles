@@ -342,6 +342,18 @@ in
         main = {
           id = 0;
           isDefault = true;
+          bookmarks = [
+            {
+              name = "Toolbar";
+              toolbar = true;
+              bookmarks = [
+                {
+                  name = "Home";
+                  url = "https://home.gufu.duckdns.org";
+                }
+              ];
+            }
+          ];
           search = {
             default = "DuckDuckGo";
             force = true;
@@ -427,6 +439,9 @@ in
             "network.trr.mode" = 3;
             "network.trr.uri" = "https://doh.gufu.duckdns.org/dns-query";
             "network.trr.excluded-domains" = "gufu.duckdns.org";
+
+            # Extra
+            "browser.toolbars.bookmarks.visibility" = "allways";
           };
         };
       };
