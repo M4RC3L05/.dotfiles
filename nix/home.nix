@@ -437,7 +437,7 @@ in
             "network.trr.excluded-domains" = "gufu.duckdns.org";
 
             # Extra
-            "browser.toolbars.bookmarks.visibility" = "allways";
+            "browser.toolbars.bookmarks.visibility" = "always";
           };
         };
       };
