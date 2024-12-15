@@ -82,7 +82,8 @@ let
     SDL_VIDEODRIVER = "wayland,x11";
 
     # bitwarden
-    SSH_AUTH_SOCK = "$HOME/.bitwarden-ssh-agent.sock";
+    BITWARDEN_SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/bitwarden-ssh-agent.sock";
+    SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/bitwarden-ssh-agent.sock";
   };
 in
 {
