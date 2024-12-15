@@ -253,8 +253,6 @@ in
 
         PS1='$(prompt "''${PIPESTATUS[@]}") '
 
-        eval "$(~/.local/bin/mise activate bash)"
-
         # Greeting
         the-office-quote
         echo
@@ -459,8 +457,6 @@ in
         set -g hydro_color_pwd green
         set -g hydro_color_prompt magenta
         set -g hydro_color_duration yellow
-
-        ~/.local/bin/mise activate fish | source
       '';
       plugins = [
         {
@@ -499,6 +495,18 @@ in
     kubecolor = {
       enable = true;
       package = nixpkgsUnstable.kubecolor;
+    };
+
+    mise = {
+      enable = true;
+      package = nixpkgsUnstable.mise;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      globalConfig = {
+        tools = {
+          usage = "latest";
+        };
+      };
     };
 
     mpv = {
