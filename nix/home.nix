@@ -6,7 +6,9 @@
 }:
 let
   nixgl = import <nixgl> { };
-  nixpkgsUnstable = import <nixpkgs-unstable> { };
+  nixpkgsUnstable = import <nixpkgs-unstable> {
+    config.allowUnfree = true;
+  };
 
   # https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
   wrap =

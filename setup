@@ -59,14 +59,6 @@ install_nix_step() {
     print_sub_title "home-manager already installed"
   fi
 
-  run_and_print mkdir -p $HOME/.config/nixpkgs
-
-  if [ -f $HOME/.config/nixpkgs/config.nix ]; then 
-    run_and_print rm $HOME/.config/nixpkgs/config.nix
-  fi
-
-  run_and_print ln -s $HOME/.dotfiles/nix/config.nix $HOME/.config/nixpkgs/config.nix
-
   run_and_print mkdir -p $HOME/.config/home-manager
 
   if [ -f $HOME/.config/home-manager/home.nix ]; then 
