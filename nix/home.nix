@@ -88,6 +88,12 @@ let
     BITWARDEN_SSH_AUTH_SOCK = "$HOME/bitwarden-ssh-agent.sock";
     SSH_AUTH_SOCK = "$HOME/bitwarden-ssh-agent.sock";
   };
+
+  baseShellAlias = {
+    cat = "bat --plain";
+    ls = "eza --color=auto --header --git --icons";
+    code = "codium";
+  };
 in
 {
   home.username = "main";
@@ -194,10 +200,7 @@ in
   programs = {
     bash = {
       enable = true;
-      shellAliases = {
-        cat = "bat --plain";
-        ls = "eza --color=auto --header --git --icons";
-      };
+      shellAliases = baseShellAlias;
       bashrcExtra = ''
         export TERM="xterm-256color";
 
@@ -453,10 +456,7 @@ in
     fish = {
       enable = true;
       package = nixpkgsUnstable.fish;
-      shellAliases = {
-        cat = "bat --plain";
-        ls = "eza --color=auto --header --git --icons";
-      };
+      shellAliases = baseShellAlias;
       functions = {
         fish_greeting = "the-office-quote; echo";
       };
