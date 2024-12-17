@@ -96,91 +96,85 @@ let
   };
 in
 {
-  home.username = "main";
-  home.homeDirectory = "/home/main";
+  home = {
+    username = "main";
+    homeDirectory = "/home/main";
+    stateVersion = "24.11";
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.11"; # Please read the comment before changing.
+    activation = {
+      copyFonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ -d "$HOME/.nix-profile/share/fonts" ]; then
+          run mkdir -p $HOME/.local/share/fonts
 
-  home.activation = {
-    copyFonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ -d "$HOME/.nix-profile/share/fonts" ]; then
-        run mkdir -p $HOME/.local/share/fonts
+          if [ -d "$HOME/.local/share/fonts/nix" ]; then
+            run rm -r $HOME/.local/share/fonts/nix
+          fi
 
-        if [ -d "$HOME/.local/share/fonts/nix" ]; then
-          run rm -r $HOME/.local/share/fonts/nix
+          run mkdir -p $HOME/.local/share/fonts/nix
+          run cp -rL $HOME/.nix-profile/share/fonts/* $HOME/.local/share/fonts/nix
+          run chmod -R u+rw,g+rw $HOME/.local/share/fonts/nix
         fi
+      '';
+    };
 
-        run mkdir -p $HOME/.local/share/fonts/nix
-        run cp -rL $HOME/.nix-profile/share/fonts/* $HOME/.local/share/fonts/nix
-        run chmod -R u+rw,g+rw $HOME/.local/share/fonts/nix
-      fi
-    '';
+    packages = [
+      nixpkgsUnstable.act
+      nixpkgsUnstable.btop
+      nixpkgsUnstable.cascadia-code
+      nixpkgsUnstable.curl
+      nixpkgsUnstable.dive
+      nixpkgsUnstable.docker-credential-helpers
+      nixpkgsUnstable.eget
+      nixpkgsUnstable.eza
+      nixpkgsUnstable.fastfetch
+      nixpkgsUnstable.ffmpeg_7-full
+      nixpkgsUnstable.jq
+      nixpkgsUnstable.k9s
+      nixpkgsUnstable.kubectl
+      nixpkgsUnstable.lsof
+      nixpkgsUnstable.nil
+      nixpkgsUnstable.nixfmt-rfc-style
+      nixpkgsUnstable.podman
+      nixpkgsUnstable.q
+      nixpkgsUnstable.rsync
+      nixpkgsUnstable.tldr
+      nixpkgsUnstable.tokei
+      nixpkgsUnstable.tree
+      nixpkgsUnstable.micro-full
+      nixpkgsUnstable.wget
+      nixpkgsUnstable.yt-dlp
+      nixpkgsUnstable.procps
+      nixpkgsUnstable.hyperfine
+      nixpkgsUnstable.wrk
+      nixpkgsUnstable.zip
+      (config.lib.nixGL.wrappers.nvidia nixpkgsUnstable.nvtopPackages.full)
+
+      (config.lib.nixGL.wrappers.mesa (
+        wrap nixpkgsUnstable.youtube-music {
+          env = {
+            NIXOS_OZONE_WL = "1";
+          };
+          flags = [ "--disable-gpu" ];
+        }
+      ))
+    ];
+
+    file = {
+      ".config" = {
+        source = ~/.dotfiles/home/.config;
+        recursive = true;
+      };
+      ".local" = {
+        source = ~/.dotfiles/home/.local;
+        recursive = true;
+      };
+      ".eget.toml" = {
+        source = ~/.dotfiles/home/.eget.toml;
+      };
+    };
+
+    sessionVariables = baseSessionVariables;
   };
-
-  home.packages = [
-    nixpkgsUnstable.act
-    nixpkgsUnstable.btop
-    nixpkgsUnstable.cascadia-code
-    nixpkgsUnstable.curl
-    nixpkgsUnstable.dive
-    nixpkgsUnstable.docker-credential-helpers
-    nixpkgsUnstable.eget
-    nixpkgsUnstable.eza
-    nixpkgsUnstable.fastfetch
-    nixpkgsUnstable.ffmpeg_7-full
-    nixpkgsUnstable.jq
-    nixpkgsUnstable.k9s
-    nixpkgsUnstable.kubectl
-    nixpkgsUnstable.lsof
-    nixpkgsUnstable.nil
-    nixpkgsUnstable.nixfmt-rfc-style
-    nixpkgsUnstable.podman
-    nixpkgsUnstable.q
-    nixpkgsUnstable.rsync
-    nixpkgsUnstable.tldr
-    nixpkgsUnstable.tokei
-    nixpkgsUnstable.tree
-    nixpkgsUnstable.micro-full
-    nixpkgsUnstable.wget
-    nixpkgsUnstable.yt-dlp
-    nixpkgsUnstable.procps
-    nixpkgsUnstable.hyperfine
-    nixpkgsUnstable.wrk
-    nixpkgsUnstable.zip
-    (config.lib.nixGL.wrappers.nvidia nixpkgsUnstable.nvtopPackages.full)
-
-    (config.lib.nixGL.wrappers.mesa (
-      wrap nixpkgsUnstable.youtube-music {
-        env = {
-          NIXOS_OZONE_WL = "1";
-        };
-        flags = [ "--disable-gpu" ];
-      }
-    ))
-  ];
-
-  home.file = {
-    ".config" = {
-      source = ~/.dotfiles/home/.config;
-      recursive = true;
-    };
-    ".local" = {
-      source = ~/.dotfiles/home/.local;
-      recursive = true;
-    };
-    ".eget.toml" = {
-      source = ~/.dotfiles/home/.eget.toml;
-    };
-  };
-
-  home.sessionVariables = baseSessionVariables;
 
   fonts = {
     fontconfig = {
