@@ -582,14 +582,14 @@ in
       enable = true;
       package = (
         config.lib.nixGL.wrappers.mesa (
-          wrap nixpkgsUnstable.vscode {
+          wrap nixpkgsUnstable.vscodium {
             env = {
               NIXOS_OZONE_WL = "1";
             };
             environment = {
-              pname = nixpkgsUnstable.vscode.pname;
-              version = nixpkgsUnstable.vscode.version;
-              meta = nixpkgsUnstable.vscode.meta;
+              pname = nixpkgsUnstable.vscodium.pname;
+              version = nixpkgsUnstable.vscodium.version;
+              meta = nixpkgsUnstable.vscodium.meta;
             };
           }
         )
