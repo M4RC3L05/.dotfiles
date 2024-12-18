@@ -187,6 +187,8 @@ in
   xdg = {
     mime = {
       enable = true;
+      desktopFileUtilsPackage = nixpkgsUnstable.desktop-file-utils;
+      sharedMimeInfoPackage = nixpkgsUnstable.shared-mime-info;
     };
   };
 }
