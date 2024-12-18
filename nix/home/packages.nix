@@ -34,4 +34,12 @@
       flags = [ "--disable-gpu" ];
     }
   ))
+
+  (config.lib.nixGL.wrappers.mesa (
+    utils.wrap nixpkgsUnstable.bitwarden {
+      env = {
+        NIXOS_OZONE_WL = "1";
+      };
+    }
+  ))
 ]
