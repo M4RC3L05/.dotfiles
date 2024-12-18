@@ -11,7 +11,7 @@ let
     config.allowUnfree = true;
   };
 
-  wrapUtils = import ./utils/wrap.nix {
+  utils = import ./utils/mod.nix {
     inherit pkgs;
     inherit lib;
   };
@@ -33,7 +33,7 @@ in
     packages = import ./home/packages.nix {
       inherit config;
       inherit nixpkgsUnstable;
-      inherit wrapUtils;
+      inherit utils;
     };
 
     file = import ./home/file.nix;
@@ -103,7 +103,7 @@ in
 
     vscode = import ./programs/vscode.nix {
       inherit config;
-      inherit wrapUtils;
+      inherit utils;
       inherit nixpkgsUnstable;
     };
   };

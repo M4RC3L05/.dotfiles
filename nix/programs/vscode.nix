@@ -1,13 +1,13 @@
 {
   config,
-  wrapUtils,
+  utils,
   nixpkgsUnstable,
 }:
 {
   enable = true;
   package = (
     config.lib.nixGL.wrappers.mesa (
-      wrapUtils.wrap nixpkgsUnstable.vscodium {
+      utils.wrap nixpkgsUnstable.vscodium {
         env = {
           NIXOS_OZONE_WL = "1";
         };

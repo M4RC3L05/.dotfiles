@@ -1,7 +1,7 @@
 {
   config,
   nixpkgsUnstable,
-  wrapUtils,
+  utils,
 }:
 [
   nixpkgsUnstable.act
@@ -36,7 +36,7 @@
   (config.lib.nixGL.wrappers.nvidia nixpkgsUnstable.nvtopPackages.full)
 
   (config.lib.nixGL.wrappers.mesa (
-    wrapUtils.wrap nixpkgsUnstable.youtube-music {
+    utils.wrap nixpkgsUnstable.youtube-music {
       env = {
         NIXOS_OZONE_WL = "1";
       };
