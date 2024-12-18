@@ -12,8 +12,10 @@ let
   };
 
   utils = import ./utils/mod.nix {
-    inherit pkgs;
-    inherit lib;
+    inherit
+      pkgs
+      lib
+      ;
   };
 
   defaults = import ./defaults.nix;
@@ -31,9 +33,11 @@ in
     };
 
     packages = import ./home/packages.nix {
-      inherit config;
-      inherit nixpkgsUnstable;
-      inherit utils;
+      inherit
+        config
+        nixpkgsUnstable
+        utils
+        ;
     };
 
     file = import ./home/file.nix;
@@ -56,8 +60,10 @@ in
 
   programs = {
     bash = import ./programs/bash.nix {
-      inherit defaults;
-      inherit nixpkgsUnstable;
+      inherit
+        defaults
+        nixpkgsUnstable
+        ;
     };
 
     bat = import ./programs/bat.nix {
@@ -77,13 +83,17 @@ in
     };
 
     firefox = import ./programs/firefox.nix {
-      inherit config;
-      inherit nixpkgsUnstable;
+      inherit
+        config
+        nixpkgsUnstable
+        ;
     };
 
     fish = import ./programs/fish.nix {
-      inherit defaults;
-      inherit nixpkgsUnstable;
+      inherit
+        defaults
+        nixpkgsUnstable
+        ;
     };
 
     git = import ./programs/git.nix {
@@ -115,8 +125,10 @@ in
     };
 
     mpv = import ./programs/mpv.nix {
-      inherit config;
-      inherit nixpkgsUnstable;
+      inherit
+        config
+        nixpkgsUnstable
+        ;
     };
 
     nix-your-shell = import ./programs/nix-your-shell.nix;
@@ -126,9 +138,11 @@ in
     ssh = import ./programs/ssh.nix;
 
     vscode = import ./programs/vscode.nix {
-      inherit config;
-      inherit utils;
-      inherit nixpkgsUnstable;
+      inherit
+        config
+        utils
+        nixpkgsUnstable
+        ;
     };
 
     yt-dlp = import ./programs/yt-dlp.nix {
