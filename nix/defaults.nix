@@ -28,7 +28,6 @@
 
   shellAliases = {
     cat = "bat --plain";
-    ls = "eza --color=auto --header --git --icons";
     code = "codium";
   };
 }

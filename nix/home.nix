@@ -64,6 +64,18 @@ in
       inherit nixpkgsUnstable;
     };
 
+    btop = import ./programs/btop.nix {
+      inherit nixpkgsUnstable;
+    };
+
+    eza = import ./programs/eza.nix {
+      inherit nixpkgsUnstable;
+    };
+
+    fastfetch = import ./programs/fastfetch.nix {
+      inherit nixpkgsUnstable;
+    };
+
     firefox = import ./programs/firefox.nix {
       inherit config;
       inherit nixpkgsUnstable;
@@ -82,7 +94,19 @@ in
       enable = true;
     };
 
+    jq = import ./programs/jq.nix {
+      inherit nixpkgsUnstable;
+    };
+
+    k9s = import ./programs/k9s.nix {
+      inherit nixpkgsUnstable;
+    };
+
     kubecolor = import ./programs/kubecolor.nix {
+      inherit nixpkgsUnstable;
+    };
+
+    micro = import ./programs/micro.nix {
       inherit nixpkgsUnstable;
     };
 
@@ -106,11 +130,19 @@ in
       inherit utils;
       inherit nixpkgsUnstable;
     };
+
+    yt-dlp = import ./programs/yt-dlp.nix {
+      inherit nixpkgsUnstable;
+    };
   };
 
   services = {
-    syncthing = {
-      enable = true;
+    syncthing = import ./services/syncthing.nix {
+      inherit nixpkgsUnstable;
+    };
+
+    podman = import ./services/podman.nix {
+      inherit nixpkgsUnstable;
     };
   };
 
