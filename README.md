@@ -17,10 +17,11 @@ Just run the setup script.
 
 ## Testing
 
-Build and run the docker image on `.docker` folder
+Build and run the docker image on `.docker` folder using podman.
+This will start with systemd and ask for login.
 
 ```cmd
-podman build -t dotfiles:latest . -f ./.docker/Dockerfile && podman run -it --rm --init dotfiles:latest
+podman build -t dotfiles:latest . -f ./.docker/Dockerfile && podman run -it --rm dotfiles:latest
 ```
 
 Once inside the running docker image, cd into `~/.dotfiles` and execute `./setup`
