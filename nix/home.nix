@@ -48,6 +48,12 @@ in
   fonts = {
     fontconfig = {
       enable = true;
+      defaultFonts = {
+        monospace = [
+          "Cascadia Code"
+          "monospace"
+        ];
+      };
     };
   };
 
