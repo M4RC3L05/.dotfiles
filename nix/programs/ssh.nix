@@ -1,17 +1,11 @@
 {
   enable = true;
   addKeysToAgent = "no";
+  forwardAgent = false;
   matchBlocks = {
-    "github.com" = {
-      identityFile = "~/.ssh/github";
-      identitiesOnly = true;
-    };
-
     "mainserver" = {
       hostname = "192.168.1.200";
-      identityFile = "~/.ssh/main";
-      identitiesOnly = true;
-      forwardAgent = true;
+      forwardAgent = false;
       user = "main";
     };
   };
