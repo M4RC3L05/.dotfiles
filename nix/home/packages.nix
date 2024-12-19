@@ -36,7 +36,7 @@
   ))
 
   (config.lib.nixGL.wrappers.mesa (
-    utils.wrap nixpkgsUnstable.bitwarden {
+    utils.wrap nixpkgsUnstable.bitwarden-desktop {
       env = {
         NIXOS_OZONE_WL = "1";
       };
