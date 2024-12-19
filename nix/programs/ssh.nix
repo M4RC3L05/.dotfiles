@@ -1,6 +1,6 @@
 {
   enable = true;
-  addKeysToAgent = "yes";
+  addKeysToAgent = "no";
   matchBlocks = {
     "github.com" = {
       identityFile = "~/.ssh/github";
