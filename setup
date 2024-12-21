@@ -7,34 +7,70 @@ fi
 
 set -e
 
+trap "cleanup" EXIT
+
 ###
 # UTILS & VARS
 ###
 
-BOLD="\033[1m"
-CYAN="\033[36m"
-GREEN="\033[32m"
+BOLD="\033[0;1m"
+CYAN="\033[0;36m"
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+BOLD_GREEN="\033[1;32m"
+PURPLE="\033[0;35m"
 RESET="\033[0m"
 
 DIR_NAME="$(realpath "$(dirname "$0")")"
 PACKAGES_DIR="$DIR_NAME/packages"
+TEMP_DIR="$(mktemp --directory)"
+PIDS=""
+
+cleanup() {
+  for job in $PIDS; do
+    __run_and_print "kill $job &> /dev/null" || true
+  done
+
+  __run_and_print "rm -rf $TEMP_DIR &> /dev/null" || true
+}
+
+__run_and_print() {
+  printf "%b+%b %s\n" "$PURPLE" "$RESET" "$*"
+
+  eval $*
+}
 
 run_and_print() {
-  printf "+ %s\n" "$*"
+  printf "%b+%b %s\n" "$PURPLE" "$RESET" "$*"
 
-  if [ "$#" -eq 1 ]; then
-    eval "$1"
-  else
-    "$@"
-  fi
+  stdout="$(mktemp --tmpdir="$TEMP_DIR")"
+  stderr="$(mktemp --tmpdir="$TEMP_DIR")"
+
+  eval $* > "$stdout" 2> "$stderr" &
+  pid="$!"
+  PIDS="$PIDS $pid"
+  
+  tail -f -n +1 "$stdout" | sed "s/^/  $(printf "%b>%b" "$CYAN" "$RESET") /" &
+  tail1_pid="$!"
+  PIDS="$PIDS $tail1_pid"
+  
+  tail -f -n +1 "$stderr" | sed "s/^/  $(printf "%b!%b" "$RED" "$RESET") /" &
+  tail2_pid="$!"
+  PIDS="$PIDS $tail2_pid"
+
+  wait "$pid"
+
+  kill "$tail1_pid"
+  kill "$tail2_pid"
+  wait
 }
 
 print_title() {
-  printf "%b==>%b %b%s%b\n" "$GREEN" "$RESET" "$BOLD" "$1" "$RESET"
+  printf "%b==>%b %b%s%b\n" "$BOLD_GREEN" "$RESET" "$BOLD" "$1" "$RESET"
 }
 
 print_sub_title() {
-  printf "%b=>%b %s\n" "$CYAN" "$RESET" "$1"
+  printf "%b=>%b %s\n" "$GREEN" "$RESET" "$1"
 }
 
 ###
@@ -44,7 +80,9 @@ print_sub_title() {
 install_nix_step() {
   if ! command -v nix > /dev/null 2>&1; then
     run_and_print "curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile"
-    run_and_print ". $HOME/.nix-profile/etc/profile.d/nix.sh"
+    
+    . $HOME/.nix-profile/etc/profile.d/nix.sh
+
     run_and_print nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
     run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
     run_and_print nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
@@ -54,32 +92,22 @@ install_nix_step() {
   fi
 
   if ! command -v home-manager > /dev/null 2>&1; then
-    run_and_print nix-shell '<home-manager>' -A install
+    run_and_print nix-shell "'<home-manager>'" -A install
   else
     print_sub_title "home-manager already installed"
   fi
 
-  run_and_print mkdir -p $HOME/.config/home-manager
+  run_and_print mkdir -p "$HOME"/.config/home-manager
 
-  if [ -f $HOME/.config/home-manager/home.nix ]; then 
-    run_and_print rm $HOME/.config/home-manager/home.nix
+  if [ -f "$HOME"/.config/home-manager/home.nix ]; then 
+    run_and_print rm "$HOME"/.config/home-manager/home.nix
   fi
   
-  run_and_print ln -s $HOME/.dotfiles/nix/home.nix $HOME/.config/home-manager/home.nix
+  run_and_print ln -s "$HOME"/.dotfiles/nix/home.nix "$HOME"/.config/home-manager/home.nix
 
   run_and_print nix-env -iA nixpkgs-unstable.nix nixpkgs-unstable.cacert
   run_and_print home-manager switch -b backup
-
-  print_sub_title "Copy fonts"
-  run_and_print mkdir -p $HOME/.local/share/fonts
-
-  if [ -d "$HOME/.local/share/fonts/nix" ]; then
-    run_and_print rm -r $HOME/.local/share/fonts/nix
-  fi
-
-  run_and_print mkdir -p $HOME/.local/share/fonts/nix
-  run_and_print cp -rL $HOME/.nix-profile/share/fonts/* $HOME/.local/share/fonts/nix
-  run_and_print chmod -R u+rw,g+rw $HOME/.local/share/fonts/nix
+  run_and_print nix-collect-garbage -d
 }
 
 install_eget_packages_step() {
