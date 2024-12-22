@@ -8,7 +8,7 @@
   settings = {
     devices = {
       mainphone = {
-        id = "SE33S73-MJNXF4Q-LNXD5PU-FBWQIGR-H3AQKTI-2673GBO-DWH6ONJ-5R7VZQY";
+        id = "QWCBKVJ-W5VN4QW-XLLS2AY-T2ZX6P2-CA4ILTN-FHOLCOJ-EQKJJ4F-R5PYKAO";
       };
       maintablet = {
         id = "HQRTVSH-5BRZQ2M-X5FJEYL-V2E3BZU-LO47TRO-ICLA3SJ-3MCHKIU-YGX3EAG";
