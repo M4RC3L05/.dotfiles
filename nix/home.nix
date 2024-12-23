@@ -118,6 +118,13 @@ in
       inherit nixpkgsUnstable;
     };
 
+    kitty = import ./programs/kitty.nix {
+      inherit
+        config
+        nixpkgsUnstable
+        ;
+    };
+
     kubecolor = import ./programs/kubecolor.nix {
       inherit nixpkgsUnstable;
     };
