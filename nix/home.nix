@@ -60,7 +60,7 @@ in
   nixGL = {
     packages = nixgl;
     vulkan = {
-      enable = true;
+      enable = false;
     };
   };
 
