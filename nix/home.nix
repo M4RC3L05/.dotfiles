@@ -88,6 +88,13 @@ in
       inherit nixpkgsUnstable;
     };
 
+    firefox = import ./programs/firefox.nix {
+      inherit
+        nixpkgsUnstable
+        config
+        ;
+    };
+
     fish = import ./programs/fish.nix {
       inherit
         defaults
