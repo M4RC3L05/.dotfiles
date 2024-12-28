@@ -26,7 +26,7 @@
     nixpkgsUnstable.vscode-extensions.jnoortheen.nix-ide
   ];
   enableUpdateCheck = false;
-  enableExtensionUpdateCheck = false;
+  enableExtensionUpdateCheck = true;
   userSettings = {
     "diffEditor.ignoreTrimWhitespace" = true;
     "editor.cursorSmoothCaretAnimation" = "on";
