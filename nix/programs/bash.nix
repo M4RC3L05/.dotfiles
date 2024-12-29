@@ -8,12 +8,6 @@
     eval "$(${nixpkgsUnstable.lib.getExe nixpkgsUnstable.bat-extras.batman} --export-env)"
   '';
   initExtra = ''
-    if [[ $(${nixpkgsUnstable.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-    then
-      shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-      exec ${nixpkgsUnstable.fish}/bin/fish $LOGIN_OPTION
-    fi
-
     # Git prompt
     . ${nixpkgsUnstable.git}/share/git/contrib/completion/git-prompt.sh
 

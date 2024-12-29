@@ -10,4 +10,7 @@
     size = 10;
   };
   themeFile = "VSCode_Dark";
+  settings = {
+    shell = "fish";
+  };
 }
