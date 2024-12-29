@@ -39,6 +39,7 @@
     "extensions.ignoreRecommendations" = true;
     "files.autoSave" = "onFocusChange";
     "telemetry.telemetryLevel" = "off";
+    "terminal.integrated.defaultProfile.linux" = "fish";
     "terminal.integrated.fontFamily" = "'Cascadia Code NF', 'monospace', monospace";
     "terminal.integrated.smoothScrolling" = true;
     "window.autoDetectColorScheme" = true;
