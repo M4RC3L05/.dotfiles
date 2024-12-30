@@ -19,3 +19,9 @@ done < "$EGET_EXECUTABLES"
 set -x
 
 mise upgrade
+
+# https://github.com/NixOS/nixpkgs/issues/369472
+mkdir -p ~/.config/fish/completions
+mkdir -p ~/.local/share/bash-completion/completions
+mise completion fish > ~/.config/fish/completions/mise.fish
+mise completion bash > ~/.local/share/bash-completion/completions/mise.bash
