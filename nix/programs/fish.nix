@@ -1,7 +1,6 @@
 { defaults, pkgs }:
 {
   enable = true;
-  package = pkgs.fish;
   shellAliases = defaults.shellAliases;
   functions = {
     fish_greeting = "the-office-quote; echo";

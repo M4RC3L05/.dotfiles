@@ -1,7 +1,6 @@
 { pkgs }:
 {
   enable = true;
-  package = pkgs.podman;
   settings = {
     policy = {
       default = [

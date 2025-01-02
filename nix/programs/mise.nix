@@ -1,7 +1,6 @@
 { pkgs }:
 {
   enable = true;
-  package = pkgs.mise;
   enableBashIntegration = true;
   enableFishIntegration = true;
   globalConfig = {
