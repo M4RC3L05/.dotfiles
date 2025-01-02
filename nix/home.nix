@@ -111,6 +111,13 @@ in
       inherit pkgs;
     };
 
+    ghostty = import ./programs/ghostty.nix {
+      inherit
+        config
+        pkgs
+        ;
+    };
+
     home-manager = {
       enable = true;
     };
