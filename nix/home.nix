@@ -81,17 +81,11 @@ in
       inherit pkgs;
     };
 
-    btop = import ./programs/btop.nix {
-      inherit pkgs;
-    };
+    btop = import ./programs/btop.nix;
 
-    eza = import ./programs/eza.nix {
-      inherit pkgs;
-    };
+    eza = import ./programs/eza.nix;
 
-    fastfetch = import ./programs/fastfetch.nix {
-      inherit pkgs;
-    };
+    fastfetch = import ./programs/fastfetch.nix;
 
     firefox = import ./programs/firefox.nix {
       inherit
@@ -107,10 +101,6 @@ in
         ;
     };
 
-    git = import ./programs/git.nix {
-      inherit pkgs;
-    };
-
     ghostty = import ./programs/ghostty.nix {
       inherit
         config
@@ -118,29 +108,23 @@ in
         ;
     };
 
+    git = import ./programs/git.nix;
+
     home-manager = {
       enable = true;
     };
 
-    jq = import ./programs/jq.nix {
-      inherit pkgs;
-    };
+    jq = import ./programs/jq.nix;
 
-    k9s = import ./programs/k9s.nix {
-      inherit pkgs;
-    };
+    k9s = import ./programs/k9s.nix;
 
-    kubecolor = import ./programs/kubecolor.nix {
-      inherit pkgs;
-    };
+    kubecolor = import ./programs/kubecolor.nix;
 
     micro = import ./programs/micro.nix {
       inherit pkgs;
     };
 
-    mise = import ./programs/mise.nix {
-      inherit pkgs;
-    };
+    mise = import ./programs/mise.nix;
 
     mpv = import ./programs/mpv.nix {
       inherit
@@ -163,19 +147,13 @@ in
         ;
     };
 
-    yt-dlp = import ./programs/yt-dlp.nix {
-      inherit pkgs;
-    };
+    yt-dlp = import ./programs/yt-dlp.nix;
   };
 
   services = {
-    syncthing = import ./services/syncthing.nix {
-      inherit pkgs;
-    };
+    podman = import ./services/podman.nix;
 
-    podman = import ./services/podman.nix {
-      inherit pkgs;
-    };
+    syncthing = import ./services/syncthing.nix;
   };
 
   systemd = {

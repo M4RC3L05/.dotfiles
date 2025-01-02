@@ -1,4 +1,3 @@
-{ pkgs }:
 {
   enable = true;
   userName = "m4rc3l05";
