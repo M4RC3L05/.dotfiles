@@ -24,6 +24,7 @@
   pkgs.hyperfine
   pkgs.wrk
   pkgs.zip
+
   (config.lib.nixGL.wrappers.nvidia pkgs.nvtopPackages.full)
 
   (config.lib.nixGL.wrappers.mesa (
