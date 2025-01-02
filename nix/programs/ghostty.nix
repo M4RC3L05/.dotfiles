@@ -7,6 +7,7 @@
     command = "fish";
     font-size = "10";
     theme = "light:vs_light_modern,dark:vs_dark_modern";
+    term = "xterm-256color";
   };
   themes = {
     vs_dark_modern = {
