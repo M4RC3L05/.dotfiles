@@ -130,13 +130,6 @@ in
       inherit pkgs;
     };
 
-    kitty = import ./programs/kitty.nix {
-      inherit
-        config
-        pkgs
-        ;
-    };
-
     kubecolor = import ./programs/kubecolor.nix {
       inherit pkgs;
     };
