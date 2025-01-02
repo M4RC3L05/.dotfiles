@@ -1,7 +1,7 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.podman;
+  package = pkgs.podman;
   settings = {
     policy = {
       default = [

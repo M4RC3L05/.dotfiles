@@ -1,5 +1,5 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.yt-dlp;
+  package = pkgs.yt-dlp;
 }

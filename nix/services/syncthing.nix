@@ -1,7 +1,7 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.syncthing;
+  package = pkgs.syncthing;
   guiAddress = "127.0.0.1:8384";
   overrideDevices = true;
   overrideFolders = true;

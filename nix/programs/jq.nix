@@ -1,5 +1,5 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.jq;
+  package = pkgs.jq;
 }

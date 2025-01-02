@@ -5,10 +5,9 @@
   ...
 }:
 let
-  nixgl = import <nixgl> { };
 
-  nixpkgsUnstable = import <nixpkgs-unstable> {
-    config.allowUnfree = true;
+  nixgl = import <nixgl> {
+    inherit pkgs;
   };
 
   utils = import ./utils/mod.nix {
@@ -35,7 +34,7 @@ in
     packages = import ./home/packages.nix {
       inherit
         config
-        nixpkgsUnstable
+        pkgs
         utils
         ;
     };
@@ -64,33 +63,39 @@ in
     };
   };
 
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
+
   programs = {
     bash = import ./programs/bash.nix {
       inherit
         defaults
-        nixpkgsUnstable
+        pkgs
         ;
     };
 
     bat = import ./programs/bat.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     btop = import ./programs/btop.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     eza = import ./programs/eza.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     fastfetch = import ./programs/fastfetch.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     firefox = import ./programs/firefox.nix {
       inherit
-        nixpkgsUnstable
+        pkgs
         config
         ;
     };
@@ -98,12 +103,12 @@ in
     fish = import ./programs/fish.nix {
       inherit
         defaults
-        nixpkgsUnstable
+        pkgs
         ;
     };
 
     git = import ./programs/git.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     home-manager = {
@@ -111,36 +116,36 @@ in
     };
 
     jq = import ./programs/jq.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     k9s = import ./programs/k9s.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     kitty = import ./programs/kitty.nix {
       inherit
         config
-        nixpkgsUnstable
+        pkgs
         ;
     };
 
     kubecolor = import ./programs/kubecolor.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     micro = import ./programs/micro.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     mise = import ./programs/mise.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     mpv = import ./programs/mpv.nix {
       inherit
         config
-        nixpkgsUnstable
+        pkgs
         ;
     };
 
@@ -154,22 +159,22 @@ in
       inherit
         config
         utils
-        nixpkgsUnstable
+        pkgs
         ;
     };
 
     yt-dlp = import ./programs/yt-dlp.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
   };
 
   services = {
     syncthing = import ./services/syncthing.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
 
     podman = import ./services/podman.nix {
-      inherit nixpkgsUnstable;
+      inherit pkgs;
     };
   };
 
@@ -194,8 +199,8 @@ in
   xdg = {
     mime = {
       enable = true;
-      desktopFileUtilsPackage = nixpkgsUnstable.desktop-file-utils;
-      sharedMimeInfoPackage = nixpkgsUnstable.shared-mime-info;
+      desktopFileUtilsPackage = pkgs.desktop-file-utils;
+      sharedMimeInfoPackage = pkgs.shared-mime-info;
     };
   };
 }

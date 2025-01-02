@@ -1,15 +1,15 @@
-{ defaults, nixpkgsUnstable }:
+{ defaults, pkgs }:
 {
   enable = true;
   shellAliases = defaults.shellAliases;
   bashrcExtra = ''
     export TERM="xterm-256color";
 
-    eval "$(${nixpkgsUnstable.lib.getExe nixpkgsUnstable.bat-extras.batman} --export-env)"
+    eval "$(${pkgs.lib.getExe pkgs.bat-extras.batman} --export-env)"
   '';
   initExtra = ''
     # Git prompt
-    . ${nixpkgsUnstable.git}/share/git/contrib/completion/git-prompt.sh
+    . ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
 
     # Prompt
     prompt() {

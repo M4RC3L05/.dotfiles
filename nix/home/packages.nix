@@ -1,33 +1,33 @@
 {
   config,
-  nixpkgsUnstable,
+  pkgs,
   utils,
 }:
 [
-  nixpkgsUnstable.act
-  nixpkgsUnstable.cascadia-code
-  nixpkgsUnstable.curl
-  nixpkgsUnstable.dive
-  nixpkgsUnstable.docker-credential-helpers
-  nixpkgsUnstable.eget
-  nixpkgsUnstable.ffmpeg_7-full
-  nixpkgsUnstable.kubectl
-  nixpkgsUnstable.lsof
-  nixpkgsUnstable.nil
-  nixpkgsUnstable.nixfmt-rfc-style
-  nixpkgsUnstable.q
-  nixpkgsUnstable.rsync
-  nixpkgsUnstable.tldr
-  nixpkgsUnstable.tokei
-  nixpkgsUnstable.wget
-  nixpkgsUnstable.procps
-  nixpkgsUnstable.hyperfine
-  nixpkgsUnstable.wrk
-  nixpkgsUnstable.zip
-  (config.lib.nixGL.wrappers.nvidia nixpkgsUnstable.nvtopPackages.full)
+  pkgs.act
+  pkgs.cascadia-code
+  pkgs.curl
+  pkgs.dive
+  pkgs.docker-credential-helpers
+  pkgs.eget
+  pkgs.ffmpeg_7-full
+  pkgs.kubectl
+  pkgs.lsof
+  pkgs.nil
+  pkgs.nixfmt-rfc-style
+  pkgs.q
+  pkgs.rsync
+  pkgs.tldr
+  pkgs.tokei
+  pkgs.wget
+  pkgs.procps
+  pkgs.hyperfine
+  pkgs.wrk
+  pkgs.zip
+  (config.lib.nixGL.wrappers.nvidia pkgs.nvtopPackages.full)
 
   (config.lib.nixGL.wrappers.mesa (
-    utils.wrap nixpkgsUnstable.youtube-music {
+    utils.wrap pkgs.youtube-music {
       env = {
         NIXOS_OZONE_WL = "1";
       };
@@ -36,7 +36,7 @@
   ))
 
   (config.lib.nixGL.wrappers.mesa (
-    utils.wrap nixpkgsUnstable.bitwarden-desktop {
+    utils.wrap pkgs.bitwarden-desktop {
       env = {
         NIXOS_OZONE_WL = "1";
       };

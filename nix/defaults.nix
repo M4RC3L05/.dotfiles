@@ -28,6 +28,5 @@
 
   shellAliases = {
     cat = "bat --plain";
-    code = "codium";
   };
 }

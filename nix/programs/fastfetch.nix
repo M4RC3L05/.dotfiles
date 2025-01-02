@@ -1,5 +1,5 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.fastfetch;
+  package = pkgs.fastfetch;
 }

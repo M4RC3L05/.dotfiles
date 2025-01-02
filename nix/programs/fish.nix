@@ -1,7 +1,7 @@
-{ defaults, nixpkgsUnstable }:
+{ defaults, pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.fish;
+  package = pkgs.fish;
   shellAliases = defaults.shellAliases;
   functions = {
     fish_greeting = "the-office-quote; echo";
@@ -14,7 +14,7 @@
   plugins = [
     {
       name = "hydro";
-      src = nixpkgsUnstable.fishPlugins.hydro.src;
+      src = pkgs.fishPlugins.hydro.src;
     }
   ];
 }

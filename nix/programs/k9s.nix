@@ -1,5 +1,5 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.k9s;
+  package = pkgs.k9s;
 }

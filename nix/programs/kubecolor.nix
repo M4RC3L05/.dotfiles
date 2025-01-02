@@ -1,6 +1,6 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.kubecolor;
+  package = pkgs.kubecolor;
   enableAlias = true;
 }

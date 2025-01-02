@@ -1,29 +1,29 @@
 {
   config,
   utils,
-  nixpkgsUnstable,
+  pkgs,
 }:
 {
   enable = true;
   package = (
     config.lib.nixGL.wrappers.mesa (
-      utils.wrap nixpkgsUnstable.vscodium {
+      utils.wrap pkgs.vscode {
         env = {
           NIXOS_OZONE_WL = "1";
         };
         environment = {
-          pname = nixpkgsUnstable.vscodium.pname;
-          version = nixpkgsUnstable.vscodium.version;
-          meta = nixpkgsUnstable.vscodium.meta;
+          pname = pkgs.vscode.pname;
+          version = pkgs.vscode.version;
+          meta = pkgs.vscode.meta;
         };
       }
     )
   );
   extensions = [
-    nixpkgsUnstable.vscode-extensions.denoland.vscode-deno
-    nixpkgsUnstable.vscode-extensions.tamasfe.even-better-toml
-    nixpkgsUnstable.vscode-extensions.skyapps.fish-vscode
-    nixpkgsUnstable.vscode-extensions.jnoortheen.nix-ide
+    pkgs.vscode-extensions.denoland.vscode-deno
+    pkgs.vscode-extensions.tamasfe.even-better-toml
+    pkgs.vscode-extensions.skyapps.fish-vscode
+    pkgs.vscode-extensions.jnoortheen.nix-ide
   ];
   enableUpdateCheck = false;
   enableExtensionUpdateCheck = true;

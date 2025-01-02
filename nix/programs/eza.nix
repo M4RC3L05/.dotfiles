@@ -1,7 +1,7 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.eza;
+  package = pkgs.eza;
   git = true;
   icons = "auto";
   colors = "auto";

@@ -6,7 +6,7 @@ PACKAGES_DIR="$HOME/.dotfiles/packages"
 EGET_EXECUTABLES="$PACKAGES_DIR/eget-executables"
 
 nix-channel --update
-nix-env -iA nixpkgs-unstable.nix nixpkgs-unstable.cacert
+nix-env --install --file '<nixpkgs>' --attr nix cacert -I nixpkgs=channel:nixpkgs-unstable
 home-manager switch
 
 set +x

@@ -1,5 +1,5 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.micro-full;
+  package = pkgs.micro-full;
 }

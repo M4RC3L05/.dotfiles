@@ -83,10 +83,10 @@ install_nix_step() {
     
     . $HOME/.nix-profile/etc/profile.d/nix.sh
 
-    run_and_print nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
     run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
     run_and_print nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     run_and_print nix-channel --update
+    run_and_print nix-channel --list
   else
     print_sub_title "nix already installed"
   fi
@@ -105,7 +105,7 @@ install_nix_step() {
   
   run_and_print ln -s "$HOME"/.dotfiles/nix/home.nix "$HOME"/.config/home-manager/home.nix
 
-  run_and_print nix-env -iA nixpkgs-unstable.nix nixpkgs-unstable.cacert
+  nix-env --install --file '<nixpkgs>' --attr nix cacert -I nixpkgs=channel:nixpkgs-unstable
   run_and_print home-manager switch -b backup
   run_and_print nix-collect-garbage -d
 }

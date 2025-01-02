@@ -1,6 +1,6 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.bat;
-  extraPackages = [ nixpkgsUnstable.bat-extras.batman ];
+  package = pkgs.bat;
+  extraPackages = [ pkgs.bat-extras.batman ];
 }

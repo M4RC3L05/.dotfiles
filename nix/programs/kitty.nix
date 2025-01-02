@@ -1,7 +1,7 @@
-{ config, nixpkgsUnstable }:
+{ config, pkgs }:
 {
   enable = true;
-  package = (config.lib.nixGL.wrappers.mesa nixpkgsUnstable.kitty);
+  package = (config.lib.nixGL.wrappers.mesa pkgs.kitty);
   shellIntegration = {
     mode = "disabled";
   };

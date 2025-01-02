@@ -1,7 +1,7 @@
-{ nixpkgsUnstable }:
+{ pkgs }:
 {
   enable = true;
-  package = nixpkgsUnstable.mise;
+  package = pkgs.mise;
   enableBashIntegration = true;
   enableFishIntegration = true;
   globalConfig = {
