@@ -23,6 +23,7 @@ RESET="\033[0m"
 
 DIR_NAME="$(realpath "$(dirname "$0")")"
 PACKAGES_DIR="$DIR_NAME/packages"
+FLATPAK_APPS="$(cat "$PACKAGES_DIR/flatpak-apps")"
 TEMP_DIR="$(mktemp --directory)"
 PIDS=""
 
@@ -131,9 +132,9 @@ install_eget_packages_step() {
 
 install_flatpak_apps_and_runtimes_step() {
   if command -v flatpak > /dev/null 2>&1; then
-    if [ -n "$(cat "$PACKAGES_DIR/flatpak-apps")" ]; then
+    if [ -n "$FLATPAK_APPS" ]; then
       # shellcheck disable=SC2046
-      run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-apps")
+      run_and_print flatpak install -y --noninteractive $FLATPAK_APPS
       echo
     else
       print_sub_title "No flatpak apps to install, skipping"
