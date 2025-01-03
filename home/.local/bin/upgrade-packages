@@ -11,14 +11,17 @@ home-manager switch
 
 set +x
 while IFS= read -r executable; do
-  if [ -n "$executable" ]; then
-    (set -x; eget $executable --upgrade-only)
+  if [ -n "$executable" ] && ! echo "$executable" | grep -q "#disable-upgrade"; then
+    clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
+
+    (set -x; eget $clean_executable --upgrade-only)
   fi
 done < "$EGET_EXECUTABLES"
 
 set -x
 
-mise upgrade
+mise self-update
+mise upgrade --bump
 
 # https://github.com/NixOS/nixpkgs/issues/369472
 mkdir -p ~/.config/fish/completions

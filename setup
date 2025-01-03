@@ -114,7 +114,9 @@ install_eget_packages_step() {
   if [ -n "$(cat "$PACKAGES_DIR/eget-executables")" ]; then
     while IFS= read -r executable; do
       if [ -n "$executable" ]; then
-        run_and_print eget $executable --upgrade-only
+        clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
+
+        run_and_print eget $clean_executable --upgrade-only
         echo
       fi
     done < "$PACKAGES_DIR/eget-executables"

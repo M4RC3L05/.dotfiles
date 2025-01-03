@@ -124,8 +124,6 @@ in
       inherit pkgs;
     };
 
-    mise = import ./programs/mise.nix;
-
     mpv = import ./programs/mpv.nix {
       inherit
         config
