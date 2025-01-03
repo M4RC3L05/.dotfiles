@@ -14,7 +14,11 @@ while IFS= read -r executable; do
   if [ -n "$executable" ] && ! echo "$executable" | grep -q "#disable-upgrade"; then
     clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
 
-    (set -x; eget $clean_executable --upgrade-only)
+    (
+      set -x
+      # shellcheck disable=SC2086
+      eget $clean_executable --upgrade-only
+    )
   fi
 done < "$EGET_EXECUTABLES"
 

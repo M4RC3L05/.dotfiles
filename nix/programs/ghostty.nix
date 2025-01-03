@@ -1,7 +1,7 @@
 { config, pkgs }:
 {
   enable = true;
-  package = (config.lib.nixGL.wrappers.mesa pkgs.ghostty);
+  package = config.lib.nixGL.wrappers.mesa pkgs.ghostty;
   settings = {
     font-family = "Cascadia Code";
     command = "fish";

@@ -1,7 +1,7 @@
 { defaults, pkgs }:
 {
   enable = true;
-  shellAliases = defaults.shellAliases;
+  inherit (defaults) shellAliases;
   functions = {
     fish_greeting = "the-office-quote; echo";
   };
@@ -15,7 +15,7 @@
   plugins = [
     {
       name = "hydro";
-      src = pkgs.fishPlugins.hydro.src;
+      inherit (pkgs.fishPlugins.hydro) src;
     }
   ];
 }

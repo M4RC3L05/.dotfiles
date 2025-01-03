@@ -1,7 +1,7 @@
 { defaults, pkgs }:
 {
   enable = true;
-  shellAliases = defaults.shellAliases;
+  inherit (defaults) shellAliases;
   bashrcExtra = ''
     export TERM="xterm-256color";
 

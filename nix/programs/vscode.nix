@@ -5,19 +5,13 @@
 }:
 {
   enable = true;
-  package = (
-    config.lib.nixGL.wrappers.mesa (
-      utils.wrap pkgs.vscode {
-        env = {
-          NIXOS_OZONE_WL = "1";
-        };
-        environment = {
-          pname = pkgs.vscode.pname;
-          version = pkgs.vscode.version;
-          meta = pkgs.vscode.meta;
-        };
-      }
-    )
+  package = config.lib.nixGL.wrappers.mesa (
+    utils.wrap pkgs.vscode {
+      env = {
+        NIXOS_OZONE_WL = "1";
+      };
+      environment = { inherit (pkgs.vscode) pname version meta; };
+    }
   );
   extensions = [
     pkgs.vscode-extensions.denoland.vscode-deno

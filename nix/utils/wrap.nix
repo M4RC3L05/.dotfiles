@@ -24,7 +24,7 @@
     );
     mergedRunEnvironment = lib.attrsets.mergeAttrsList [
       (options.environment or { })
-      ({ buildInputs = [ pkgs.makeWrapper ]; })
+      { buildInputs = [ pkgs.makeWrapper ]; }
     ];
   in
   pkgs.runCommand "${pkg.name}-custom-wrapper" mergedRunEnvironment ''

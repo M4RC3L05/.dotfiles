@@ -2,11 +2,7 @@
   enable = true;
   settings = {
     policy = {
-      default = [
-        {
-          type = "insecureAcceptAnything";
-        }
-      ];
+      default = [ { type = "insecureAcceptAnything"; } ];
     };
     registries = {
       search = [ "docker.io" ];

@@ -1,0 +1,27 @@
+---
+name: CI
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone repository
+        uses: actions/checkout@v4
+
+      - name: install nix
+        uses: nixbuild/nix-quick-install-action@v29
+
+      - name: add unstable channel
+        run: |-
+          nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+          nix-channel --update
+
+      - name: check formatting
+        run: nix-shell --run ./.bin/check-fmt
+      
+      - name: check linting
+        run: nix-shell --run ./.bin/check-lint

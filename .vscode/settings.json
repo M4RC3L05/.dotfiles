@@ -4,8 +4,17 @@
   "nix.serverSettings": {
     "nil": {
       "formatting": {
-        "command": ["nixfmt"]
+        "command": [
+          "nixfmt",
+          "-s"
+        ]
       }
     }
+  },
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": false
   }
 }

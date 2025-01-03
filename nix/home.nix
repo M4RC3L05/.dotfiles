@@ -6,42 +6,26 @@
 }:
 let
 
-  nixgl = import <nixgl> {
-    inherit pkgs;
-  };
-
-  utils = import ./utils/mod.nix {
-    inherit
-      pkgs
-      lib
-      ;
-  };
+  nixgl = import <nixgl> { inherit pkgs; };
+  utils = import ./utils/mod.nix { inherit pkgs lib; };
 
   defaults = import ./defaults.nix;
 in
 {
   home = {
+    inherit (defaults) sessionVariables;
+
     username = "main";
     homeDirectory = "/home/main";
     stateVersion = "24.11";
 
     activation = {
-      copyFonts = import ./home/activation/copy-fonts.nix {
-        inherit lib;
-      };
+      copyFonts = import ./home/activation/copy-fonts.nix { inherit lib; };
     };
 
-    packages = import ./home/packages.nix {
-      inherit
-        config
-        pkgs
-        utils
-        ;
-    };
+    packages = import ./home/packages.nix { inherit config pkgs utils; };
 
     file = import ./home/file.nix;
-
-    sessionVariables = defaults.sessionVariables;
   };
 
   fonts = {
@@ -70,16 +54,9 @@ in
   };
 
   programs = {
-    bash = import ./programs/bash.nix {
-      inherit
-        defaults
-        pkgs
-        ;
-    };
+    bash = import ./programs/bash.nix { inherit defaults pkgs; };
 
-    bat = import ./programs/bat.nix {
-      inherit pkgs;
-    };
+    bat = import ./programs/bat.nix { inherit pkgs; };
 
     btop = import ./programs/btop.nix;
 
@@ -87,26 +64,11 @@ in
 
     fastfetch = import ./programs/fastfetch.nix;
 
-    firefox = import ./programs/firefox.nix {
-      inherit
-        pkgs
-        config
-        ;
-    };
+    firefox = import ./programs/firefox.nix { inherit pkgs config; };
 
-    fish = import ./programs/fish.nix {
-      inherit
-        defaults
-        pkgs
-        ;
-    };
+    fish = import ./programs/fish.nix { inherit defaults pkgs; };
 
-    ghostty = import ./programs/ghostty.nix {
-      inherit
-        config
-        pkgs
-        ;
-    };
+    ghostty = import ./programs/ghostty.nix { inherit config pkgs; };
 
     git = import ./programs/git.nix;
 
@@ -120,16 +82,9 @@ in
 
     kubecolor = import ./programs/kubecolor.nix;
 
-    micro = import ./programs/micro.nix {
-      inherit pkgs;
-    };
+    micro = import ./programs/micro.nix { inherit pkgs; };
 
-    mpv = import ./programs/mpv.nix {
-      inherit
-        config
-        pkgs
-        ;
-    };
+    mpv = import ./programs/mpv.nix { inherit config pkgs; };
 
     nix-your-shell = import ./programs/nix-your-shell.nix;
 
@@ -137,13 +92,7 @@ in
 
     ssh = import ./programs/ssh.nix;
 
-    vscode = import ./programs/vscode.nix {
-      inherit
-        config
-        utils
-        pkgs
-        ;
-    };
+    vscode = import ./programs/vscode.nix { inherit config utils pkgs; };
 
     yt-dlp = import ./programs/yt-dlp.nix;
   };
@@ -156,10 +105,11 @@ in
 
   systemd = {
     user = {
+      inherit (defaults) sessionVariables;
+
       services = {
         dump-packages = import ./systemd/user/services/dump-packages.nix;
       };
-      sessionVariables = defaults.sessionVariables;
       timers = {
         dump-packages = import ./systemd/user/timers/dump-packages.nix;
       };

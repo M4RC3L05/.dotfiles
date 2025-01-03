@@ -1,7 +1,7 @@
 { config, pkgs }:
 {
   enable = true;
-  package = (config.lib.nixGL.wrappers.mesa pkgs.firefox);
+  package = config.lib.nixGL.wrappers.mesa pkgs.firefox;
   policies = {
     "3rdparty" = {
       Extensions = {
