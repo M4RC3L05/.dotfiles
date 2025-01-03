@@ -28,4 +28,4 @@ Once inside the running docker image, cd into `~/.dotfiles` and execute `./setup
 
 ## Final words
 
-This dotfiles assumes your default login shell is bash and the user is `main` and home dir is `/home/main`.
+This dotfiles assumes your user is `main` and home dir is `/home/main`.
