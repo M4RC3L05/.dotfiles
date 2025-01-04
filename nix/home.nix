@@ -133,8 +133,6 @@ in
   xdg = {
     mime = {
       enable = true;
-      desktopFileUtilsPackage = pkgs.desktop-file-utils;
-      sharedMimeInfoPackage = pkgs.shared-mime-info;
     };
   };
 }
