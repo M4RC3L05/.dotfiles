@@ -125,6 +125,13 @@ install_eget_packages_step() {
         echo
       fi
     done < "$PACKAGES_DIR/eget-executables"
+
+    print_sub_title "Add mise completions"
+    run_and_print mkdir -p "$HOME"/.config/fish/completions
+    run_and_print mkdir -p "$HOME"/.local/share/bash-completion/completions
+    run_and_print "$HOME/.local/bin/mise completion fish > $HOME/.config/fish/completions/mise.fish"
+    run_and_print "$HOME/.local/bin/mise completion bash > $HOME/.local/share/bash-completion/completions/mise.bash"
+    run_and_print "$HOME"/.local/bin/mise install
   else
     print_sub_title "No eget packages to install, skipping"
   fi
@@ -133,7 +140,7 @@ install_eget_packages_step() {
 install_flatpak_apps_and_runtimes_step() {
   if command -v flatpak > /dev/null 2>&1; then
     if [ -n "$FLATPAK_APPS" ]; then
-      # shellcheck disable=SC2046
+      # shellcheck disable=SC2086
       run_and_print flatpak install -y --noninteractive $FLATPAK_APPS
       echo
     else
