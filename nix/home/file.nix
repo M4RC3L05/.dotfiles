@@ -1,13 +1,13 @@
 {
   ".config" = {
-    source = ~/.dotfiles/home/.config;
+    source = ./../../home/.config;
     recursive = true;
   };
   ".local" = {
-    source = ~/.dotfiles/home/.local;
+    source = ./../../home/.local;
     recursive = true;
   };
   ".eget.toml" = {
-    source = ~/.dotfiles/home/.eget.toml;
+    source = ./../../home/.eget.toml;
   };
 }
