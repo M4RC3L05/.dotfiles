@@ -12,3 +12,4 @@ cd /home/main/.dotfiles || exit
 git add .
 git commit -sm "wip" -n
 cd /home/main || exit
+sed -i '$d' ~/.bashrc
