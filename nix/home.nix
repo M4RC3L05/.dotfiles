@@ -5,10 +5,8 @@
   ...
 }:
 let
-
   nixgl = import <nixgl> { inherit pkgs; };
   utils = import ./utils/mod.nix { inherit pkgs lib; };
-
   defaults = import ./defaults.nix;
 in
 {
