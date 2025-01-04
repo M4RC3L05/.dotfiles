@@ -7,66 +7,18 @@ fi
 
 set -e
 
-trap "cleanup" EXIT
-
 ###
 # UTILS & VARS
 ###
 
 BOLD="\033[0;1m"
-CYAN="\033[0;36m"
 GREEN="\033[0;32m"
-RED="\033[0;31m"
 BOLD_GREEN="\033[1;32m"
-PURPLE="\033[0;35m"
 RESET="\033[0m"
 
 DIR_NAME="$(realpath "$(dirname "$0")")"
 PACKAGES_DIR="$DIR_NAME/packages"
 FLATPAK_APPS="$(cat "$PACKAGES_DIR/flatpak-apps")"
-TEMP_DIR="$(mktemp --directory)"
-PIDS=""
-
-cleanup() {
-  for job in $PIDS; do
-    __run_and_print "kill $job &> /dev/null" || true
-  done
-
-  __run_and_print "rm -rf $TEMP_DIR &> /dev/null" || true
-}
-
-__run_and_print() {
-  printf "%b+%b %s\n" "$PURPLE" "$RESET" "$*"
-
-  # shellcheck disable=SC2048,SC2086
-  eval $*
-}
-
-run_and_print() {
-  printf "%b+%b %s\n" "$PURPLE" "$RESET" "$*"
-
-  stdout="$(mktemp --tmpdir="$TEMP_DIR")"
-  stderr="$(mktemp --tmpdir="$TEMP_DIR")"
-
-  # shellcheck disable=SC2048,SC2086
-  eval $* > "$stdout" 2> "$stderr" &
-  pid="$!"
-  PIDS="$PIDS $pid"
-
-  tail -f -n +1 "$stdout" | sed "s/^/  $(printf "%b>%b" "$CYAN" "$RESET") /" &
-  tail1_pid="$!"
-  PIDS="$PIDS $tail1_pid"
-
-  tail -f -n +1 "$stderr" | sed "s/^/  $(printf "%b!%b" "$RED" "$RESET") /" &
-  tail2_pid="$!"
-  PIDS="$PIDS $tail2_pid"
-
-  wait "$pid"
-
-  kill "$tail1_pid"
-  kill "$tail2_pid"
-  wait
-}
 
 print_title() {
   printf "%b==>%b %b%s%b\n" "$BOLD_GREEN" "$RESET" "$BOLD" "$1" "$RESET"
@@ -81,80 +33,93 @@ print_sub_title() {
 ###
 
 install_nix_step() {
-  if ! command -v nix > /dev/null 2>&1; then
-    run_and_print "curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile"
+  print_title "Setup nix"
+
+  if command -v nix > /dev/null 2>&1; then
+    print_sub_title "Nix already installed, skipping installation"
+  else
+    (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile)
 
     # shellcheck disable=SC1091
     . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
-    run_and_print nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl
-    run_and_print nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    run_and_print nix-channel --update
-    run_and_print nix-channel --list
-  else
-    print_sub_title "nix already installed"
+    (set -x; nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager)
+    (set -x; nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl)
+    (set -x; nix-channel --update)
+    (set -x; nix-channel --list)
   fi
 
-  if ! command -v home-manager > /dev/null 2>&1; then
-    run_and_print nix-shell "'<home-manager>'" -A install
+  if command -v home-manager > /dev/null 2>&1; then
+    print_sub_title "Home-manager already installed, skipping installation"
   else
-    print_sub_title "home-manager already installed"
+    (set -x; nix-shell '<home-manager>' -A install)
   fi
 
-  run_and_print mkdir -p "$HOME"/.config/home-manager
+  (set -x; mkdir -p "$HOME"/.config/home-manager)
 
   if [ -f "$HOME"/.config/home-manager/home.nix ]; then
-    run_and_print rm "$HOME"/.config/home-manager/home.nix
+    (set -x; rm "$HOME"/.config/home-manager/home.nix)
   fi
 
-  run_and_print ln -s "$HOME"/.dotfiles/nix/home.nix "$HOME"/.config/home-manager/home.nix
-
-  nix-env --install --file '<nixpkgs>' --attr nixVersions.latest cacert -I nixpkgs=channel:nixpkgs-unstable
-  run_and_print home-manager switch -b backup
-  run_and_print nix-collect-garbage -d
+  (set -x; ln -s "$HOME"/.dotfiles/nix/home.nix "$HOME"/.config/home-manager/home.nix)
+  (set -x; home-manager switch -b backup)
+  (set -x; nix-collect-garbage -d)
 }
 
 install_eget_packages_step() {
-  if [ -n "$(cat "$PACKAGES_DIR/eget-executables")" ]; then
-    while IFS= read -r executable; do
-      if [ -n "$executable" ]; then
-        clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
+  print_title "Install eget packages"
 
-        # shellcheck disable=SC2086
-        run_and_print eget $clean_executable --upgrade-only
-        echo
-      fi
-    done < "$PACKAGES_DIR/eget-executables"
+  if ! command -v eget > /dev/null 2>&1; then
+    print_sub_title "Eget is not installed, skipping"
 
-    print_sub_title "Add mise completions"
-    run_and_print mkdir -p "$HOME"/.config/fish/completions
-    run_and_print mkdir -p "$HOME"/.local/share/bash-completion/completions
-    run_and_print "$HOME/.local/bin/mise completion fish > $HOME/.config/fish/completions/mise.fish"
-    run_and_print "$HOME/.local/bin/mise completion bash > $HOME/.local/share/bash-completion/completions/mise.bash"
-    run_and_print "$HOME"/.local/bin/mise install
-  else
-    print_sub_title "No eget packages to install, skipping"
+    return
   fi
+
+  if [ -z "$(cat "$PACKAGES_DIR/eget-executables")" ]; then
+    print_sub_title "No eget packages to install, skipping"
+
+    return
+  fi
+
+  while IFS= read -r executable; do
+    if [ -n "$executable" ]; then
+      clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
+
+      # shellcheck disable=SC2086
+      (set -x; eget $clean_executable --upgrade-only)
+    fi
+  done < "$PACKAGES_DIR/eget-executables"
+  echo
+
+  print_sub_title "Add mise completions & install deps"
+  (set -x; mkdir -p "$HOME"/.config/fish/completions)
+  (set -x; mkdir -p "$HOME"/.local/share/bash-completion/completions)
+  (set -x; "$HOME"/.local/bin/mise completion fish > "$HOME"/.config/fish/completions/mise.fish)
+  (set -x; "$HOME"/.local/bin/mise completion bash > "$HOME"/.local/share/bash-completion/completions/mise.bash)
+  (set -x; "$HOME"/.local/bin/mise install)
 }
 
 install_flatpak_apps_and_runtimes_step() {
-  if command -v flatpak > /dev/null 2>&1; then
-    if [ -n "$FLATPAK_APPS" ]; then
-      # shellcheck disable=SC2086
-      run_and_print flatpak install -y --noninteractive $FLATPAK_APPS
-      echo
-    else
-      print_sub_title "No flatpak apps to install, skipping"
-    fi
+  print_title "Install flatpak apps and runtimes"
 
-    if [ -n "$(cat "$PACKAGES_DIR/flatpak-runtimes")" ]; then
-      # shellcheck disable=SC2046
-      run_and_print flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes")
-    else
-      print_sub_title "No flatpak runtimes to install, skipping"
-    fi
-  else
+  if ! command -v flatpak > /dev/null 2>&1; then
     print_sub_title "Flatpak is not installed, skipping"
+
+    return
+  fi
+
+  if [ -z "$FLATPAK_APPS" ]; then
+    print_sub_title "No flatpak apps to install, skipping instalation"
+  else
+    # shellcheck disable=SC2086
+    (set -x; flatpak install -y --noninteractive $FLATPAK_APPS)
+  fi
+
+  if [ -z "$(cat "$PACKAGES_DIR/flatpak-runtimes")" ]; then
+    print_sub_title "No flatpak runtimes to install, skipping instalation"
+  else
+    # shellcheck disable=SC2046
+    flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes")
   fi
 }
 
@@ -162,15 +127,12 @@ install_flatpak_apps_and_runtimes_step() {
 # MAIN
 ###
 
-print_title "Install nix"
 install_nix_step
 echo
 
-print_title "Install eget packages"
 install_eget_packages_step
 echo
 
-print_title "Install flatpak apps and runtimes"
 install_flatpak_apps_and_runtimes_step
 echo
 
