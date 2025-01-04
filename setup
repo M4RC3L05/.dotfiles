@@ -11,6 +11,18 @@ set -e
 # UTILS & VARS
 ###
 
+print_title() {
+  printf "%b==>%b %b%s%b\n" "$BOLD_GREEN" "$RESET" "$BOLD" "$1" "$RESET"
+}
+
+print_sub_title() {
+  printf "%b»%b %s\n" "$GREEN" "$RESET" "$1"
+}
+
+trim_str() {
+  echo "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+
 BOLD="\033[0;1m"
 GREEN="\033[0;32m"
 BOLD_GREEN="\033[1;32m"
@@ -18,42 +30,48 @@ RESET="\033[0m"
 
 DIR_NAME="$(realpath "$(dirname "$0")")"
 PACKAGES_DIR="$DIR_NAME/packages"
-FLATPAK_APPS="$(cat "$PACKAGES_DIR/flatpak-apps")"
-
-print_title() {
-  printf "%b==>%b %b%s%b\n" "$BOLD_GREEN" "$RESET" "$BOLD" "$1" "$RESET"
-}
-
-print_sub_title() {
-  printf "%b=>%b %s\n" "$GREEN" "$RESET" "$1"
-}
+EGET_EXECUTABLES="$(trim_str "$(cat "$PACKAGES_DIR"/eget-executables)")"
+FLATPAK_APPS="$(trim_str "$(cat "$PACKAGES_DIR"/flatpak-apps)")"
+FLATPAK_RUNTIMES="$(trim_str "$(cat "$PACKAGES_DIR"/flatpak-runtimes)")"
 
 ###
 # STEPS
 ###
 
-install_nix_step() {
-  print_title "Setup nix"
-
+install_and_setup_nix() {
   if command -v nix > /dev/null 2>&1; then
     print_sub_title "Nix already installed, skipping installation"
-  else
-    (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile)
 
-    # shellcheck disable=SC1091
-    . "$HOME"/.nix-profile/etc/profile.d/nix.sh
-
-    (set -x; nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager)
-    (set -x; nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl)
-    (set -x; nix-channel --update)
-    (set -x; nix-channel --list)
+    return
   fi
 
+  print_sub_title "Install nix"
+
+  (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile)
+
+  # shellcheck disable=SC1091
+  . "$HOME"/.nix-profile/etc/profile.d/nix.sh
+
+  print_sub_title "Add extra nix channels"
+
+  (set -x; nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager)
+  (set -x; nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl)
+  (set -x; nix-channel --update)
+  (set -x; nix-channel --list)
+}
+
+install_and_setup_home_manager() {
   if command -v home-manager > /dev/null 2>&1; then
     print_sub_title "Home-manager already installed, skipping installation"
-  else
-    (set -x; nix-shell '<home-manager>' -A install)
+
+    return
   fi
+
+  print_sub_title "Install home manager"
+
+  (set -x; nix-shell '<home-manager>' -A install)
+
+  print_sub_title "Set up home manager files"
 
   (set -x; mkdir -p "$HOME"/.config/home-manager)
 
@@ -62,46 +80,42 @@ install_nix_step() {
   fi
 
   (set -x; ln -s "$HOME"/.dotfiles/nix/home.nix "$HOME"/.config/home-manager/home.nix)
+}
+
+install_home_manager_derivation() {
+  print_sub_title "Install home manager packages"
+
   (set -x; home-manager switch -b backup)
-  (set -x; nix-collect-garbage -d)
 }
 
 install_eget_packages_step() {
-  print_title "Install eget packages"
-
   if ! command -v eget > /dev/null 2>&1; then
     print_sub_title "Eget is not installed, skipping"
 
     return
   fi
 
-  if [ -z "$(cat "$PACKAGES_DIR/eget-executables")" ]; then
+  if [ -z "$EGET_EXECUTABLES" ]; then
     print_sub_title "No eget packages to install, skipping"
 
     return
   fi
 
-  while IFS= read -r executable; do
-    if [ -n "$executable" ]; then
-      clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
+  print_sub_title "Install eget packages"
 
-      # shellcheck disable=SC2086
-      (set -x; eget $clean_executable --upgrade-only)
+  echo "$EGET_EXECUTABLES" | while IFS= read -r executable; do
+    if [ -z "$(trim_str "$executable")" ]; then
+      continue
     fi
-  done < "$PACKAGES_DIR/eget-executables"
-  echo
 
-  print_sub_title "Add mise completions & install deps"
-  (set -x; mkdir -p "$HOME"/.config/fish/completions)
-  (set -x; mkdir -p "$HOME"/.local/share/bash-completion/completions)
-  (set -x; "$HOME"/.local/bin/mise completion fish > "$HOME"/.config/fish/completions/mise.fish)
-  (set -x; "$HOME"/.local/bin/mise completion bash > "$HOME"/.local/share/bash-completion/completions/mise.bash)
-  (set -x; "$HOME"/.local/bin/mise install)
+    clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
+
+    # shellcheck disable=SC2086
+    (set -x; eget $clean_executable --upgrade-only)
+  done
 }
 
 install_flatpak_apps_and_runtimes_step() {
-  print_title "Install flatpak apps and runtimes"
-
   if ! command -v flatpak > /dev/null 2>&1; then
     print_sub_title "Flatpak is not installed, skipping"
 
@@ -111,29 +125,46 @@ install_flatpak_apps_and_runtimes_step() {
   if [ -z "$FLATPAK_APPS" ]; then
     print_sub_title "No flatpak apps to install, skipping instalation"
   else
+    print_sub_title "Install flatpak apps"
     # shellcheck disable=SC2086
     (set -x; flatpak install -y --noninteractive $FLATPAK_APPS)
   fi
 
-  if [ -z "$(cat "$PACKAGES_DIR/flatpak-runtimes")" ]; then
+  if [ -z "$FLATPAK_RUNTIMES" ]; then
     print_sub_title "No flatpak runtimes to install, skipping instalation"
   else
-    # shellcheck disable=SC2046
-    (set -x; flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes"))
+    print_sub_title "Install flatpak runtimes"
+    # shellcheck disable=SC2086
+    (set -x; flatpak install -y --noninteractive $FLATPAK_RUNTIMES)
   fi
+}
+
+finalize_mise_install() {
+  print_sub_title "Add mise completions & install deps"
+
+  (set -x; mkdir -p "$HOME"/.config/fish/completions)
+  (set -x; mkdir -p "$HOME"/.local/share/bash-completion/completions)
+  (set -x; "$HOME"/.local/bin/mise completion fish > "$HOME"/.config/fish/completions/mise.fish)
+  (set -x; "$HOME"/.local/bin/mise completion bash > "$HOME"/.local/share/bash-completion/completions/mise.bash)
+  (set -x; "$HOME"/.local/bin/mise install)
 }
 
 ###
 # MAIN
 ###
 
-install_nix_step
-echo
+print_title "Setup"
+install_and_setup_nix
+install_and_setup_home_manager
 
+print_title "Packages instalation"
+install_home_manager_derivation
 install_eget_packages_step
+install_flatpak_apps_and_runtimes_step
 echo
 
-install_flatpak_apps_and_runtimes_step
+print_title "Extra configuration"
+finalize_mise_install
 echo
 
 printf "%b✓%b All done, restart and open a new shell to get started !!!\n" "$GREEN" "$RESET"
