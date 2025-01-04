@@ -40,6 +40,14 @@ in
     };
   };
 
+  nix = {
+    gc = {
+      automatic = true;
+      frequency = "daily";
+      options = "-d";
+    };
+  };
+
   nixGL = {
     packages = nixgl;
     vulkan = {
