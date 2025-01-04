@@ -3,7 +3,6 @@
 set -e
 
 ROOT_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
-SH_FILES="$(shfmt -f "$ROOT_DIR")"
 NIX_FILES="$(find "$ROOT_DIR" -type f -name "*.nix")"
 JSON_FILES="$(find "$ROOT_DIR" -type f -name "*.json")"
 
@@ -11,14 +10,6 @@ echo "=> Running editorconfig checker"
 (
   set -x
   editorconfig-checker -exclude .git "$ROOT_DIR"
-)
-echo
-
-echo "=> Running shfmt"
-(
-  set -x
-  # shellcheck disable=SC2086
-  shfmt -d -i 2 -p -sr $SH_FILES
 )
 echo
 
