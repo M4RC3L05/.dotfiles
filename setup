@@ -119,7 +119,7 @@ install_flatpak_apps_and_runtimes_step() {
     print_sub_title "No flatpak runtimes to install, skipping instalation"
   else
     # shellcheck disable=SC2046
-    flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes")
+    (set -x; flatpak install -y --noninteractive $(cat "$PACKAGES_DIR/flatpak-runtimes"))
   fi
 }
 
