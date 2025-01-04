@@ -7,23 +7,14 @@ NIX_FILES="$(find "$ROOT_DIR" -type f -name "*.nix")"
 JSON_FILES="$(find "$ROOT_DIR" -type f -name "*.json")"
 
 echo "=> Running editorconfig checker"
-(
-  set -x
-  editorconfig-checker -exclude .git "$ROOT_DIR"
-)
+(set -x; editorconfig-checker -exclude .git "$ROOT_DIR")
 echo
 
 echo "=> Running nixfmt"
-(
-  set -x
-  # shellcheck disable=SC2086
-  nixfmt -c -s $NIX_FILES
-)
+# shellcheck disable=SC2086
+(set -x; nixfmt -c -s $NIX_FILES)
 echo
 
 echo "=> Running jsonfmt"
-(
-  set -x
-  # shellcheck disable=SC2086
-  jsonfmt -i "  " $JSON_FILES
-)
+# shellcheck disable=SC2086
+(set -x; jsonfmt -i "  " $JSON_FILES)
