@@ -18,6 +18,7 @@
     pkgs.vscode-extensions.tamasfe.even-better-toml
     pkgs.vscode-extensions.skyapps.fish-vscode
     pkgs.vscode-extensions.jnoortheen.nix-ide
+    pkgs.vscode-extensions.mads-hartmann.bash-ide-vscode
   ];
   enableUpdateCheck = false;
   enableExtensionUpdateCheck = true;
