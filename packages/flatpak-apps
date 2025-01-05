@@ -1,25 +1,26 @@
-app.drey.KeyRack
-com.discordapp.Discord
-com.github.Matoking.protontricks
-com.github.neithern.g4music
-com.github.tchx84.Flatseal
-com.heroicgameslauncher.hgl
-com.mattjakeman.ExtensionManager
-com.protonvpn.www
-com.usebottles.bottles
-com.valvesoftware.Steam
-io.github.josephmawa.Bella
-io.github.seadve.Kooha
-io.github.ungoogled_software.ungoogled_chromium
-io.kinvolk.Headlamp
-net.mullvad.MullvadBrowser
-net.nokyan.Resources
-org.gnome.Calculator
-org.gnome.Loupe
-org.gnome.TextEditor
-org.gnome.seahorse.Application
-org.libreoffice.LibreOffice
-org.localsend.localsend_app
-org.prismlauncher.PrismLauncher
-org.qbittorrent.qBittorrent
-org.raspberrypi.rpi-imager
+flathub	app.drey.KeyRack
+flathub	com.discordapp.Discord
+flathub-beta	com.discordapp.DiscordCanary
+flathub	com.github.Matoking.protontricks
+flathub	com.github.neithern.g4music
+flathub	com.github.tchx84.Flatseal
+flathub	com.heroicgameslauncher.hgl
+flathub	com.mattjakeman.ExtensionManager
+flathub	com.protonvpn.www
+flathub	com.usebottles.bottles
+flathub	com.valvesoftware.Steam
+flathub	io.github.josephmawa.Bella
+flathub	io.github.seadve.Kooha
+flathub	io.github.ungoogled_software.ungoogled_chromium
+flathub	io.kinvolk.Headlamp
+flathub	net.mullvad.MullvadBrowser
+flathub	net.nokyan.Resources
+flathub	org.gnome.Calculator
+flathub	org.gnome.Loupe
+flathub	org.gnome.TextEditor
+flathub	org.gnome.seahorse.Application
+flathub	org.libreoffice.LibreOffice
+flathub	org.localsend.localsend_app
+flathub	org.prismlauncher.PrismLauncher
+flathub	org.qbittorrent.qBittorrent
+flathub	org.raspberrypi.rpi-imager

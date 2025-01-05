@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
+set -x
+
 PACKAGES_DIR="$HOME/.dotfiles/packages"
 FLATPAK_APPS_FILE_PATH="$PACKAGES_DIR/flatpak-apps"
 
-set -x
-flatpak list --app --columns=application > "$FLATPAK_APPS_FILE_PATH"
-set +x
+flatpak list --columns=origin,application --app | tail -n +1 > "$FLATPAK_APPS_FILE_PATH"

@@ -126,16 +126,20 @@ install_flatpak_apps_and_runtimes_step() {
     print_sub_title "No flatpak apps to install, skipping instalation"
   else
     print_sub_title "Install flatpak apps"
-    # shellcheck disable=SC2086
-    (set -x; flatpak install -y --noninteractive $FLATPAK_APPS)
+    echo "$FLATPAK_APPS" | while read -r origin app; do
+      # shellcheck disable=SC2086
+      (set -x; flatpak install -y --noninteractive $origin $app)
+    done
   fi
 
   if [ -z "$FLATPAK_RUNTIMES" ]; then
     print_sub_title "No flatpak runtimes to install, skipping instalation"
   else
     print_sub_title "Install flatpak runtimes"
-    # shellcheck disable=SC2086
-    (set -x; flatpak install -y --noninteractive $FLATPAK_RUNTIMES)
+    echo "$FLATPAK_RUNTIMES" | while read -r origin runtime; do
+      # shellcheck disable=SC2086
+      (set -x; flatpak install -y --noninteractive $origin $runtime)
+    done
   fi
 }
 
