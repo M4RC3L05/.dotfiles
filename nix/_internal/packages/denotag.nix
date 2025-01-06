@@ -1,7 +1,4 @@
-{
-  pkgs ? import <nixpkgs> { },
-  lib,
-}:
+{ pkgs, lib }:
 pkgs.stdenv.mkDerivation rec {
   binName = "denotag";
   pname = "@m4rc3l05/${binName}";
