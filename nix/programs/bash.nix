@@ -52,8 +52,6 @@
       fi
     }
 
-    eval "$(mise activate bash)"
-
     PS1='$(prompt "''${PIPESTATUS[@]}") '
 
     # Greeting

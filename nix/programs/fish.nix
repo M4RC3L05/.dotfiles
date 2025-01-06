@@ -9,8 +9,6 @@
     set -g hydro_color_pwd green
     set -g hydro_color_prompt magenta
     set -g hydro_color_duration yellow
-
-    mise activate fish | source
   '';
   plugins = [
     {

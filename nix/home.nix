@@ -19,6 +19,16 @@ in
 
     activation = {
       copyFonts = import ./home/activation/copy-fonts.nix { inherit lib; };
+      # TEMP while: https://github.com/NixOS/nixpkgs/issues/369472
+      miseCompletions = (
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          run mkdir -p "$HOME"/.config/fish/completions
+          run mkdir -p "$HOME"/.local/share/bash-completion/completions
+          run ${lib.getExe pkgs.mise} completion fish > "$HOME"/.config/fish/completions/mise.fish
+          run ${lib.getExe pkgs.mise} completion bash > "$HOME"/.local/share/bash-completion/completions/mise.bash
+          run ${lib.getExe pkgs.mise} install -C "$HOME"
+        ''
+      );
     };
 
     packages = import ./home/packages.nix { inherit config pkgs utils; };
@@ -89,6 +99,8 @@ in
     kubecolor = import ./programs/kubecolor.nix;
 
     micro = import ./programs/micro.nix { inherit pkgs; };
+
+    mise = import ./programs/mise.nix;
 
     mpv = import ./programs/mpv.nix { inherit config pkgs; };
 

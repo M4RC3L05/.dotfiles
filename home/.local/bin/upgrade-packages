@@ -22,12 +22,4 @@ while IFS= read -r executable; do
   fi
 done < "$EGET_EXECUTABLES"
 
-set -x
-
-mise self-update
-mise upgrade --bump
-
-mkdir -p ~/.config/fish/completions
-mkdir -p ~/.local/share/bash-completion/completions
-mise completion fish > ~/.config/fish/completions/mise.fish
-mise completion bash > ~/.local/share/bash-completion/completions/mise.bash
+mise upgrade --bump --cd "$HOME"

@@ -143,16 +143,6 @@ install_flatpak_apps_and_runtimes_step() {
   fi
 }
 
-finalize_mise_install() {
-  print_sub_title "Add mise completions & install deps"
-
-  (set -x; mkdir -p "$HOME"/.config/fish/completions)
-  (set -x; mkdir -p "$HOME"/.local/share/bash-completion/completions)
-  (set -x; "$HOME"/.local/bin/mise completion fish > "$HOME"/.config/fish/completions/mise.fish)
-  (set -x; "$HOME"/.local/bin/mise completion bash > "$HOME"/.local/share/bash-completion/completions/mise.bash)
-  (set -x; "$HOME"/.local/bin/mise install)
-}
-
 ###
 # MAIN
 ###
@@ -165,10 +155,6 @@ print_title "Packages instalation"
 install_home_manager_derivation
 install_eget_packages_step
 install_flatpak_apps_and_runtimes_step
-echo
-
-print_title "Extra configuration"
-finalize_mise_install
 echo
 
 printf "%b✓%b All done, restart and open a new shell to get started !!!\n" "$GREEN" "$RESET"
