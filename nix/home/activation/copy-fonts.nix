@@ -1,5 +1,5 @@
 { lib }:
-(lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+lib.hm.dag.entryAfter [ "writeBoundary" ] ''
   if [ -d "$HOME/.nix-profile/share/fonts" ]; then
     run mkdir -p $HOME/.local/share/fonts
 
@@ -11,4 +11,4 @@
     run cp -rL $HOME/.nix-profile/share/fonts/* $HOME/.local/share/fonts/nix
     run chmod -R u+rw,g+rw $HOME/.local/share/fonts/nix
   fi
-'')
+''
