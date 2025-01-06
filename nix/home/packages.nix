@@ -2,14 +2,17 @@
   config,
   pkgs,
   utils,
+  internal,
 }:
 [
+  internal.pkgs.denotag
+  internal.pkgs.theOfficeQuote
+
   pkgs.act
   pkgs.cascadia-code
   pkgs.curl
   pkgs.dive
   pkgs.docker-credential-helpers
-  pkgs.eget
   pkgs.ffmpeg_7-full
   pkgs.kubectl
   pkgs.lsof

@@ -2,24 +2,7 @@
 
 set -ex
 
-PACKAGES_DIR="$HOME/.dotfiles/packages"
-EGET_EXECUTABLES="$PACKAGES_DIR/eget-executables"
-
 nix-channel --update
 nix-env --install --file '<nixpkgs>' --attr nixVersions.latest cacert -I nixpkgs=channel:nixpkgs-unstable
 home-manager switch
-
-set +x
-while IFS= read -r executable; do
-  if [ -n "$executable" ] && ! echo "$executable" | grep -q "#disable-upgrade"; then
-    clean_executable="$(echo "$executable" | sed 's/#disable-upgrade//g')"
-
-    (
-      set -x
-      # shellcheck disable=SC2086
-      eget $clean_executable --upgrade-only
-    )
-  fi
-done < "$EGET_EXECUTABLES"
-
 mise upgrade --bump --cd "$HOME"

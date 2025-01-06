@@ -1,9 +1,17 @@
-{ defaults, pkgs }:
+{
+  defaults,
+  pkgs,
+  lib,
+  internal,
+}:
 {
   enable = true;
   inherit (defaults) shellAliases;
   functions = {
-    fish_greeting = "the-office-quote; echo";
+    fish_greeting = ''
+      ${lib.getExe internal.pkgs.theOfficeQuote}
+      echo
+    '';
   };
   interactiveShellInit = ''
     set -g hydro_color_pwd green

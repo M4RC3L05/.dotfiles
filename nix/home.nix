@@ -8,6 +8,7 @@ let
   nixgl = import <nixgl> { inherit pkgs; };
   utils = import ./utils/mod.nix { inherit pkgs lib; };
   defaults = import ./defaults.nix;
+  internal = import ./_internal/mod.nix { inherit pkgs; };
 in
 {
   home = {
@@ -31,7 +32,14 @@ in
       );
     };
 
-    packages = import ./home/packages.nix { inherit config pkgs utils; };
+    packages = import ./home/packages.nix {
+      inherit
+        config
+        pkgs
+        utils
+        internal
+        ;
+    };
 
     file = import ./home/file.nix;
   };
@@ -70,7 +78,14 @@ in
   };
 
   programs = {
-    bash = import ./programs/bash.nix { inherit defaults pkgs; };
+    bash = import ./programs/bash.nix {
+      inherit
+        defaults
+        pkgs
+        internal
+        lib
+        ;
+    };
 
     bat = import ./programs/bat.nix { inherit pkgs; };
 
@@ -82,7 +97,14 @@ in
 
     firefox = import ./programs/firefox.nix { inherit pkgs config; };
 
-    fish = import ./programs/fish.nix { inherit defaults pkgs; };
+    fish = import ./programs/fish.nix {
+      inherit
+        defaults
+        pkgs
+        internal
+        lib
+        ;
+    };
 
     ghostty = import ./programs/ghostty.nix { inherit config pkgs; };
 

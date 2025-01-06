@@ -1,4 +1,9 @@
-{ defaults, pkgs }:
+{
+  defaults,
+  pkgs,
+  internal,
+  lib,
+}:
 {
   enable = true;
   inherit (defaults) shellAliases;
@@ -55,7 +60,7 @@
     PS1='$(prompt "''${PIPESTATUS[@]}") '
 
     # Greeting
-    the-office-quote
+    ${lib.getExe internal.pkgs.theOfficeQuote}
     echo
   '';
 }
