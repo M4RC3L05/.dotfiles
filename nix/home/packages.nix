@@ -27,6 +27,7 @@
   pkgs.hyperfine
   pkgs.wrk
   pkgs.zip
+  pkgs.bitwarden-cli
 
   (config.lib.nixGL.wrappers.nvidia pkgs.nvtopPackages.full)
 
