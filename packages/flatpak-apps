@@ -1,4 +1,5 @@
 flathub	app.drey.KeyRack
+flathub	com.brave.Browser
 flathub	com.discordapp.Discord
 flathub-beta	com.discordapp.DiscordCanary
 flathub	com.github.Matoking.protontricks
@@ -11,7 +12,6 @@ flathub	com.usebottles.bottles
 flathub	com.valvesoftware.Steam
 flathub	io.github.josephmawa.Bella
 flathub	io.github.seadve.Kooha
-flathub	io.github.ungoogled_software.ungoogled_chromium
 flathub	io.kinvolk.Headlamp
 flathub	net.mullvad.MullvadBrowser
 flathub	net.nokyan.Resources
