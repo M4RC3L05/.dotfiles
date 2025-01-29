@@ -40,6 +40,15 @@
           "mainphone"
         ];
       };
+      "~/Documents/calendars" = {
+        enable = true;
+        label = "calendars";
+        type = "sendreceive";
+        devices = [
+          "maintablet"
+          "mainphone"
+        ];
+      };
     };
     gui = {
       theme = "dark";
