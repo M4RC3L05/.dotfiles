@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+for file in "$@"; do
+  if [ ! -f "$file" ]; then
+    echo "File $file does not exists, skipping..."
+    echo
+    continue
+  fi
+
+  parsed_path="$(realpath "$file")"
+  file_extension=".$(basename "$parsed_path" | sed 's/.*\.//')"
+  final_path="$(basename -s "$file_extension" "$parsed_path").ogg"
+
+  echo "=> Converting $(basename "$parsed_path") => $final_path"
+  (set -x; ffmpeg -v warning -stats -i "$parsed_path" -c:a libopus -b:a 256k -vn "$final_path")
+  echo
+done
