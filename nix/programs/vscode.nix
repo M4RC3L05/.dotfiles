@@ -19,6 +19,7 @@
     pkgs.vscode-extensions.skyapps.fish-vscode
     pkgs.vscode-extensions.jnoortheen.nix-ide
     pkgs.vscode-extensions.mads-hartmann.bash-ide-vscode
+    pkgs.vscode-extensions.editorconfig.editorconfig
   ];
   enableUpdateCheck = false;
   enableExtensionUpdateCheck = true;
