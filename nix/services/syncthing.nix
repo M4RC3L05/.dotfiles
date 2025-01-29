@@ -22,11 +22,23 @@
           "maintablet"
         ];
       };
-      "~/notes" = {
+      "~/Documents/notes" = {
         enable = true;
         label = "notes";
         type = "sendonly";
-        devices = [ "maintablet" ];
+        devices = [
+          "maintablet"
+          "mainphone"
+        ];
+      };
+      "~/Documents/contacts" = {
+        enable = true;
+        label = "contacts";
+        type = "sendreceive";
+        devices = [
+          "maintablet"
+          "mainphone"
+        ];
       };
     };
     gui = {
