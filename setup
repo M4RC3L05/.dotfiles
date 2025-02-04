@@ -1,37 +1,54 @@
 #!/usr/bin/env sh
 
-if [ "$(id -u)" -eq 0 ]; then
-  echo "This script cannot be run as root. It will call sudo as needed"
-  exit 1
-fi
-
 set -e
 
 ###
 # UTILS & VARS
 ###
 
-print_title() {
-  printf "%b==>%b %b%s%b\n" "$BOLD_GREEN" "$RESET" "$BOLD" "$1" "$RESET"
-}
-
-print_sub_title() {
-  printf "%b»%b %s\n" "$GREEN" "$RESET" "$1"
-}
-
-trim_str() {
-  echo "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
-}
-
-BOLD="\033[0;1m"
 GREEN="\033[0;32m"
-BOLD_GREEN="\033[1;32m"
+BLUE="\033[0;34m"
+YELLOW="\033[0;33m"
+RED="\033[0;31m"
 RESET="\033[0m"
 
 DIR_NAME="$(realpath "$(dirname "$0")")"
 PACKAGES_DIR="$DIR_NAME/packages"
-FLATPAK_APPS="$(trim_str "$(cat "$PACKAGES_DIR"/flatpak-apps)")"
-FLATPAK_RUNTIMES="$(trim_str "$(cat "$PACKAGES_DIR"/flatpak-runtimes)")"
+FLATPAK_APPS="$(cat "$PACKAGES_DIR"/flatpak-apps)"
+FLATPAK_RUNTIMES="$(cat "$PACKAGES_DIR"/flatpak-runtimes)"
+
+log() {
+  case "$1" in
+    INFO)
+      printf "%b[%s]%b %s\n" "$BLUE" "INFO" "$RESET" "$2"
+    ;;
+    WARNING)
+      printf "%b[%s]%b %s\n" "$YELLOW" "WARNING" "$RESET" "$2"
+    ;;
+    SUCCESS)
+      printf "%b[%s]%b %s\n" "$GREEN" "SUCCESS" "$RESET" "$2"
+    ;;
+    ERROR)
+      printf "%b[%s]%b %s\n" "$RED" "ERROR" "$RESET" "$2"
+    ;;
+  esac
+}
+
+log_info() {
+  log "INFO" "$1"
+}
+
+log_success() {
+  log "SUCCESS" "$1"
+}
+
+log_warning() {
+  log "WARNING" "$1"
+}
+
+log_error() {
+  log "ERROR" "$1"
+}
 
 ###
 # STEPS
@@ -39,19 +56,19 @@ FLATPAK_RUNTIMES="$(trim_str "$(cat "$PACKAGES_DIR"/flatpak-runtimes)")"
 
 install_and_setup_nix() {
   if command -v nix > /dev/null 2>&1; then
-    print_sub_title "Nix already installed, skipping installation"
+    log_warning "Nix already installed, skipping installation"
 
     return
   fi
 
-  print_sub_title "Install nix"
+  log_info "Install nix"
 
   (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile)
 
   # shellcheck disable=SC1091
   . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
-  print_sub_title "Add extra nix channels"
+  log_info "Add extra nix channels"
 
   (set -x; nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager)
   (set -x; nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl)
@@ -61,16 +78,16 @@ install_and_setup_nix() {
 
 install_and_setup_home_manager() {
   if command -v home-manager > /dev/null 2>&1; then
-    print_sub_title "Home-manager already installed, skipping installation"
+    log_warning "Home-manager already installed, skipping installation"
 
     return
   fi
 
-  print_sub_title "Install home manager"
+  log_info "Install home manager"
 
   (set -x; nix-shell '<home-manager>' -A install)
 
-  print_sub_title "Set up home manager files"
+  log_info "Set up home manager files"
 
   (set -x; mkdir -p "$HOME"/.config/home-manager)
 
@@ -82,22 +99,22 @@ install_and_setup_home_manager() {
 }
 
 install_home_manager_derivation() {
-  print_sub_title "Install home manager packages"
+  log_info "Install home manager packages"
 
   (set -x; home-manager switch -b backup)
 }
 
 install_flatpak_apps_and_runtimes_step() {
   if ! command -v flatpak > /dev/null 2>&1; then
-    print_sub_title "Flatpak is not installed, skipping"
+    log_warning "Flatpak is not installed, skipping"
 
     return
   fi
 
   if [ -z "$FLATPAK_APPS" ]; then
-    print_sub_title "No flatpak apps to install, skipping instalation"
+    log_warning "No flatpak apps to install, skipping instalation"
   else
-    print_sub_title "Install flatpak apps"
+    log_info "Install flatpak apps"
     echo "$FLATPAK_APPS" | while read -r origin app; do
       # shellcheck disable=SC2086
       (set -x; flatpak install -y --noninteractive $origin $app)
@@ -105,9 +122,9 @@ install_flatpak_apps_and_runtimes_step() {
   fi
 
   if [ -z "$FLATPAK_RUNTIMES" ]; then
-    print_sub_title "No flatpak runtimes to install, skipping instalation"
+    log_warning "No flatpak runtimes to install, skipping instalation"
   else
-    print_sub_title "Install flatpak runtimes"
+    log_info "Install flatpak runtimes"
     echo "$FLATPAK_RUNTIMES" | while read -r origin runtime; do
       # shellcheck disable=SC2086
       (set -x; flatpak install -y --noninteractive $origin $runtime)
@@ -119,13 +136,14 @@ install_flatpak_apps_and_runtimes_step() {
 # MAIN
 ###
 
-print_title "Setup"
+if [ "$(id -u)" -eq 0 ]; then
+  log_error "This script cannot be run as root. It will call sudo as needed"
+  exit 1
+fi
+
 install_and_setup_nix
 install_and_setup_home_manager
-
-print_title "Packages instalation"
 install_home_manager_derivation
 install_flatpak_apps_and_runtimes_step
-echo
 
-printf "%b✓%b All done, restart and open a new shell to get started !!!\n" "$GREEN" "$RESET"
+log_success "All done, restart and open a new shell to get started !!!"
