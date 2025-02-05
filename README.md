@@ -5,7 +5,6 @@ My dotfiles
 ## Dependencies
 
 - Flatpak: https://flatpak.org/setup
-  - To install flatpak apps
 
 ## Run
 

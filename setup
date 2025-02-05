@@ -111,13 +111,17 @@ install_flatpak_apps_and_runtimes_step() {
     return
   fi
 
+  log_info "Adding flatpak remotes"
+  (set -x; flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo)
+  (set -x; flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo)
+
   if [ -z "$FLATPAK_APPS" ]; then
     log_warning "No flatpak apps to install, skipping instalation"
   else
     log_info "Install flatpak apps"
     echo "$FLATPAK_APPS" | while read -r origin app; do
       # shellcheck disable=SC2086
-      (set -x; flatpak install -y --noninteractive $origin $app)
+      (set -x; flatpak install --user -y --noninteractive --or-update $origin $app)
     done
   fi
 
@@ -127,7 +131,7 @@ install_flatpak_apps_and_runtimes_step() {
     log_info "Install flatpak runtimes"
     echo "$FLATPAK_RUNTIMES" | while read -r origin runtime; do
       # shellcheck disable=SC2086
-      (set -x; flatpak install -y --noninteractive $origin $runtime)
+      (set -x; flatpak install --user -y --noninteractive --or-update $origin $runtime)
     done
   fi
 }
