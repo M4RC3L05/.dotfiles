@@ -21,7 +21,6 @@
   pkgs.lsof
   pkgs.nil
   pkgs.nixfmt-rfc-style
-  pkgs.procps
   pkgs.q
   pkgs.rsync
   pkgs.tldr
