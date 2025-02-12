@@ -138,8 +138,15 @@ in
       inherit (defaults) sessionVariables;
 
       services = {
+        podman = import ./systemd/user/services/podman.nix { inherit pkgs; };
+
         dump-packages = import ./systemd/user/services/dump-packages.nix;
       };
+
+      sockets = {
+        podman = import ./systemd/user/sockets/podman.nix;
+      };
+
       timers = {
         dump-packages = import ./systemd/user/timers/dump-packages.nix;
       };

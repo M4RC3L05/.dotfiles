@@ -13,6 +13,7 @@
   pkgs.cascadia-code
   pkgs.curl
   pkgs.dive
+  pkgs.docker
   pkgs.docker-credential-helpers
   pkgs.ffmpeg_7-full
   pkgs.hyperfine
