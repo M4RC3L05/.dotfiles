@@ -13,11 +13,9 @@
   Service = {
     Type = "exec";
     KillMode = "process";
+    Delegate = true;
     Environment = ''LOGGING=" --log-level=info"'';
-    ExecStart = [
-      ""
-      "${pkgs.podman}/bin/podman $LOGGING system service"
-    ];
+    ExecStart = "${pkgs.podman}/bin/podman $LOGGING system service";
   };
 
   Install = {
