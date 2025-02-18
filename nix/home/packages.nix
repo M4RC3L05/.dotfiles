@@ -38,13 +38,4 @@
   ))
 
   (config.lib.nixGL.wrappers.nvidia pkgs.nvtopPackages.full)
-
-  (config.lib.nixGL.wrappers.mesa (
-    utils.wrap pkgs.youtube-music {
-      env = {
-        NIXOS_OZONE_WL = "1";
-      };
-      flags = [ "--disable-gpu" ];
-    }
-  ))
 ]
