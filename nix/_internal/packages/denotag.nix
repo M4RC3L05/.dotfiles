@@ -2,11 +2,11 @@
 pkgs.stdenv.mkDerivation rec {
   binName = "denotag";
   pname = "@m4rc3l05/${binName}";
-  version = "4.6.8";
+  version = "4.6.9";
 
   src = pkgs.fetchurl {
     url = "https://github.com/M4RC3L05/denotag/releases/download/v${version}/denotag-x86_64-unknown-linux-gnu.tar.gz";
-    sha256 = "sha256-Hxy/TtUbX/AJgxulq3SJVMI+ytfnGjGWP9sRja2jqKE=";
+    sha256 = "sha256-dWWE/TDQpVJ5DYytc/ijNdsmjqmhFlbB+XvEq0THZ7k=";
   };
 
   dontConfigure = true;
