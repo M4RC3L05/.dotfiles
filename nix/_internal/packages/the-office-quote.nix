@@ -2,11 +2,11 @@
 pkgs.stdenv.mkDerivation rec {
   binName = "the-office-quote";
   pname = "@m4rc3l05/${binName}";
-  version = "1.0.11";
+  version = "1.0.12";
 
   src = pkgs.fetchurl {
     url = "https://github.com/M4RC3L05/the-office-quote/releases/download/v${version}/the-office-quote-x86_64-unknown-linux-gnu.tar.gz";
-    sha256 = "sha256-rWEXWYMH6E0IrC9Jb+OBFJVyJVTUYsCEVj52C4Piu5k=";
+    sha256 = "sha256-7cSV1hqvMVCD7l3g5Kuqom2anxejLqXkCsAmmn8FC7A=";
   };
 
   dontConfigure = true;
