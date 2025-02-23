@@ -21,10 +21,8 @@
     SDL_VIDEODRIVER = "wayland,x11";
 
     # bitwarden
-    # Home dir for now: https://github.com/bitwarden/clients/issues/12417
-    # Fixed on v2025.1.3
-    BITWARDEN_SSH_AUTH_SOCK = "$HOME/bitwarden-ssh-agent.sock";
-    SSH_AUTH_SOCK = "$HOME/bitwarden-ssh-agent.sock";
+    BITWARDEN_SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/bitwarden-ssh-agent.sock";
+    SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/bitwarden-ssh-agent.sock";
   };
 
   shellAliases = {
