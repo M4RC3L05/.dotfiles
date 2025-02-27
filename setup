@@ -63,13 +63,14 @@ install_and_setup_nix() {
 
   log_info "Install nix"
 
-  (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile)
+  (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add)
 
   # shellcheck disable=SC1091
   . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
   log_info "Add extra nix channels"
 
+  (set -x; nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs)
   (set -x; nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager)
   (set -x; nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl)
   (set -x; nix-channel --update)
