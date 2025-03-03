@@ -44,7 +44,6 @@
       env = {
         NIXOS_OZONE_WL = "1";
       };
-      flags = [ "--disable-gpu" ];
     }
   ))
 ]
