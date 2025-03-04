@@ -95,6 +95,10 @@
               name = "Duck AI";
               url = "https://duck.ai";
             }
+            {
+              name = "Nixpkgs-tracker";
+              url = "https://nixpkgs-tracker.ocfox.me";
+            }
           ];
         }
       ];
