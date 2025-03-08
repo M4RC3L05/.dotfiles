@@ -108,6 +108,13 @@
         privateDefault = "DuckDuckGo";
       };
       settings = {
+        # General
+        ## Browser layout
+        "sidebar.revamp" = true;
+        "sidebar.visibility" = "hide-sidebar";
+        "sidebar.verticalTabs" = true;
+        "sidebar.main.tools" = "bookmarks";
+
         # Home
         ## New Windows and Tabs
         "browser.startup.page" = 1;
@@ -188,7 +195,7 @@
 
         # Extra
         ## Bookmark visibility
-        "browser.toolbars.bookmarks.visibility" = "always";
+        "browser.toolbars.bookmarks.visibility" = "never";
         ## Encrypted media extensions
         "media.eme.enabled" = true;
         ## Firefox account
