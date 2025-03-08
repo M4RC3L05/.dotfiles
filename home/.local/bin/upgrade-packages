@@ -2,7 +2,7 @@
 
 set -ex
 
-nix-channel --update
 nix-env --install --file '<nixpkgs>' --attr nixVersions.latest cacert -I nixpkgs=channel:nixpkgs-unstable
-home-manager switch
+nix flake update --flake "$HOME/.dotfiles"
+(cd "$HOME/.dotfiles"; nix run . -- switch --impure --flake .#main)
 mise upgrade --bump --cd "$HOME"

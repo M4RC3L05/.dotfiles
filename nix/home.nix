@@ -5,17 +5,17 @@
   ...
 }:
 let
-  nixgl = import <nixgl> { inherit pkgs; };
+  # nixgl = import <nixgl> { inherit pkgs; };
   utils = import ./utils/mod.nix { inherit pkgs lib; };
   defaults = import ./defaults.nix;
   internal = import ./_internal/mod.nix { inherit pkgs; };
 in
 {
-  home = {
+  home = rec {
     inherit (defaults) sessionVariables;
 
     username = "main";
-    homeDirectory = "/home/main";
+    homeDirectory = "/home/${username}";
     stateVersion = "24.11";
 
     activation = {
@@ -55,7 +55,7 @@ in
   };
 
   nixGL = {
-    packages = nixgl;
+    packages = pkgs.nixgl;
     vulkan = {
       enable = true;
     };
