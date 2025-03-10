@@ -68,11 +68,41 @@ install_and_setup_nix() {
   # shellcheck disable=SC1091
   . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
-  log_info "Enable nix unstable features and build home-manager config"
+  log_info "Add extra nix channels"
 
-  (set -x; mkdir -p "$HOME"/.config/nix)
-  (set -x; echo "experimental-features = nix-command flakes" > "$HOME"/.config/nix/nix.conf)
-  (set -x; nix run . -- switch -b backup --impure --flake .#main);
+  (set -x; nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs)
+  (set -x; nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager)
+  (set -x; nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl)
+  (set -x; nix-channel --update)
+  (set -x; nix-channel --list)
+}
+
+install_and_setup_home_manager() {
+  if command -v home-manager > /dev/null 2>&1; then
+    log_warning "Home-manager already installed, skipping installation"
+
+    return
+  fi
+
+  log_info "Install home manager"
+
+  (set -x; nix-shell '<home-manager>' -A install)
+
+  log_info "Set up home manager files"
+
+  (set -x; mkdir -p "$HOME"/.config/home-manager)
+
+  if [ -f "$HOME"/.config/home-manager/home.nix ]; then
+    (set -x; rm "$HOME"/.config/home-manager/home.nix)
+  fi
+
+  (set -x; ln -s "$HOME"/.dotfiles/nix/home.nix "$HOME"/.config/home-manager/home.nix)
+}
+
+install_home_manager_derivation() {
+  log_info "Install home manager packages"
+
+  (set -x; home-manager switch -b backup)
 }
 
 install_flatpak_apps_and_runtimes_step() {
@@ -117,6 +147,8 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 install_and_setup_nix
+install_and_setup_home_manager
+install_home_manager_derivation
 install_flatpak_apps_and_runtimes_step
 
 log_success "All done, restart and open a new shell to get started !!!"

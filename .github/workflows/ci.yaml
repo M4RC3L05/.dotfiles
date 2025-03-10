@@ -15,8 +15,13 @@ jobs:
       - name: install nix
         uses: nixbuild/nix-quick-install-action@v29
 
-      - name: check formatting
-        run: nix develop --command ./.bin/check-fmt
+      - name: add unstable channel
+        run: |-
+          nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+          nix-channel --update
 
+      - name: check formatting
+        run: nix-shell --run ./.bin/check-fmt
+      
       - name: check linting
-        run: nix develop --command ./.bin/check-lint
+        run: nix-shell --run ./.bin/check-lint
