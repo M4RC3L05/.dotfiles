@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  utils,
   internal,
 }:
 [
@@ -29,21 +28,23 @@
   pkgs.wrk
   pkgs.zip
 
-  (config.lib.nixGL.wrappers.mesa (
-    utils.wrap pkgs.bitwarden-desktop {
-      env = {
-        NIXOS_OZONE_WL = "1";
-      };
-    }
-  ))
+  (config.lib.nixGL.wrappers.mesa pkgs.bitwarden-desktop
+    # Enabling wayland will break resizing
+    # (utils.wrap pkgs.bitwarden-desktop {
+    #   env = {
+    #     NIXOS_OZONE_WL = "1";
+    #   };
+    # })
+  )
 
   (config.lib.nixGL.wrappers.nvidia pkgs.nvtopPackages.full)
 
-  (config.lib.nixGL.wrappers.mesa (
-    utils.wrap pkgs.youtube-music {
-      env = {
-        NIXOS_OZONE_WL = "1";
-      };
-    }
-  ))
+  (config.lib.nixGL.wrappers.mesa pkgs.youtube-music
+    # Enabling wayland will break resizing
+    # (utils.wrap pkgs.youtube-music {
+    #   env = {
+    #     NIXOS_OZONE_WL = "1";
+    #   };
+    # })
+  )
 ]

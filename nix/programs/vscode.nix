@@ -1,18 +1,15 @@
-{
-  config,
-  utils,
-  pkgs,
-}:
+{ config, pkgs }:
 {
   enable = true;
-  package = config.lib.nixGL.wrappers.mesa (
-    utils.wrap pkgs.vscode {
-      env = {
-        NIXOS_OZONE_WL = "1";
-      };
-      environment = { inherit (pkgs.vscode) pname version meta; };
-    }
-  );
+  package = config.lib.nixGL.wrappers.mesa pkgs.vscode
+  # Recizing is not afected with wailad for some reason but better this way
+  # (utils.wrap pkgs.vscode {
+  #   env = {
+  #     NIXOS_OZONE_WL = "1";
+  #   };
+  #   environment = { inherit (pkgs.vscode) pname version meta; };
+  # })
+  ;
   profiles = {
     "default" = {
       extensions = [

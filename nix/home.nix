@@ -6,7 +6,7 @@
 }:
 let
   nixgl = import <nixgl> { inherit pkgs; };
-  utils = import ./utils/mod.nix { inherit pkgs lib; };
+  # utils = import ./utils/mod.nix { inherit pkgs lib; };
   defaults = import ./defaults.nix;
   internal = import ./_internal/mod.nix { inherit pkgs; };
 in
@@ -22,14 +22,7 @@ in
       copyFonts = import ./home/activation/copy-fonts.nix { inherit lib; };
     };
 
-    packages = import ./home/packages.nix {
-      inherit
-        config
-        pkgs
-        utils
-        internal
-        ;
-    };
+    packages = import ./home/packages.nix { inherit config pkgs internal; };
 
     file = import ./home/file.nix;
   };
@@ -122,7 +115,7 @@ in
 
     ssh = import ./programs/ssh.nix;
 
-    vscode = import ./programs/vscode.nix { inherit config utils pkgs; };
+    vscode = import ./programs/vscode.nix { inherit config pkgs; };
 
     yt-dlp = import ./programs/yt-dlp.nix;
   };
