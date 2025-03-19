@@ -66,42 +66,45 @@
     main = {
       id = 0;
       isDefault = true;
-      bookmarks = [
-        {
-          name = "Toolbar";
-          toolbar = true;
-          bookmarks = [
-            {
-              name = "Home";
-              url = "https://home.gufu.duckdns.org";
-            }
-            {
-              name = "Syncthing";
-              url = "http://127.0.0.1:8384";
-            }
-            {
-              name = "Home Manager - Options";
-              url = "https://home-manager-options.extranix.com";
-            }
-            {
-              name = "dnscheck.tools";
-              url = "https://www.dnscheck.tools";
-            }
-            {
-              name = "Best Similar movies";
-              url = "https://bestsimilar.com";
-            }
-            {
-              name = "Duck AI";
-              url = "https://duck.ai";
-            }
-            {
-              name = "Nixpkgs-tracker";
-              url = "https://nixpkgs-tracker.ocfox.me";
-            }
-          ];
-        }
-      ];
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            name = "Toolbar";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "Home";
+                url = "https://home.gufu.duckdns.org";
+              }
+              {
+                name = "Syncthing";
+                url = "http://127.0.0.1:8384";
+              }
+              {
+                name = "Home Manager - Options";
+                url = "https://home-manager-options.extranix.com";
+              }
+              {
+                name = "dnscheck.tools";
+                url = "https://www.dnscheck.tools";
+              }
+              {
+                name = "Best Similar movies";
+                url = "https://bestsimilar.com";
+              }
+              {
+                name = "Duck AI";
+                url = "https://duck.ai";
+              }
+              {
+                name = "Nixpkgs-tracker";
+                url = "https://nixpkgs-tracker.ocfox.me";
+              }
+            ];
+          }
+        ];
+      };
       search = {
         default = "DuckDuckGo";
         force = true;
