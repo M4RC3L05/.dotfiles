@@ -25,7 +25,7 @@
       "~/Documents/notes" = {
         enable = true;
         label = "notes";
-        type = "sendonly";
+        type = "sendreceive";
         devices = [
           "maintablet"
           "mainphone"
