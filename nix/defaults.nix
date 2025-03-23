@@ -27,5 +27,6 @@
 
   shellAliases = {
     cat = "bat --plain";
+    proxyK8sServer = "ssh -NL 6443:127.0.0.1:6443 mainserver";
   };
 }
