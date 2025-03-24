@@ -16,7 +16,6 @@
       editor = "micro";
     };
   };
-
   lfs = {
     enable = true;
   };

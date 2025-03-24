@@ -17,47 +17,24 @@
     . ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
 
     # Prompt
-    prompt() {
-      local color_red="\001\e[31m\002"
-      local color_green='\001\e[32m\002'
-      local color_grey='\001\e[37m\002'
-      local color_reset='\001\e[0m\002'
-
-      local error="no"
+    exit_status() {
       local exit_statuses=("$@")
-      local username="''${USER:-$(whoami)}"
-      local hostname="''${HOSTNAME:-$(hostname)}"
-      local home="''${HOME:-$(echo ~)}"
-      local path="''${PWD:-$(pwd)}"
-      path="''${path/#$home/'~'}"
-      path="$(echo "$path" | awk -F'/' '{for(i=1;i<NF;i++) printf "%s/", substr($i,1,1); print $NF}')"
-      local git_branch="$(__git_ps1 " $color_grey%s$color_reset")"
-
-      echo -en "$color_green$path$color_reset"
-      echo -en "$git_branch"
-
-      if [[ -n "$git_branch" ]] && [[ -n "$(git status --porcelain)" ]]; then
-        echo -en "*"
-      fi
-
-      echo -en " "
 
       for exit_status in "''${exit_statuses[@]}"; do
         if [[ "$exit_status" != "0" ]]; then
-          error="yes"
+          local exit_statuses_joined="''${exit_statuses[*]}"
+          echo -en " \e[31m[''${exit_statuses_joined// / | }]\e[0m"
+
           break
         fi
       done
-
-      if [[ "$error" == "yes" ]]; then
-        local exit_statuses_joined="''${exit_statuses[*]}"
-        echo -en "$color_red[''${exit_statuses_joined// / | }]❱$color_reset"
-      else
-        echo -en "❱"
-      fi
     }
 
-    PS1='$(prompt "''${PIPESTATUS[@]}") '
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWUNTRACKEDFILES=1
+    GIT_PS1_SHOWCOLORHINTS="true"
+    GIT_PS1_SHOWUPSTREAM="verbose"
+    PS1='\[\033[92m\]\u\[\033[0m\]@\h \[\033[32m\]\w\[\033[0m\]$(__git_ps1 " (%s)")$(exit_status "''${PIPESTATUS[@]}")> '
 
     # Greeting
     ${lib.getExe internal.pkgs.theOfficeQuote}

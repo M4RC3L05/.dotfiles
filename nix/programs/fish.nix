@@ -14,14 +14,12 @@
     '';
   };
   interactiveShellInit = ''
-    set -g hydro_color_pwd green
-    set -g hydro_color_prompt magenta
-    set -g hydro_color_duration yellow
+    set -g __fish_git_prompt_char_upstream_ahead ↑
+    set -g __fish_git_prompt_char_upstream_behind ↓
+    set -g __fish_git_prompt_show_informative_status true
+    set -g __fish_git_prompt_showcolorhints true
+    set -g __fish_git_prompt_showdirtystate true
+    set -g __fish_git_prompt_showuntrackedfiles true
+    set -g __fish_git_prompt_showupstream informative
   '';
-  plugins = [
-    {
-      name = "hydro";
-      inherit (pkgs.fishPlugins.hydro) src;
-    }
-  ];
 }
