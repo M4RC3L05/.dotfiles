@@ -184,6 +184,7 @@
         "app.shield.optoutstudies.enabled" = false;
         "browser.discovery.enabled" = false;
         "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
+        "datareporting.usage.uploadEnabled" = false;
 
         ## Website advertising preferences
         "dom.private-attribution.submission.enabled" = false;
