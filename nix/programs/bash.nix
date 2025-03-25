@@ -7,12 +7,11 @@
 {
   enable = true;
   inherit (defaults) shellAliases;
-  bashrcExtra = ''
+  initExtra = ''
     export TERM="xterm-256color";
 
     eval "$(${pkgs.lib.getExe pkgs.bat-extras.batman} --export-env)"
-  '';
-  initExtra = ''
+
     # Git prompt
     . ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
 
