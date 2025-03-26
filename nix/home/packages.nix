@@ -14,7 +14,7 @@
   pkgs.dive
   pkgs.docker
   pkgs.docker-credential-helpers
-  pkgs.ffmpeg_7-full
+  pkgs.ffmpeg-full
   pkgs.hyperfine
   pkgs.kubectl
   pkgs.lsof
