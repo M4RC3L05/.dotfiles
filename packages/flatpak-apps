@@ -3,6 +3,7 @@ flathub	com.brave.Browser
 flathub	com.discordapp.Discord
 flathub-beta	com.discordapp.DiscordCanary
 flathub	com.github.Matoking.protontricks
+flathub	com.github.finefindus.eyedropper
 flathub	com.github.neithern.g4music
 flathub	com.github.tchx84.Flatseal
 flathub	com.heroicgameslauncher.hgl
@@ -10,7 +11,6 @@ flathub	com.mattjakeman.ExtensionManager
 flathub	com.protonvpn.www
 flathub	com.usebottles.bottles
 flathub	com.valvesoftware.Steam
-flathub	io.github.josephmawa.Bella
 flathub	io.github.seadve.Kooha
 flathub	io.kinvolk.Headlamp
 flathub	net.mullvad.MullvadBrowser
