@@ -9,6 +9,7 @@ set -e
 GREEN="\033[0;32m"
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
+PURPLE="\033[0;35m"
 RED="\033[0;31m"
 RESET="\033[0m"
 
@@ -16,6 +17,8 @@ DIR_NAME="$(realpath "$(dirname "$0")")"
 PACKAGES_DIR="$DIR_NAME/packages"
 FLATPAK_APPS="$(cat "$PACKAGES_DIR"/flatpak-apps)"
 FLATPAK_RUNTIMES="$(cat "$PACKAGES_DIR"/flatpak-runtimes)"
+
+PS4="$PURPLE\$ $RESET"
 
 log() {
   case "$1" in
