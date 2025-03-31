@@ -114,6 +114,7 @@
         # General
         ## Browser layout
         "sidebar.revamp" = true;
+        "sidebar.revamp.round-content-area" = true;
         "sidebar.visibility" = "hide-sidebar";
         "sidebar.verticalTabs" = true;
         "sidebar.main.tools" = "bookmarks";
