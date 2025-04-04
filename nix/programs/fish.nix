@@ -7,6 +7,7 @@
 {
   enable = true;
   inherit (defaults) shellAliases;
+  generateCompletions = true;
   functions = {
     fish_greeting = ''
       ${lib.getExe internal.pkgs.theOfficeQuote}

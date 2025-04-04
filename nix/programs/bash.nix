@@ -7,6 +7,8 @@
 {
   enable = true;
   inherit (defaults) shellAliases;
+  enableCompletion = true;
+  enableVteIntegration = true;
   initExtra = ''
     export TERM="xterm-256color";
 
@@ -33,7 +35,7 @@
     GIT_PS1_SHOWUNTRACKEDFILES=1
     GIT_PS1_SHOWCOLORHINTS="true"
     GIT_PS1_SHOWUPSTREAM="verbose"
-    PS1='\[\033[92m\]\u\[\033[0m\]@\h \[\033[32m\]\w\[\033[0m\]$(__git_ps1 " (%s)")$(exit_status "''${PIPESTATUS[@]}")> '
+    PS1='[\[\033[92m\]\u\[\033[0m\]@\h \[\033[32m\]\w\[\033[0m\]$(__git_ps1 " (%s)")$(exit_status "''${PIPESTATUS[@]}")]$ '
 
     # Greeting
     ${lib.getExe internal.pkgs.theOfficeQuote}
