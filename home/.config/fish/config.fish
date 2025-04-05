@@ -15,6 +15,8 @@ status is-interactive; and begin
   alias lt 'eza --tree'
   alias proxyK8sServer 'ssh -NL 6443:127.0.0.1:6443 mainserver'
 
+  batman --export-env | source
+
   # Interactive shell initialisation
   set -g __fish_git_prompt_char_upstream_ahead ↑
   set -g __fish_git_prompt_char_upstream_behind ↓
