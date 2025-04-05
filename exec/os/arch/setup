@@ -135,7 +135,7 @@ if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
 fi
 
 log_info "Download custom packages"
-(set -x; /home/linuxbrew/.linuxbrew/bin/eget M4RC3L05/the-office-quote --upgrade-only --to /home/main/.local/bin)
-(set -x; /home/linuxbrew/.linuxbrew/bin/eget M4RC3L05/denotag --upgrade-only --to /home/main/.local/bin)
+(set -x; /home/linuxbrew/.linuxbrew/bin/eget M4RC3L05/the-office-quote --upgrade-only --to "$HOME"/.local/bin)
+(set -x; /home/linuxbrew/.linuxbrew/bin/eget M4RC3L05/denotag --upgrade-only --to "$HOME"/.local/bin)
 
 log_success "All done, restart your computer."

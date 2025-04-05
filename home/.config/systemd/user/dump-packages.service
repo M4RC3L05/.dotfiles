@@ -2,7 +2,7 @@
 WantedBy=default.target
 
 [Service]
-ExecStart=/home/main/.local/bin/dump-packages
+ExecStart=sh -c "${HOME}/.local/bin/dump-packages"
 Type=oneshot
 
 [Unit]

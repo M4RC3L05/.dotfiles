@@ -11,7 +11,7 @@ PURPLE="\033[0;35m"
 RED="\033[0;31m"
 RESET="\033[0m"
 
-DOTFILES_DIR="/home/main/.dotfiles"
+DOTFILES_DIR="$HOME/.dotfiles"
 PACKAGES_DIR="$DOTFILES_DIR/packages"
 FLATPAK_APPS="$(cat "$PACKAGES_DIR"/flatpak-apps)"
 FLATPAK_RUNTIMES="$(cat "$PACKAGES_DIR"/flatpak-runtimes)"
