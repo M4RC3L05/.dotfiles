@@ -3,19 +3,16 @@ status is-login; and begin
 end
 
 status is-interactive; and begin
-
   # Aliases
-  alias cat 'bat --plain'
-  alias eza 'eza --icons auto --color auto --git'
+  alias cat "bat --plain"
+  alias eza "eza --icons auto --color auto --git"
   alias kubectl kubecolor
-  alias la 'eza -a'
-  alias ll 'eza -l'
-  alias lla 'eza -la'
+  alias la "eza -a"
+  alias ll "eza -l"
+  alias lla "eza -la"
   alias ls eza
-  alias lt 'eza --tree'
-  alias proxyK8sServer 'ssh -NL 6443:127.0.0.1:6443 mainserver'
-
-  batman --export-env | source
+  alias lt "eza --tree"
+  alias proxyK8sServer "ssh -NL 6443:127.0.0.1:6443 mainserver"
 
   # Interactive shell initialisation
   set -g __fish_git_prompt_char_upstream_ahead ↑
@@ -25,4 +22,7 @@ status is-interactive; and begin
   set -g __fish_git_prompt_showdirtystate true
   set -g __fish_git_prompt_showuntrackedfiles true
   set -g __fish_git_prompt_showupstream informative
+
+  batman --export-env | source
+  mise activate fish | source
 end

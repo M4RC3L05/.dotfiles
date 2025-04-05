@@ -10,12 +10,17 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-log_info "Refresh repos"
-(set -x; sudo pacman -Syyuu)
-
 log_info "Setup Gnome"
 (set -x; gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']")
 (set -x; gsettings set org.gnome.Epiphany.web:/ hardware-acceleration-policy 'always' || true)
+
+if ! systemctl is-enabled bluetooth > /dev/null 2>&1; then
+  log_info "Enable bluetooth service"
+  (set -x; systemctl enable --now bluetooth)
+fi
+
+log_info "Refresh repos"
+(set -x; sudo pacman -Syyuu)
 
 log_info "Setup legacy gtk theme"
 log_warning "Set the theme using gnome-tweaks"
@@ -25,11 +30,6 @@ log_warning "Set the theme using gnome-tweaks"
 log_info "Setup gnome extensions"
 log_warning "\`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
 (set -x; sudo pacman -S --needed --noconfirm gnome-shell-extension-caffeine gnome-shell-extension-appindicator)
-
-if ! systemctl is-enabled bluetooth > /dev/null 2>&1; then
-  log_info "Enable bluetooth service"
-  (set -x; systemctl enable --now bluetooth)
-fi
 
 log_info "Setup graphics packages"
 (set -x; sudo pacman -S --needed --noconfirm intel-media-driver vulkan-intel libvpl vpl-gpu-rt)
@@ -50,16 +50,20 @@ if sudo ufw status | grep -q "inactive"; then
   (set -x; sudo ufw enable)
 fi
 
-if [ ! -f "/etc/ufw/applications.d/syncthing" ]; then
-  log_info "Add syncthing to firewall exclusions"
-  (set -x; sudo curl -o /etc/ufw/applications.d/syncthing https://raw.githubusercontent.com/syncthing/syncthing/refs/heads/main/etc/firewall-ufw/syncthing)
-  (set -x; sudo ufw app update syncthing)
-  (set -x; sudo ufw allow syncthing)
-fi
-
 log_info "Add localsend to firewall exclusion"
 sudo ufw allow 53317/udp
 sudo ufw allow 53317/tcp
+
+log_info "Setup syncthing"
+(set -x; sudo pacman -S --needed --noconfirm syncthing)
+
+if ! systemctl --user is-enabled syncthing > /dev/null 2>&1; then
+  log_info "Enable syncthing service"
+  (set -x; systemctl --user enable --now syncthing)
+fi
+
+log_info "Add syncthing to firewall exclusion"
+sudo ufw allow syncthing
 
 log_info "Setup flatpak"
 (set -x; sudo pacman -S --needed --noconfirm flatpak)
@@ -75,8 +79,7 @@ if [ -z "$FLATPAK_APPS" ]; then
 else
   log_info "Install flatpak apps"
   echo "$FLATPAK_APPS" | while read -r origin app; do
-    # shellcheck disable=SC2086
-    (set -x; flatpak install --user -y --noninteractive $origin $app)
+    (set -x; flatpak install --user -y --noninteractive "$origin" "$app")
   done
 fi
 
@@ -85,8 +88,7 @@ if [ -z "$FLATPAK_RUNTIMES" ]; then
 else
   log_info "Install flatpak runtimes"
   echo "$FLATPAK_RUNTIMES" | while read -r origin runtime; do
-    # shellcheck disable=SC2086
-    (set -x; flatpak install --user -y --noninteractive $origin $runtime)
+    (set -x; flatpak install --user -y --noninteractive "$origin" "$runtime")
   done
 fi
 
@@ -120,17 +122,32 @@ log_info "Setup ghostty"
 log_info "Setup mpv"
 (set -x; sudo pacman -S --needed --noconfirm mpv)
 
-log_info "Setup general tools"
-(set -x; sudo pacman -S --needed --noconfirm base-devel base-devel procps-ng curl file git)
+log_info "Setup podman"
+(set -x; sudo pacman -S --needed --noconfirm podman)
+
+if ! systemctl --user is-enabled podman > /dev/null 2>&1; then
+  log_info "Enable podman service"
+  (set -x; systemctl --user enable --now podman)
+fi
+
+if [ -z "$PACMAN_PACKAGES" ]; then
+  log_warning "No general tools to install"
+else
+  log_info "Setup general tools"
+  echo "$PACMAN_PACKAGES" | while read -r package; do
+    (set -x; sudo pacman -S --needed --noconfirm "$package")
+  done
+fi
 
 if ! command -v brew > /dev/null 2>&1; then
   log_info "Setup homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  (set -x; /home/linuxbrew/.linuxbrew/bin/brew bundle --verbose --file "$BREW_PACKAGES_PATH")
+  (set -x; brew analytics off)
+  (set -x; brew bundle --verbose --file "$BREW_PACKAGES_PATH")
 fi
 
 log_info "Stow files"
-(set -x; cd "$DOTFILES_DIR" && /home/linuxbrew/.linuxbrew/bin/stow --adopt --no-folding -v home)
+(set -x; cd "$DOTFILES_DIR" && stow --adopt --no-folding -v home)
 (set -x; cd "$DOTFILES_DIR" && git restore home)
 
 if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then

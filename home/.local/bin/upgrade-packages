@@ -4,3 +4,4 @@ set -ex
 
 brew update && brew upgrade && brew cleanup && brew autoremove && brew services cleanup
 mise upgrade --bump --cd "$HOME"
+fish -c "fish_update_completions"

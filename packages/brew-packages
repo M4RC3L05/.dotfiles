@@ -1,77 +1,8 @@
-tap "homebrew/linux-fonts"
-# Run your GitHub Actions locally
-brew "act"
-# Clone of cat(1) with syntax highlighting and Git integration
-brew "bat"
-# Bash scripts that integrate bat with various command-line tools
-brew "bat-extras"
-# Secure and free password manager for all of your devices
-brew "bitwarden-cli"
-# Resource monitor. C++ version and continuation of bashtop and bpytop
-brew "btop"
-# Get a file from an HTTP, HTTPS or FTP server
-brew "curl"
-# Good-lookin' diffs with diff-highlight and more
-brew "diff-so-fancy"
-# Tool for exploring each layer in a docker image
-brew "dive"
-# Pack, ship and run any application as a lightweight container
-brew "docker"
 # Platform keystore credential helper for Docker
 brew "docker-credential-helper"
 # Easily install prebuilt binaries from GitHub
 brew "eget"
-# Modern, maintained replacement for ls
-brew "eza"
-# Like neofetch, but much faster because written mostly in C
-brew "fastfetch"
-# Play, record, convert, and stream audio and video
-brew "ffmpeg"
-# User-friendly command-line shell for UNIX-like operating systems
-brew "fish"
-# Distributed revision control system
-brew "git"
-# Command-line benchmarking tool
-brew "hyperfine"
-# Lightweight and flexible command-line JSON processor
-brew "jq"
-# Kubernetes CLI To Manage Your Clusters In Style!
-brew "k9s"
 # Colorize your kubectl output
 brew "kubecolor"
-# Kubernetes command-line interface
-brew "kubernetes-cli"
-# Modern and intuitive terminal-based text editor
-brew "micro"
-# Polyglot runtime manager (asdf rust clone)
-brew "mise"
-# Tool for managing OCI containers and pods
-brew "podman", restart_service: :changed
-# Utility that provides fast incremental file transfer
-brew "rsync"
-# Organize software neatly under a single directory tree (e.g. /usr/local)
-brew "stow"
-# Open source continuous file synchronization application
-brew "syncthing", restart_service: :changed
-# Official tldr client written in Rust
-brew "tlrc"
-# Program that allows you to count code, quickly
-brew "tokei"
-# Internet file retriever
-brew "wget"
 # HTTP benchmarking tool
 brew "wrk"
-# Feature-rich command-line audio/video downloader
-brew "yt-dlp"
-# Compression and file packaging/archive utility
-brew "zip"
-# Cascadia code font
-brew "homebrew/linux-fonts/font-cascadia-code"
-# Cascadia code nf font
-brew "homebrew/linux-fonts/font-cascadia-code-nf"
-# Cascadia mono font
-brew "homebrew/linux-fonts/font-cascadia-mono"
-# Cascadia mono nf font
-brew "homebrew/linux-fonts/font-cascadia-mono-nf"
-# Cascadia mono pl font
-brew "homebrew/linux-fonts/font-cascadia-mono-pl"
