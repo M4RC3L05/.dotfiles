@@ -1,20 +1,11 @@
 {
-  "nix.enableLanguageServer": true,
-  "nix.serverPath": "nil",
-  "nix.serverSettings": {
-    "nil": {
-      "formatting": {
-        "command": [
-          "nixfmt",
-          "-s"
-        ]
-      }
-    }
-  },
   "[json]": {
     "editor.formatOnSave": false
   },
   "[jsonc]": {
+    "editor.formatOnSave": false
+  },
+  "[html]": {
     "editor.formatOnSave": false
   }
 }

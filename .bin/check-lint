@@ -4,19 +4,8 @@ set -e
 
 ROOT_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 SH_FILES="$(shfmt -f "$ROOT_DIR")"
-NIX_FILES="$(find "$ROOT_DIR" -type f -name "*.nix")"
 
 echo "=> Running shellcheck"
 # shellcheck disable=SC2086
 (set -x; shellcheck -f tty --norc -s sh $SH_FILES)
-echo
-
-echo "=> Running statix"
-# shellcheck disable=SC2086
-(set -x; statix check $ROOT_DIR)
-echo
-
-echo "=> Running deadnix"
-# shellcheck disable=SC2086
-(set -x; deadnix -f -o human-readable $NIX_FILES)
 echo

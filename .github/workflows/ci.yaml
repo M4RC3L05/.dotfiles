@@ -12,16 +12,14 @@ jobs:
       - name: clone repository
         uses: actions/checkout@v4
 
-      - name: install nix
-        uses: nixbuild/nix-quick-install-action@v29
-
-      - name: add unstable channel
-        run: |-
-          nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-          nix-channel --update
+      - name: Install mise
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
 
       - name: check formatting
-        run: nix-shell --run ./.bin/check-fmt
-      
+        run: ./.bin/check-fmt
+
       - name: check linting
-        run: nix-shell --run ./.bin/check-lint
+        run: ./.bin/check-lint

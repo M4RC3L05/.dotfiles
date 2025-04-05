@@ -2,7 +2,5 @@
 
 set -ex
 
-nix-channel --update
-nix-env --install --file '<nixpkgs>' --attr nixVersions.latest cacert -I nixpkgs=channel:nixpkgs-unstable
-home-manager switch
+brew update && brew upgrade && brew cleanup && brew autoremove && brew services cleanup
 mise upgrade --bump --cd "$HOME"

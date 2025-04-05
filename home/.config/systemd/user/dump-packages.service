@@ -1,0 +1,9 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+ExecStart=/home/main/.local/bin/dump-packages
+Type=oneshot
+
+[Unit]
+Description=Dump packages to a file

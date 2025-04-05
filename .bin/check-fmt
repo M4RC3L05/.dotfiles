@@ -3,18 +3,7 @@
 set -e
 
 ROOT_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
-NIX_FILES="$(find "$ROOT_DIR" -type f -name "*.nix")"
-JSON_FILES="$(find "$ROOT_DIR" -type f -name "*.json")"
 
 echo "=> Running editorconfig checker"
-(set -x; editorconfig-checker -exclude .git "$ROOT_DIR")
+(set -x; ec -exclude .git "$ROOT_DIR")
 echo
-
-echo "=> Running nixfmt"
-# shellcheck disable=SC2086
-(set -x; nixfmt -c -s $NIX_FILES)
-echo
-
-echo "=> Running jsonfmt"
-# shellcheck disable=SC2086
-(set -x; jsonfmt -i "  " $JSON_FILES)

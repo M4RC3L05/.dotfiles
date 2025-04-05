@@ -1,7 +1,6 @@
 flathub	app.drey.KeyRack
 flathub	com.brave.Browser
 flathub	com.discordapp.Discord
-flathub-beta	com.discordapp.DiscordCanary
 flathub	com.github.Matoking.protontricks
 flathub	com.github.finefindus.eyedropper
 flathub	com.github.neithern.g4music
@@ -14,6 +13,7 @@ flathub	io.github.seadve.Kooha
 flathub	io.kinvolk.Headlamp
 flathub	net.mullvad.MullvadBrowser
 flathub	net.nokyan.Resources
+flathub	org.gnome.Boxes
 flathub	org.gnome.Calculator
 flathub	org.gnome.Loupe
 flathub	org.gnome.TextEditor
@@ -23,4 +23,3 @@ flathub	org.localsend.localsend_app
 flathub	org.prismlauncher.PrismLauncher
 flathub	org.qbittorrent.qBittorrent
 flathub	org.raspberrypi.rpi-imager
-flathub	page.tesk.Refine
