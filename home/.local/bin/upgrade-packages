@@ -3,6 +3,7 @@
 set -ex
 
 mise upgrade --bump --cd "$HOME"
+ubi --self-upgrade
 
 UBI_PACKAGES="$(cat "$HOME"/.dotfiles/packages/ubi-packages)"
 if [ -n "$UBI_PACKAGES" ]; then

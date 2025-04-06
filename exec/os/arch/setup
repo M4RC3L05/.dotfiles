@@ -148,8 +148,8 @@ if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   (set -x; systemctl --user enable --now dump-packages.timer)
 fi
 
-log_info "Setup mise"
-(set -x; mise install --cd "$HOME")
+log_info "Setup ubi"
+(set -x; curl --silent --location https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh | TARGET="$HOME/.local/bin" sh)
 
 if [ -z "$UBI_PACKAGES" ]; then
   log_warning "No ubi packages to install"
@@ -157,7 +157,7 @@ else
   log_info "Setup ubi packages"
   echo "$UBI_PACKAGES" | while read -r package; do
     # shellcheck disable=SC2086
-    (set -x; mise exec ubi -- ubi $package --in "$HOME"/.local/bin -v)
+    (set -x; ubi $package --in "$HOME"/.local/bin -v)
   done
 fi
 
