@@ -2,6 +2,14 @@
 
 set -ex
 
-brew update && brew upgrade && brew cleanup && brew autoremove && brew services cleanup
 mise upgrade --bump --cd "$HOME"
+
+UBI_PACKAGES="$(cat "$HOME"/.dotfiles/packages/ubi-packages)"
+if [ -n "$UBI_PACKAGES" ]; then
+  echo "$UBI_PACKAGES" | while read -r package; do
+    # shellcheck disable=SC2086
+    mise exec ubi -- ubi $package --in "$HOME"/.local/bin -v
+  done
+fi
+
 fish -c "fish_update_completions"
