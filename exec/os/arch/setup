@@ -157,7 +157,7 @@ else
   log_info "Setup ubi packages"
   echo "$UBI_PACKAGES" | while read -r package; do
     # shellcheck disable=SC2086
-    (set -x; ubi $package --in "$HOME"/.local/bin -v)
+    (set -x; "$HOME"/.local/bin/ubi $package --in "$HOME"/.local/bin -v)
   done
 fi
 
