@@ -156,6 +156,7 @@ if [ -z "$UBI_PACKAGES" ]; then
 else
   log_info "Setup ubi packages"
   echo "$UBI_PACKAGES" | while read -r package; do
+    # shellcheck disable=SC2086
     (set -x; mise exec ubi -- ubi $package --in "$HOME"/.local/bin -v)
   done
 fi
