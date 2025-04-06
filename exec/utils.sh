@@ -17,7 +17,7 @@ FLATPAK_APPS="$(cat "$PACKAGES_DIR"/flatpak-apps)"
 FLATPAK_RUNTIMES="$(cat "$PACKAGES_DIR"/flatpak-runtimes)"
 VSCODE_EXTENSIONS="$(cat "$PACKAGES_DIR"/vscode-extensions)"
 PACMAN_PACKAGES="$(cat "$PACKAGES_DIR"/pacman-packages)"
-BREW_PACKAGES_PATH="$PACKAGES_DIR"/brew-packages
+UBI_PACKAGES="$(cat "$PACKAGES_DIR"/ubi-packages)"
 
 PS4="$PURPLE\$ $RESET"
 

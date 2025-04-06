@@ -131,19 +131,12 @@ if ! systemctl --user is-enabled podman > /dev/null 2>&1; then
 fi
 
 if [ -z "$PACMAN_PACKAGES" ]; then
-  log_warning "No general tools to install"
+  log_warning "No pacman packages to install"
 else
-  log_info "Setup general tools"
+  log_info "Setup pacman packages"
   echo "$PACMAN_PACKAGES" | while read -r package; do
     (set -x; sudo pacman -S --needed --noconfirm "$package")
   done
-fi
-
-if ! command -v brew > /dev/null 2>&1; then
-  log_info "Setup homebrew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  (set -x; brew analytics off)
-  (set -x; brew bundle --verbose --file "$BREW_PACKAGES_PATH")
 fi
 
 log_info "Stow files"
@@ -155,8 +148,16 @@ if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   (set -x; systemctl --user enable --now dump-packages.timer)
 fi
 
-log_info "Download custom packages"
-(set -x; /home/linuxbrew/.linuxbrew/bin/eget M4RC3L05/the-office-quote --upgrade-only --to "$HOME"/.local/bin)
-(set -x; /home/linuxbrew/.linuxbrew/bin/eget M4RC3L05/denotag --upgrade-only --to "$HOME"/.local/bin)
+log_info "Setup mise"
+(set -x; mise install --cd "$HOME")
+
+if [ -z "$UBI_PACKAGES" ]; then
+  log_warning "No ubi packages to install"
+else
+  log_info "Setup ubi packages"
+  echo "$UBI_PACKAGES" | while read -r package; do
+    (set -x; mise exec ubi -- ubi $package --in "$HOME"/.local/bin -v)
+  done
+fi
 
 log_success "All done, restart your computer."

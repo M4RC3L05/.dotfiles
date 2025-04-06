@@ -1,8 +1,0 @@
-# Platform keystore credential helper for Docker
-brew "docker-credential-helper"
-# Easily install prebuilt binaries from GitHub
-brew "eget"
-# Colorize your kubectl output
-brew "kubecolor"
-# HTTP benchmarking tool
-brew "wrk"
