@@ -5,8 +5,6 @@ set -x
 PACKAGES_DIR="$HOME/.dotfiles/packages"
 FLATPAK_APPS_FILE_PATH="$PACKAGES_DIR/flatpak-apps"
 VSCODE_EXTENSIONS_FILE_PATH="$PACKAGES_DIR/vscode-extensions"
-BREW_PACKAGES_FILE_PATH="$PACKAGES_DIR/brew-packages"
 
 flatpak list --user --columns=origin,application --app | tail -n +1 > "$FLATPAK_APPS_FILE_PATH"
 code --list-extensions > "$VSCODE_EXTENSIONS_FILE_PATH"
-brew bundle dump --no-vscode --describe --force --file "$BREW_PACKAGES_FILE_PATH"
