@@ -2,6 +2,9 @@
 
 set -ex
 
+nix profile upgrade --all
+nix profile wipe-history
+nix-collect-garbage -d
 mise upgrade --bump --cd "$HOME"
 ubi --self-upgrade
 

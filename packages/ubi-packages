@@ -1,4 +1,2 @@
 --project M4RC3L05/the-office-quote
 --project M4RC3L05/denotag
---project kubecolor/kubecolor
---project docker/docker-credential-helpers -m secretservice --rename-exe docker-credential-secretservice

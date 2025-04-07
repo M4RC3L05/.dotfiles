@@ -54,16 +54,9 @@ log_info "Add localsend to firewall exclusion"
 sudo ufw allow 53317/udp
 sudo ufw allow 53317/tcp
 
-log_info "Setup syncthing"
-(set -x; sudo pacman -S --needed --noconfirm syncthing)
-
-if ! systemctl --user is-enabled syncthing > /dev/null 2>&1; then
-  log_info "Enable syncthing service"
-  (set -x; systemctl --user enable --now syncthing)
-fi
-
 log_info "Add syncthing to firewall exclusion"
-sudo ufw allow syncthing
+sudo ufw allow 22000/udp
+sudo ufw allow 21027/udp
 
 log_info "Setup flatpak"
 (set -x; sudo pacman -S --needed --noconfirm flatpak)
@@ -122,20 +115,32 @@ log_info "Setup ghostty"
 log_info "Setup mpv"
 (set -x; sudo pacman -S --needed --noconfirm mpv)
 
-log_info "Setup podman"
-(set -x; sudo pacman -S --needed --noconfirm podman)
+log_info "Setup nix"
 
-if ! systemctl --user is-enabled podman > /dev/null 2>&1; then
-  log_info "Enable podman service"
-  (set -x; systemctl --user enable --now podman)
+if ! command -v nix > /dev/null 2>&1; then
+  (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add)
+
+  # shellcheck source=/dev/null
+  . "$HOME"/.nix-profile/etc/profile.d/nix.sh
+
+  nix_binary_path="$(readlink -f "$(which nix)")"
+  nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
+  (set -x; nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index")
+  (set -x; "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile install nixpkgs#nix)
 fi
 
-if [ -z "$PACMAN_PACKAGES" ]; then
-  log_warning "No pacman packages to install"
+if [ -z "$NIX_PACKAGES" ]; then
+  log_warning "No nix packages to install"
 else
-  log_info "Setup pacman packages"
-  echo "$PACMAN_PACKAGES" | while read -r package; do
-    (set -x; sudo pacman -S --needed --noconfirm "$package")
+  log_info "Setup nix packages"
+  echo "$NIX_PACKAGES" | while read -r package; do
+    case "$package" in
+      *podman*|*syncthing*)
+        log_warning "Service \"$package\" need to be manually enabled after restarting the computer"
+        ;;
+    esac
+
+    (set -x; nix --extra-experimental-features 'nix-command flakes' profile install nixpkgs#"$package")
   done
 fi
 
