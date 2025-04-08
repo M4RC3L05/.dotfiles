@@ -9,6 +9,7 @@ legacyPackages.x86_64-linux.diff-so-fancy
 legacyPackages.x86_64-linux.dive
 legacyPackages.x86_64-linux.docker
 legacyPackages.x86_64-linux.docker-credential-helpers
+legacyPackages.x86_64-linux.eget
 legacyPackages.x86_64-linux.eza
 legacyPackages.x86_64-linux.fastfetch
 legacyPackages.x86_64-linux.ffmpeg

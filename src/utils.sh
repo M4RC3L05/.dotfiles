@@ -16,7 +16,7 @@ PACKAGES_DIR="$DOTFILES_DIR/src/packages"
 FLATPAK_APPS="$(cat "$PACKAGES_DIR"/flatpak-apps)"
 FLATPAK_RUNTIMES="$(cat "$PACKAGES_DIR"/flatpak-runtimes)"
 NIX_PACKAGES="$(cat "$PACKAGES_DIR"/nix-packages)"
-UBI_PACKAGES="$(cat "$PACKAGES_DIR"/ubi-packages)"
+EGET_PACKAGES="$(cat "$PACKAGES_DIR"/eget-packages)"
 VSCODE_EXTENSIONS="$(cat "$PACKAGES_DIR"/vscode-extensions)"
 
 PS4="$PURPLE\$ $RESET"
