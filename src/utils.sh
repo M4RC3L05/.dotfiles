@@ -12,7 +12,7 @@ RED="\033[0;31m"
 RESET="\033[0m"
 
 DOTFILES_DIR="$HOME/.dotfiles"
-PACKAGES_DIR="$DOTFILES_DIR/packages"
+PACKAGES_DIR="$DOTFILES_DIR/src/packages"
 FLATPAK_APPS="$(cat "$PACKAGES_DIR"/flatpak-apps)"
 FLATPAK_RUNTIMES="$(cat "$PACKAGES_DIR"/flatpak-runtimes)"
 NIX_PACKAGES="$(cat "$PACKAGES_DIR"/nix-packages)"

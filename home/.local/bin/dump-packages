@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-PACKAGES_DIR="$HOME/.dotfiles/packages"
+PACKAGES_DIR="$HOME/.dotfiles/src/packages"
 FLATPAK_APPS_FILE_PATH="$PACKAGES_DIR/flatpak-apps"
 VSCODE_EXTENSIONS_FILE_PATH="$PACKAGES_DIR/vscode-extensions"
 NIX_PACKAGES_FILE_PATH="$PACKAGES_DIR/nix-packages"
