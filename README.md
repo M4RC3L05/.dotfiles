@@ -7,5 +7,5 @@ My dotfiles for archlinux
 Just run the setup script.
 
 ```cmd
-./exec/os/arch/setup
+./src/os/arch/setup
 ```
