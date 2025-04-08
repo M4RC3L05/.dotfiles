@@ -80,7 +80,7 @@ if [ ! -f "/etc/firefox/policies/policies.json" ]; then
 fi
 
 log_info "Setup bitwarden"
-(set -x; sudo pacman -S --needed --noconfirm bitwarden bitwarden-cli)
+(set -x; sudo pacman -S --needed --noconfirm bitwarden)
 
 log_info "Setup ghostty"
 (set -x; sudo pacman -S --needed --noconfirm ghostty)

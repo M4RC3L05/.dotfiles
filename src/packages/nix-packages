@@ -1,5 +1,6 @@
 legacyPackages.x86_64-linux.bat
 legacyPackages.x86_64-linux.bat-extras.batman
+legacyPackages.x86_64-linux.bitwarden-cli
 legacyPackages.x86_64-linux.btop
 legacyPackages.x86_64-linux.cacert
 legacyPackages.x86_64-linux.cascadia-code
