@@ -10,8 +10,7 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-log_info "Refresh repos"
-(set -x; sudo pacman -Syyuu)
+log_info "Running arch steps"
 
 for step in "$DOTFILES_DIR"/src/os/arch/steps/*.sh; do
   log_info "Running step \"$(basename "$step")\""
