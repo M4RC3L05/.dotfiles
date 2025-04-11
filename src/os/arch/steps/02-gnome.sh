@@ -4,6 +4,13 @@ set -e
 
 log_info "Setup Gnome"
 (set -x; gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']")
+(set -x; gsettings set org.gnome.desktop.interface color-scheme "prefer-dark")
+(set -x; gsettings set org.gnome.desktop.interface accent-color "orange")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled "true")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "2500")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "false")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from "18.0")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to "9.0")
 (set -x; gsettings set org.gnome.Epiphany.web:/ hardware-acceleration-policy 'always' || true)
 
 if ! systemctl is-enabled bluetooth > /dev/null 2>&1; then
