@@ -42,6 +42,7 @@ log_info "Install nix packages"
 install_packages "nix"
 
 log_info "Install eget packages"
+(set -x; mkdir -p "$HOME"/.local/bin/)
 install_packages "eget"
 
 log_info "Install vscode extensions"
