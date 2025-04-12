@@ -1,0 +1,106 @@
+#!/usr/bin/env sh
+
+set -e
+
+# shellcheck source=/dev/null
+. "$(dirname "$0")"/utils.sh
+
+if [ "$(id -u)" -eq 0 ]; then
+  log_error "This script cannot be run as root. It will call sudo as needed"
+  exit 1
+fi
+
+log_info "Upgrade and install os packages"
+upgrade_package_manager_repos
+install_packages "$ID"
+
+log_info "Setup flatpak remotes"
+(set -x; flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo)
+(set -x; flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo)
+
+log_info "Install flatpak runtimes & apps"
+install_packages "flatpak-runtimes"
+install_packages "flatpak-apps"
+
+log_info "Setup nix"
+
+if ! command -v nix > /dev/null 2>&1; then
+  (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add)
+
+  # shellcheck source=/dev/null
+  . "$HOME"/.nix-profile/etc/profile.d/nix.sh
+
+  nix_binary_path="$(readlink -f "$(which nix)")"
+  nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
+  (set -x; nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index")
+  (set -x; "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile install nixpkgs#nix)
+else
+  log_info "Nix already setup"
+fi
+
+log_info "Install nix packages"
+install_packages "nix"
+
+log_info "Install eget packages"
+install_packages "eget"
+
+log_info "Install vscode extensions"
+install_packages "vscode-extensions"
+
+log_info "Set gnome & gnome apps configs"
+(set -x; gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']")
+(set -x; gsettings set org.gnome.desktop.interface color-scheme "prefer-dark")
+(set -x; gsettings set org.gnome.desktop.interface accent-color "orange")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled "true")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "2500")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "false")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from "18.0")
+(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to "9.0")
+(set -x; gsettings set org.gnome.Console theme "auto")
+(set -x; gsettings set org.gnome.Console shell "['fish']")
+(set -x; gsettings set org.gnome.Epiphany.web:/ hardware-acceleration-policy 'always' || true)
+
+if ! systemctl is-enabled bluetooth > /dev/null 2>&1; then
+  log_info "Enable bluetooth service"
+  (set -x; systemctl enable --now bluetooth)
+fi
+
+log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
+# Install https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension manually
+log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
+
+if ! systemctl is-enabled ufw > /dev/null 2>&1; then
+  log_info "Enable firewall service"
+  (set -x; systemctl enable --now ufw)
+fi
+
+if sudo ufw status | grep -q "inactive"; then
+  log_info "Enable ufw"
+  (set -x; sudo ufw enable)
+fi
+
+log_info "Add localsend to firewall exclusion"
+sudo ufw allow 53317/udp
+sudo ufw allow 53317/tcp
+
+log_info "Add syncthing to firewall exclusion"
+sudo ufw allow 22000/udp
+sudo ufw allow 21027/udp
+
+if [ ! -f "/etc/firefox/policies/policies.json" ]; then
+  log_info "Setup firefox policy"
+  (set -x; sudo mkdir -p /etc/firefox/policies)
+  (set -x; sudo touch /etc/firefox/policies/policies.json)
+  (set -x; sudo cat "$DOTFILES_DIR/src/files/firefox/policies.json" | sudo tee /etc/firefox/policies/policies.json > /dev/null)
+fi
+
+log_info "Stow files"
+(set -x; cd "$DOTFILES_DIR" && stow --adopt --no-folding -v home)
+(set -x; cd "$DOTFILES_DIR" && git restore home)
+
+if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
+  log_info "Enable dump package cron"
+  (set -x; systemctl --user enable --now dump-packages.timer)
+fi
+
+log_success "All done, restart your computer."

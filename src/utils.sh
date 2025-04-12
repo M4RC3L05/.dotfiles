@@ -3,6 +3,8 @@
 ###
 
 # shellcheck disable=SC2034
+# shellcheck source=/dev/null
+ID="$(. /etc/os-release; echo "$ID")"
 
 GREEN="\033[0;32m"
 BLUE="\033[0;34m"
@@ -13,11 +15,6 @@ RESET="\033[0m"
 
 DOTFILES_DIR="$HOME/.dotfiles"
 PACKAGES_DIR="$DOTFILES_DIR/src/packages"
-FLATPAK_APPS="$(cat "$PACKAGES_DIR"/flatpak-apps)"
-FLATPAK_RUNTIMES="$(cat "$PACKAGES_DIR"/flatpak-runtimes)"
-NIX_PACKAGES="$(cat "$PACKAGES_DIR"/nix-packages)"
-EGET_PACKAGES="$(cat "$PACKAGES_DIR"/eget-packages)"
-VSCODE_EXTENSIONS="$(cat "$PACKAGES_DIR"/vscode-extensions)"
 
 PS4="$PURPLE\$ $RESET"
 
@@ -52,4 +49,94 @@ log_warning() {
 
 log_error() {
   log "ERROR" "$1"
+}
+
+resolve_packages_from_context() {
+  case "$1" in
+    endeavouros)
+      cat "$PACKAGES_DIR"/os/arch-packages
+    ;;
+    flatpak-apps)
+      cat "$PACKAGES_DIR"/flatpak-apps
+    ;;
+    flatpak-runtimes)
+      cat "$PACKAGES_DIR"/flatpak-runtimes
+    ;;
+    nix)
+      cat "$PACKAGES_DIR"/nix-packages
+    ;;
+    eget)
+      cat "$PACKAGES_DIR"/eget-packages
+    ;;
+    vscode-extensions)
+      cat "$PACKAGES_DIR"/vscode-extensions
+    ;;
+    *)
+      echo ""
+    ;;
+  esac
+}
+
+install() {
+  case "$1" in
+    endeavouros)
+      (set -x; sudo pacman -S --needed --noconfirm "$2")
+    ;;
+    flatpak-apps|flatpak-runtimes)
+      (set -x; flatpak install --user -y --noninteractive "$2" "$3")
+    ;;
+    nix)
+      (set -x; nix --extra-experimental-features 'nix-command flakes' profile install nixpkgs#"$2")
+    ;;
+    eget)
+      (set -x; eget "$2" --upgrade-only --to "$HOME"/.local/bin/)
+    ;;
+    vscode-extensions)
+      (set -x; code --install-extension "$2")
+    ;;
+    *)
+      log_warning "Context \"$1\" not recognized, will not install"
+    ;;
+  esac
+}
+
+install_packages() {
+  packages="$(resolve_packages_from_context "$1")"
+
+  if [ -z "$packages" ]; then
+    log_warning "No packages to install for \"$1\""
+  else
+    echo "$packages" | while read -r package_or_repo package; do
+      if [ "$package_or_repo" = "youtube_music-origin" ]; then
+        log_warning "Install $package_or_repo $package from github manually"
+        continue
+      fi
+
+      if echo "$package_or_repo" | grep -qE '^\s*$'; then
+        continue
+      fi
+
+      if echo "$package_or_repo" | grep -qE '^\s*#'; then
+        continue
+      fi
+
+      if [ "$1" = "nix" ]; then
+        case "$package_or_repo" in
+          *podman*|*syncthing*)
+            log_warning "Service \"$package_or_repo\" need to be manually enabled after restarting the computer"
+          ;;
+        esac
+      fi
+
+      install "$1" "$package_or_repo" "$package"
+    done
+  fi
+}
+
+upgrade_package_manager_repos() {
+  case "$ID" in
+    endeavouros)
+      (set -x; sudo pacman -Syyuu)
+    ;;
+  esac
 }

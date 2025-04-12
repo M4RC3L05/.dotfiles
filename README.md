@@ -1,11 +1,11 @@
 # Personal dotfiles
 
-My dotfiles for archlinux
+My personal dotfiles
 
 ## Run
 
 Just run the setup script.
 
 ```cmd
-./src/os/arch/setup
+./src/setup
 ```

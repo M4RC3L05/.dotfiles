@@ -1,0 +1,44 @@
+# GNOME
+adw-gtk-theme
+gnome-shell-extension-appindicator
+gnome-shell-extension-caffeine
+gnome-console
+
+# Drivers & Multimedia
+gst-libav
+gst-plugin-va
+gst-plugins-bad
+gst-plugins-base
+gst-plugins-good
+gst-plugins-ugly
+intel-gpu-tools
+intel-media-driver
+libva-utils
+libvpl
+nvidia-open
+nvidia-utils
+nvtop
+vdpauinfo
+vpl-gpu-rt
+vulkan-intel
+vulkan-tools
+
+# Firewall
+gufw
+
+# VSCode
+code
+trash-cli
+
+# Firefox
+firefox
+
+# Bitwarden
+bitwarden
+
+# MPV
+mpv
+
+# Flatpak
+flatpak
+gnome-software
