@@ -80,12 +80,12 @@ if sudo ufw status | grep -q "inactive"; then
 fi
 
 log_info "Add localsend to firewall exclusion"
-sudo ufw allow 53317/udp
-sudo ufw allow 53317/tcp
+(set -x; sudo ufw allow 53317/udp)
+(set -x; sudo ufw allow 53317/tcp)
 
 log_info "Add syncthing to firewall exclusion"
-sudo ufw allow 22000/udp
-sudo ufw allow 21027/udp
+(set -x; sudo ufw allow 22000/udp)
+(set -x; sudo ufw allow 21027/udp)
 
 if [ ! -f "/etc/firefox/policies/policies.json" ]; then
   log_info "Setup firefox policy"
