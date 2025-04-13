@@ -22,9 +22,8 @@ log_info "Install flatpak runtimes & apps"
 install_packages "flatpak-runtimes"
 install_packages "flatpak-apps"
 
-log_info "Setup nix"
-
 if ! command -v nix > /dev/null 2>&1; then
+  log_info "Setup nix"
   (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add)
 
   # shellcheck source=/dev/null
@@ -34,8 +33,6 @@ if ! command -v nix > /dev/null 2>&1; then
   nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
   (set -x; nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index")
   (set -x; "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile install nixpkgs#nix)
-else
-  log_info "Nix already setup"
 fi
 
 log_info "Install nix packages"
