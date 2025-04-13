@@ -4,10 +4,7 @@
         <device id="EMULY2I-W5TQFA2-6RMOMOC-YHBF3UD-EZF25DA-QENYTDL-X2ZOGQO-TIZNCAX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
-        <device id="HQRTVSH-5BRZQ2M-X5FJEYL-V2E3BZU-LO47TRO-ICLA3SJ-3MCHKIU-YGX3EAG" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="QWCBKVJ-W5VN4QW-XLLS2AY-T2ZX6P2-CA4ILTN-FHOLCOJ-EQKJJ4F-R5PYKAO" introducedBy="">
+        <device id="MM5XIPP-JNFXZJ7-IJR4VRJ-DXA74OY-5N7TPT7-2USGMD7-E4KWC2H-YA4SEAK" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
@@ -51,10 +48,7 @@
         <device id="EMULY2I-W5TQFA2-6RMOMOC-YHBF3UD-EZF25DA-QENYTDL-X2ZOGQO-TIZNCAX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
-        <device id="HQRTVSH-5BRZQ2M-X5FJEYL-V2E3BZU-LO47TRO-ICLA3SJ-3MCHKIU-YGX3EAG" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="QWCBKVJ-W5VN4QW-XLLS2AY-T2ZX6P2-CA4ILTN-FHOLCOJ-EQKJJ4F-R5PYKAO" introducedBy="">
+        <device id="MM5XIPP-JNFXZJ7-IJR4VRJ-DXA74OY-5N7TPT7-2USGMD7-E4KWC2H-YA4SEAK" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
@@ -98,10 +92,7 @@
         <device id="EMULY2I-W5TQFA2-6RMOMOC-YHBF3UD-EZF25DA-QENYTDL-X2ZOGQO-TIZNCAX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
-        <device id="HQRTVSH-5BRZQ2M-X5FJEYL-V2E3BZU-LO47TRO-ICLA3SJ-3MCHKIU-YGX3EAG" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="QWCBKVJ-W5VN4QW-XLLS2AY-T2ZX6P2-CA4ILTN-FHOLCOJ-EQKJJ4F-R5PYKAO" introducedBy="">
+        <device id="MM5XIPP-JNFXZJ7-IJR4VRJ-DXA74OY-5N7TPT7-2USGMD7-E4KWC2H-YA4SEAK" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
@@ -145,10 +136,7 @@
         <device id="EMULY2I-W5TQFA2-6RMOMOC-YHBF3UD-EZF25DA-QENYTDL-X2ZOGQO-TIZNCAX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
-        <device id="HQRTVSH-5BRZQ2M-X5FJEYL-V2E3BZU-LO47TRO-ICLA3SJ-3MCHKIU-YGX3EAG" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="QWCBKVJ-W5VN4QW-XLLS2AY-T2ZX6P2-CA4ILTN-FHOLCOJ-EQKJJ4F-R5PYKAO" introducedBy="">
+        <device id="MM5XIPP-JNFXZJ7-IJR4VRJ-DXA74OY-5N7TPT7-2USGMD7-E4KWC2H-YA4SEAK" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
@@ -198,19 +186,9 @@
         <remoteGUIPort>0</remoteGUIPort>
         <numConnections>0</numConnections>
     </device>
-    <device id="HQRTVSH-5BRZQ2M-X5FJEYL-V2E3BZU-LO47TRO-ICLA3SJ-3MCHKIU-YGX3EAG" name="maintablet" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
-        <address>dynamic</address>
-        <paused>false</paused>
-        <autoAcceptFolders>false</autoAcceptFolders>
-        <maxSendKbps>0</maxSendKbps>
-        <maxRecvKbps>0</maxRecvKbps>
-        <maxRequestKiB>0</maxRequestKiB>
-        <untrusted>false</untrusted>
-        <remoteGUIPort>0</remoteGUIPort>
-        <numConnections>0</numConnections>
-    </device>
-    <device id="QWCBKVJ-W5VN4QW-XLLS2AY-T2ZX6P2-CA4ILTN-FHOLCOJ-EQKJJ4F-R5PYKAO" name="mainphone" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
-        <address>dynamic</address>
+    <device id="MM5XIPP-JNFXZJ7-IJR4VRJ-DXA74OY-5N7TPT7-2USGMD7-E4KWC2H-YA4SEAK" name="home-server" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
+        <address>tcp://192.168.1.200:22000</address>
+        <address>quic://192.168.1.200:22000</address>
         <paused>false</paused>
         <autoAcceptFolders>false</autoAcceptFolders>
         <maxSendKbps>0</maxSendKbps>
