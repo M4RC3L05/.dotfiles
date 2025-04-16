@@ -1,0 +1,89 @@
+#!/usr/bin/env sh
+
+DOTFILES_DIR="$HOME/.dotfiles"
+DOTFILES_HOME_DIR="$DOTFILES_DIR/home"
+
+usage() {
+  echo "dots"
+  echo ""
+  echo "Dot files manager"
+  echo ""
+  echo "Usage: $(basename "$0") [COMMAND]"
+  echo ""
+  echo "Commands:"
+  echo "  diff           Diffs the dotfiles home files with the real ones"
+  echo "  adopt          Adopts changes on destionation files"
+  echo "  apply          Apply dotfiles files to destination"
+  echo "  help           Show this help message"
+}
+
+command_diff() {
+  find "$DOTFILES_HOME_DIR" -type f | while read -r file; do
+    from="$file"
+    to="$(echo "$from" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
+
+    if [ ! -f "$to" ]; then
+      echo "File \"$to\" does not exists, skipping..."
+      continue
+    fi
+
+    echo "Diffing $from with $to"
+    if diff -q "$from" "$to" > /dev/null; then
+      echo "> No differences found"
+    else
+      echo "> Diferences found:"
+      (set -x; diff -u "$from" "$to" | diff-so-fancy)
+    fi
+  done
+}
+
+command_adopt() {
+  find "$DOTFILES_HOME_DIR" -type f | while read -r file; do
+    from="$file"
+    to="$(echo "$from" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
+
+    if [ ! -f "$to" ]; then
+      echo "File \"$to\" does not exists, skipping..."
+      continue
+    fi
+
+    echo "Adopting: $to to $from"
+    (set -x; cp "$to" "$from")
+  done
+}
+
+command_apply() {
+  find "$DOTFILES_HOME_DIR" -type f | while read -r file; do
+    from="$file"
+    to="$(echo "$from" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
+    destination_folder_path="$(dirname "$to")"
+
+    echo "Applying: $from to $to"
+    (set -x; mkdir -p "$destination_folder_path")
+    (set -x; rm -f "$to")
+    (set -x; cp "$from" "$to")
+  done
+}
+
+main() {
+  command="$1"
+
+  case "$command" in
+    diff)
+      command_diff
+    ;;
+    adopt)
+      command_adopt
+    ;;
+    apply)
+      command_apply
+    ;;
+    *)
+      usage
+      exit 1
+    ;;
+  esac
+
+}
+
+main "$@"

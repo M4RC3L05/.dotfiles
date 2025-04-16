@@ -27,7 +27,6 @@ legacyPackages.x86_64-linux.oha
 legacyPackages.x86_64-linux.podman
 legacyPackages.x86_64-linux.q
 legacyPackages.x86_64-linux.rsync
-legacyPackages.x86_64-linux.stow
 legacyPackages.x86_64-linux.syncthing
 legacyPackages.x86_64-linux.tealdeer
 legacyPackages.x86_64-linux.tokei
