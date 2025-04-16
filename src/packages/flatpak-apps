@@ -23,6 +23,7 @@ flathub	org.gnome.TextEditor
 flathub	org.gnome.seahorse.Application
 flathub	org.libreoffice.LibreOffice
 flathub	org.localsend.localsend_app
+flathub	org.mozilla.firefox
 flathub	org.prismlauncher.PrismLauncher
 flathub	org.qbittorrent.qBittorrent
 flathub	org.raspberrypi.rpi-imager

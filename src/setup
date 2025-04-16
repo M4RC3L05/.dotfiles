@@ -86,12 +86,15 @@ log_info "Add syncthing to firewall exclusion"
 (set -x; sudo ufw allow 22000/udp)
 (set -x; sudo ufw allow 21027/udp)
 
-if [ ! -f "/etc/firefox/policies/policies.json" ]; then
-  log_info "Setup firefox policy"
-  (set -x; sudo mkdir -p /etc/firefox/policies)
-  (set -x; sudo touch /etc/firefox/policies/policies.json)
-  (set -x; sudo cat "$DOTFILES_DIR/src/files/firefox/policies.json" | sudo tee /etc/firefox/policies/policies.json > /dev/null)
-fi
+log_info "Setup firefox policy"
+(set -x; mkdir -p "$HOME"/.local/share/flatpak/extension/org.mozilla.firefox.systemconfig/x86_64/stable/policies)
+(set -x; cp "$DOTFILES_DIR/src/files/firefox/policies.json" "$HOME"/.local/share/flatpak/extension/org.mozilla.firefox.systemconfig/x86_64/stable/policies/policies.json)
+
+log_info "Setup firefox profile"
+(set -x; mkdir -p "$HOME"/.var/app/org.mozilla.firefox/.mozilla/firefox)
+(set -x; cp "$DOTFILES_DIR/src/files/firefox/installs.ini" "$HOME"/.var/app/org.mozilla.firefox/.mozilla/firefox/installs.ini)
+(set -x; cp "$DOTFILES_DIR/src/files/firefox/profiles.ini" "$HOME"/.var/app/org.mozilla.firefox/.mozilla/firefox/profiles.ini)
+(set -x; cp -r "$DOTFILES_DIR/src/files/firefox/main/" "$HOME"/.var/app/org.mozilla.firefox/.mozilla/firefox/main/)
 
 log_info "Stow files"
 (set -x; cd "$DOTFILES_DIR" && stow --adopt --no-folding -v home)
