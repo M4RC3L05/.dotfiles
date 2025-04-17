@@ -22,13 +22,12 @@ usage_adopt() {
   echo ""
   echo "Dotfiles manager"
   echo ""
-  echo "Usage: $(basename "$0") adopt [FILEPATH]"
+  echo "Usage: $(basename "$0") adopt [path]"
   echo ""
   echo "Arguments:"
-  echo "  filepath          The filepath do adopt a specific file. It can be a prevously adopted file or not."
-  echo "                    If no filepath provided, all file in dotfiles home directory that exists on destination"
-  echo "                    will be adopted."
-  echo "                    The filepath provided must be a valid path in the user's home directory"
+  echo "  path              The path do adopt. It can be a prevously adopted file/directory or not."
+  echo "                    If no path provided, all file in dotfiles home directory that exists on ~/ will be adopted."
+  echo "                    The path provided must be a valid path in the user's home directory"
 }
 
 recreate_file() {
