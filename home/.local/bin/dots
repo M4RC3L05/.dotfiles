@@ -11,10 +11,34 @@ usage() {
   echo "Usage: $(basename "$0") [COMMAND]"
   echo ""
   echo "Commands:"
-  echo "  diff           Diffs the dotfiles home files with the destination files"
-  echo "  adopt          Adopts changes from destination files to dotfiles home files"
-  echo "  apply          Apply changes from dotfiles home files to destination files"
+  echo "  diff           Diffs the dotfiles home files with the ~/ files"
+  echo "  adopt          Adopts changes from ~/ files to dotfiles home files"
+  echo "  apply          Apply changes from dotfiles home files to ~/ files"
   echo "  help           Show this help message"
+}
+
+usage_adopt() {
+  echo "dots"
+  echo ""
+  echo "Dotfiles manager"
+  echo ""
+  echo "Usage: $(basename "$0") adopt [FILEPATH]"
+  echo ""
+  echo "Arguments:"
+  echo "  filepath          The filepath do adopt a specific file. It can be a prevously adopted file or not."
+  echo "                    If no filepath provided, all file in dotfiles home directory that exists on destination"
+  echo "                    will be adopted."
+  echo "                    The filepath provided must be a valid path in the user's home directory"
+}
+
+recreate_file() {
+  from="$1"
+  to="$2"
+  destination_folder_path="$(dirname "$to")"
+
+  (PS4="  $ " set -x; mkdir -p "$destination_folder_path")
+  (PS4="  $ " set -x; rm -f "$to")
+  (PS4="  $ " set -x; cp "$from" "$to")
 }
 
 command_diff() {
@@ -38,17 +62,37 @@ command_diff() {
 }
 
 command_adopt() {
-  find "$DOTFILES_HOME_DIR" -type f | while read -r file; do
-    from="$file"
-    to="$(echo "$from" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
+  search_dir="$1"
+  adopt_dir="$DOTFILES_HOME_DIR"
 
-    if [ ! -f "$to" ]; then
-      echo "File \"$to\" does not exists, skipping..."
+  if [ -n "$search_dir" ]; then
+    if [ ! -e "$search_dir" ]; then
+      usage_adopt
+      exit 1
+    fi
+  else
+    search_dir="$adopt_dir"
+  fi
+
+  find "$search_dir" -type f | while read -r file; do
+    from="$file"
+
+    if [ "$search_dir" = "$adopt_dir" ]; then
+      # Copy from ~/ folder to dotfiles home
+      from="$(echo "$file" | sed "s#$adopt_dir#$HOME#")"
+      to="$file"
+    else
+      # Copy from dofiles home folder to ~/
+      to="$(echo "$file" | sed "s#$HOME#$adopt_dir#")"
+    fi
+
+    if [ ! -f "$from" ]; then
+      echo "File \"$from\" does not exists, skipping..."
       continue
     fi
 
-    echo "Adopting: $to to $from"
-    (PS4="  $ " set -x; cp "$to" "$from")
+    echo "Adopting: $from to $to"
+    recreate_file "$from" "$to"
   done
 }
 
@@ -59,9 +103,7 @@ command_apply() {
     destination_folder_path="$(dirname "$to")"
 
     echo "Applying: $from to $to"
-    (PS4="  $ " set -x; mkdir -p "$destination_folder_path")
-    (PS4="  $ " set -x; rm -f "$to")
-    (PS4="  $ " set -x; cp "$from" "$to")
+    recreate_file "$from" "$to"
   done
 }
 
@@ -73,7 +115,8 @@ main() {
       command_diff
     ;;
     adopt)
-      command_adopt
+      shift 1
+      command_adopt "$@"
     ;;
     apply)
       command_apply
