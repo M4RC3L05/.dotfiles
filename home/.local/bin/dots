@@ -6,14 +6,14 @@ DOTFILES_HOME_DIR="$DOTFILES_DIR/home"
 usage() {
   echo "dots"
   echo ""
-  echo "Dot files manager"
+  echo "Dotfiles manager"
   echo ""
   echo "Usage: $(basename "$0") [COMMAND]"
   echo ""
   echo "Commands:"
-  echo "  diff           Diffs the dotfiles home files with the real ones"
-  echo "  adopt          Adopts changes on destionation files"
-  echo "  apply          Apply dotfiles files to destination"
+  echo "  diff           Diffs the dotfiles home files with the destination files"
+  echo "  adopt          Adopts changes from destination files to dotfiles home files"
+  echo "  apply          Apply changes from dotfiles home files to destination files"
   echo "  help           Show this help message"
 }
 
