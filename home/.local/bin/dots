@@ -23,16 +23,16 @@ command_diff() {
     to="$(echo "$from" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
 
     if [ ! -f "$to" ]; then
-      echo "File \"$to\" does not exists, skipping..."
+      echo ">> File \"$to\" does not exists, skipping..."
       continue
     fi
 
     echo "Diffing $from with $to"
     if diff -q "$from" "$to" > /dev/null; then
-      echo "> No differences found"
+      echo "  >> No differences found"
     else
-      echo "> Diferences found:"
-      (set -x; diff -u "$from" "$to" | diff-so-fancy)
+      echo "  >> Diferences found:"
+      (PS4="  $ " set -x; diff -u "$from" "$to" | diff-so-fancy)
     fi
   done
 }
@@ -48,7 +48,7 @@ command_adopt() {
     fi
 
     echo "Adopting: $to to $from"
-    (set -x; cp "$to" "$from")
+    (PS4="  $ " set -x; cp "$to" "$from")
   done
 }
 
@@ -59,9 +59,9 @@ command_apply() {
     destination_folder_path="$(dirname "$to")"
 
     echo "Applying: $from to $to"
-    (set -x; mkdir -p "$destination_folder_path")
-    (set -x; rm -f "$to")
-    (set -x; cp "$from" "$to")
+    (PS4="  $ " set -x; mkdir -p "$destination_folder_path")
+    (PS4="  $ " set -x; rm -f "$to")
+    (PS4="  $ " set -x; cp "$from" "$to")
   done
 }
 
