@@ -78,12 +78,7 @@ command_adopt() {
   search_path="$(realpath --canonicalize-existing --quiet "$1")"
 
   if [ -n "$1" ]; then
-    if [ ! -e "$search_path" ]; then
-      usage_adopt
-      exit 1
-    elif [ "${search_path#"$HOME"}" != "$search_path" ]; then
-      search_path="$search_path"
-    else
+    if [ ! -e "$search_path" ] || [ "${search_path#"$HOME"}" = "$search_path" ]; then
       usage_adopt
       exit 1
     fi
@@ -117,12 +112,7 @@ command_apply() {
   search_path="$(realpath --canonicalize-existing --quiet "$1")"
 
   if [ -n "$1" ]; then
-    if [ ! -e "$search_path" ]; then
-      usage_apply
-      exit 1
-    elif [ "${search_path#"$DOTFILES_HOME_DIR"}" != "$search_path" ]; then
-      search_path="$search_path"
-    else
+    if [ ! -e "$search_path" ] || [ "${search_path#"$DOTFILES_HOME_DIR"}" = "$search_path" ]; then
       usage_apply
       exit 1
     fi
