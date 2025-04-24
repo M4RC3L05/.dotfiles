@@ -49,9 +49,9 @@ recreate_file() {
   to="$2"
   destination_folder_path="$(dirname "$to")"
 
-  (PS4="  $ " set -x; mkdir -p "$destination_folder_path")
-  (PS4="  $ " set -x; rm -f "$to")
-  (PS4="  $ " set -x; cp "$from" "$to")
+  mkdir -p "$destination_folder_path"
+  rm -f "$to"
+  cp "$from" "$to"
 }
 
 command_diff() {
@@ -64,12 +64,12 @@ command_diff() {
       continue
     fi
 
-    echo "Diffing $from with $to"
+    printf "Diffing %s with %s ..." "$from" "$to"
     if diff -q "$from" "$to" > /dev/null; then
-      echo "  >> No differences found"
+      echo " ✓"
     else
-      echo "  >> Diferences found:"
-      (PS4="  $ " set -x; diff -u "$from" "$to" | diff-so-fancy)
+      echo " ✕"
+      diff -u --color "$from" "$to"
     fi
   done
 }
@@ -103,7 +103,7 @@ command_adopt() {
       continue
     fi
 
-    echo "Adopting: $from to $to"
+    echo "Adopting $from to $to"
     recreate_file "$from" "$to"
   done
 }
@@ -125,7 +125,7 @@ command_apply() {
     to="$(echo "$from" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
     destination_folder_path="$(dirname "$to")"
 
-    echo "Applying: $from to $to"
+    echo "Applying $from to $to"
     recreate_file "$from" "$to"
   done
 }
