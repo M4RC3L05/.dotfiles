@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+EXEC_NAME="$(basename "$0")"
 DOTFILES_DIR="$HOME/.dotfiles"
 DOTFILES_HOME_DIR="$DOTFILES_DIR/home"
 
@@ -8,7 +9,7 @@ usage() {
   echo ""
   echo "Dotfiles manager"
   echo ""
-  echo "Usage: $(basename "$0") [COMMAND]"
+  echo "Usage: $EXEC_NAME [COMMAND]"
   echo ""
   echo "Commands:"
   echo "  diff           Diffs the dotfiles home files with the ~/ files"
@@ -22,7 +23,7 @@ usage_adopt() {
   echo ""
   echo "Dotfiles manager"
   echo ""
-  echo "Usage: $(basename "$0") adopt [path]"
+  echo "Usage: $EXEC_NAME adopt [path]"
   echo ""
   echo "Arguments:"
   echo "  path  (optional)  The path do adopt. It can be a prevously adopted file/directory or not."
@@ -35,7 +36,7 @@ usage_apply() {
   echo ""
   echo "Dotfiles manager"
   echo ""
-  echo "Usage: $(basename "$0") apply [path]"
+  echo "Usage: $EXEC_NAME apply [path]"
   echo ""
   echo "Arguments:"
   echo "  path (optional)   The path do apply."
