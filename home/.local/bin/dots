@@ -25,8 +25,8 @@ usage_adopt() {
   echo "Usage: $(basename "$0") adopt [path]"
   echo ""
   echo "Arguments:"
-  echo "  path              The path do adopt. It can be a prevously adopted file/directory or not."
-  echo "                    If no path provided, all file in dotfiles home directory that exists on ~/ will be adopted."
+  echo "  path  (optional)  The path do adopt. It can be a prevously adopted file/directory or not."
+  echo "                    If no path provided, all files in dotfiles home directory that exists on ~/ will be adopted."
   echo "                    The path provided must be a valid path in the user's home directory"
 }
 
@@ -74,28 +74,32 @@ command_diff() {
 }
 
 command_adopt() {
-  search_dir="$1"
-  adopt_dir="$DOTFILES_HOME_DIR"
+  search_path="$(realpath --canonicalize-existing --quiet "$1")"
 
-  if [ -n "$search_dir" ]; then
-    if [ ! -e "$search_dir" ]; then
+  if [ -n "$1" ]; then
+    if [ ! -e "$search_path" ]; then
+      usage_adopt
+      exit 1
+    elif [ "${search_path#"$HOME"}" != "$search_path" ]; then
+      search_path="$search_path"
+    else
       usage_adopt
       exit 1
     fi
   else
-    search_dir="$adopt_dir"
+    search_path="$DOTFILES_HOME_DIR"
   fi
 
-  find "$search_dir" -type f | while read -r file; do
+  find "$search_path" -type f | while read -r file; do
     from="$file"
 
-    if [ "$search_dir" = "$adopt_dir" ]; then
+    if [ "$search_path" = "$DOTFILES_HOME_DIR" ]; then
       # Copy from ~/ folder to dotfiles home
-      from="$(echo "$file" | sed "s#$adopt_dir#$HOME#")"
+      from="$(echo "$file" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
       to="$file"
     else
-      # Copy from dofiles home folder to ~/
-      to="$(echo "$file" | sed "s#$HOME#$adopt_dir#")"
+      # Copy from dotfiles home folder to ~/
+      to="$(echo "$file" | sed "s#$HOME#$DOTFILES_HOME_DIR#")"
     fi
 
     if [ ! -f "$from" ]; then
