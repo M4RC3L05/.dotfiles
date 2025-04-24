@@ -30,6 +30,19 @@ usage_adopt() {
   echo "                    The path provided must be a valid path in the user's home directory"
 }
 
+usage_apply() {
+  echo "dots"
+  echo ""
+  echo "Dotfiles manager"
+  echo ""
+  echo "Usage: $(basename "$0") apply [path]"
+  echo ""
+  echo "Arguments:"
+  echo "  path (optional)   The path do apply."
+  echo "                    If no path provided, all files in dotfiles home directory that exists on ~/ will be applyed."
+  echo "                    The path provided must be a valid path in the user's dotfiles home directory"
+}
+
 recreate_file() {
   from="$1"
   to="$2"
@@ -96,7 +109,23 @@ command_adopt() {
 }
 
 command_apply() {
-  find "$DOTFILES_HOME_DIR" -type f | while read -r file; do
+  search_path="$(realpath --canonicalize-existing --quiet "$1")"
+
+  if [ -n "$1" ]; then
+    if [ ! -e "$search_path" ]; then
+      usage_apply
+      exit 1
+    elif [ "${search_path#"$DOTFILES_HOME_DIR"}" != "$search_path" ]; then
+      search_path="$search_path"
+    else
+      usage_apply
+      exit 1
+    fi
+  else
+    search_path="$DOTFILES_HOME_DIR"
+  fi
+
+  find "$search_path" -type f | while read -r file; do
     from="$file"
     to="$(echo "$from" | sed "s#$DOTFILES_HOME_DIR#$HOME#")"
     destination_folder_path="$(dirname "$to")"
@@ -118,7 +147,8 @@ main() {
       command_adopt "$@"
     ;;
     apply)
-      command_apply
+      shift 1
+      command_apply "$@"
     ;;
     *)
       usage
