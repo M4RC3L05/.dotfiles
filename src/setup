@@ -94,4 +94,7 @@ if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   (set -x; systemctl --user enable --now dump-packages.timer)
 fi
 
+log_info "Reload systemd user units"
+(set -x; systemctl --user daemon-reload)
+
 log_success "All done, restart your computer."
