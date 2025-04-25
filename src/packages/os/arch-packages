@@ -14,7 +14,6 @@ vpl-gpu-rt
 vulkan-intel
 lib32-vulkan-intel
 libvdpau-va-gl
-intel-gpu-tools
 
 ## NVidia
 nvidia-open
@@ -22,7 +21,6 @@ nvidia-open-lts
 nvidia-utils
 libva-nvidia-driver
 lib32-nvidia-utils
-nvtop
 
 ## GStreamer plugins
 gst-libav
@@ -34,8 +32,11 @@ gst-plugins-ugly
 
 ## Tools
 vulkan-tools
+vulkan-mesa-layers
 libva-utils
 vdpauinfo
+nvtop
+intel-gpu-tools
 
 # Firewall
 gufw
