@@ -87,7 +87,7 @@ log_info "Add syncthing to firewall exclusion"
 (set -x; sudo ufw allow 21027/udp)
 
 log_info "Setup dotfiles & configs"
-(set -x; "$DOTFILES_DIR/home/.local/bin/dots" apply)
+(set -x; ~/.local/bin/dots apply)
 
 if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   log_info "Enable dump package cron"
