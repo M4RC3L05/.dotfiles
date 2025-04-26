@@ -16,7 +16,7 @@ legacyPackages.x86_64-linux.ffmpeg
 legacyPackages.x86_64-linux.fish
 legacyPackages.x86_64-linux.git
 legacyPackages.x86_64-linux.hyperfine
-legacyPackages.x86_64-linux.jq
+legacyPackages.x86_64-linux.jless
 legacyPackages.x86_64-linux.k9s
 legacyPackages.x86_64-linux.kubecolor
 legacyPackages.x86_64-linux.kubectl
