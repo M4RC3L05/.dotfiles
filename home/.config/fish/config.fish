@@ -7,11 +7,7 @@ status is-interactive; and begin
   alias cat "bat --plain"
   alias eza "eza --icons auto --color auto --git"
   alias kubectl kubecolor
-  alias la "eza -a"
-  alias ll "eza -l"
-  alias lla "eza -la"
   alias ls eza
-  alias lt "eza --tree"
   alias proxyK8sServer "ssh -NL 6443:127.0.0.1:6443 mainserver"
 
   # Interactive shell initialisation
