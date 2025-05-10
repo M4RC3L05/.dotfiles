@@ -45,9 +45,6 @@ gufw
 code
 trash-cli
 
-# MPV
-mpv
-
 # Flatpak
 flatpak
 gnome-software
