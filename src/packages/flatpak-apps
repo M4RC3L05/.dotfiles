@@ -1,4 +1,5 @@
 flathub	app.drey.KeyRack
+flathub	app.freelens.Freelens
 flathub	ca.desrt.dconf-editor
 flathub	com.bitwarden.desktop
 flathub	com.brave.Browser
@@ -12,7 +13,6 @@ flathub	com.mattjakeman.ExtensionManager
 flathub	com.protonvpn.www
 flathub	com.usebottles.bottles
 flathub	com.valvesoftware.Steam
-flathub	io.kinvolk.Headlamp
 flathub	net.mullvad.MullvadBrowser
 flathub	net.nokyan.Resources
 flathub	org.gnome.Boxes
