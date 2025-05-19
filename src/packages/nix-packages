@@ -19,6 +19,7 @@ fish
 git
 hyperfine
 jless
+jq
 k9s
 kubecolor
 kubectl
