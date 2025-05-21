@@ -18,5 +18,6 @@
   "window.titleBarStyle": "custom",
   "workbench.list.smoothScrolling": true,
   "workbench.preferredDarkColorTheme": "Default Dark Modern",
-  "workbench.preferredLightColorTheme": "Default Light Modern"
+  "workbench.preferredLightColorTheme": "Default Light Modern",
+  "deno.enable": false
 }
