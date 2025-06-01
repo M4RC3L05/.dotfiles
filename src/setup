@@ -99,6 +99,10 @@ log_info "Add syncthing to firewall exclusion"
 (set -x; sudo ufw allow 22000/udp)
 (set -x; sudo ufw allow 21027/udp)
 
+log_info "Early KMS nvidia & intel"
+(set -x; printf "hostonly=\"yes\"\\ncompress=\"lz4\"\\nforce_drivers+=\" i915 nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee "/etc/dracut.conf.d/myflags.conf" > /dev/null)
+(set -x; sudo reinstall-kernels)
+
 log_info "Setup dotfiles & configs"
 (set -x; ~/.local/bin/dots apply)
 
