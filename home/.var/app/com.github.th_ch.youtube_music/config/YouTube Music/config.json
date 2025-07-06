@@ -1,14 +1,14 @@
 {
 	"window-size": {
 		"width": 1400,
-		"height": 948
+		"height": 1000
 	},
 	"window-maximized": false,
 	"window-position": {
-		"x": 2762,
-		"y": 55
+		"x": 2867,
+		"y": 32
 	},
-	"url": "https://music.youtube.com/watch?v=K6O_4_Yu0WY",
+	"url": "https://music.youtube.com/watch?v=dUbnvxB7WtA&list=RDAMVMcI6mwpzNNvk&index=0",
 	"options": {
 		"tray": true,
 		"appVisible": true,
@@ -53,7 +53,7 @@
 	},
 	"__internal__": {
 		"migrations": {
-			"version": "3.8.0"
+			"version": "3.9.0"
 		}
 	}
 }
