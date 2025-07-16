@@ -4,6 +4,8 @@ gnome-shell-extension-appindicator
 gnome-shell-extension-caffeine
 gnome-console
 gnome-backgrounds
+libedataserverui4
+folks
 
 # Drivers & Multimedia (do not sort, order is important)
 

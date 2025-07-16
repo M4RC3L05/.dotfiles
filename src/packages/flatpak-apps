@@ -16,6 +16,8 @@ flathub	com.valvesoftware.Steam
 flathub	net.nokyan.Resources
 flathub	org.gnome.Boxes
 flathub	org.gnome.Calculator
+flathub	org.gnome.Calendar
+flathub	org.gnome.Contacts
 flathub	org.gnome.Loupe
 flathub	org.gnome.Papers
 flathub	org.gnome.Showtime
