@@ -42,9 +42,6 @@ log_info "Install eget packages"
 (set -x; mkdir -p "$HOME"/.local/bin/)
 install_packages "eget"
 
-log_info "Install vscode extensions"
-install_packages "vscode-extensions"
-
 log_info "Set gnome & gnome apps configs"
 (set -x; gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']")
 

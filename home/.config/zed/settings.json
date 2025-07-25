@@ -1,0 +1,34 @@
+{
+  "telemetry": {
+    "metrics": false,
+    "diagnostics": false
+  },
+  "title_bar": {
+    "show_sign_in": false,
+    "show_user_picture": false
+  },
+  "disable_ai": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 13,
+  "buffer_font_family": "Adwaita Mono",
+  "theme": {
+    "mode": "system",
+    "light": "Gruvbox Light",
+    "dark": "Gruvbox Dark"
+  },
+  "terminal": {
+    "shell": {
+      "program": "fish"
+    }
+  },
+  "inlay_hints": {
+    "enabled": true
+  },
+  "autosave": "on_focus_change",
+  "auto_install_extensions": {
+    "html": true,
+    "deno": true,
+    "fish": true,
+    "toml": true
+  }
+}

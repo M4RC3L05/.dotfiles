@@ -44,9 +44,8 @@ intel-gpu-tools
 # Firewall
 gufw
 
-# VSCode
-code
-trash-cli
+# Zed editor
+zed
 
 # Flatpak
 flatpak

@@ -68,9 +68,6 @@ resolve_packages_from_context() {
     eget)
       cat "$PACKAGES_DIR"/eget-packages
     ;;
-    vscode-extensions)
-      cat "$PACKAGES_DIR"/vscode-extensions
-    ;;
     *)
       echo ""
     ;;
@@ -90,9 +87,6 @@ install() {
     ;;
     eget)
       (set -x; eget "$2" --upgrade-only --to "$HOME"/.local/bin/)
-    ;;
-    vscode-extensions)
-      (set -x; code --install-extension "$2")
     ;;
     *)
       log_warning "Context \"$1\" not recognized, will not install"
