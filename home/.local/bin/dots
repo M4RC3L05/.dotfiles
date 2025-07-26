@@ -77,9 +77,9 @@ adopt_cmd() {
     already_adopted_only=0
 
     case "$2" in
-      -ad|--already-adopted)
+      -ad | --already-adopted)
         already_adopted_only=1
-      ;;
+        ;;
     esac
 
     find "$1" -type f | while IFS= read -r file; do
@@ -171,7 +171,7 @@ main() {
       else
         diff_cmd "$DOTFILES_DIR_FILES"
       fi
-    ;;
+      ;;
     adopt)
       if [ -z "$2" ]; then
         printf "A path must be specified\n\n"
@@ -180,22 +180,22 @@ main() {
       fi
 
       adopt_cmd "$(realpath "$2")" "$3"
-    ;;
+      ;;
     apply)
       if [ -n "$2" ]; then
         apply_cmd "$(realpath "$2")"
       else
         apply_cmd "$DOTFILES_DIR_FILES"
       fi
-    ;;
-    -h|--help)
+      ;;
+    -h | --help)
       help
-    ;;
+      ;;
     *)
       printf "Command \"%s\" is not valid\n\n" "$1"
       help
       exit 1
-    ;;
+      ;;
   esac
 }
 
