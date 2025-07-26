@@ -101,7 +101,10 @@ log_info "Early KMS nvidia & intel"
 (set -x; sudo reinstall-kernels)
 
 log_info "Setup dotfiles & configs"
-(set -x; ~/.local/bin/dots apply)
+(
+  set -x
+  "$(dirname "$0")"/../home/.local/bin/dots apply
+)
 
 if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   log_info "Enable dump package cron"

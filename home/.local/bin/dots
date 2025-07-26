@@ -1,0 +1,202 @@
+#!/usr/bin/env sh
+
+set -e
+
+DOTFILES_DIR="$(realpath "$HOME"/.dotfiles)"
+DOTFILES_DIR_FILES="$DOTFILES_DIR/home"
+
+resolve_diff_original_path() {
+  if echo "$1" | grep -q "^$DOTFILES_DIR_FILES"; then
+    printf "%s" "$(echo "$1" | sed "s|$DOTFILES_DIR_FILES|$HOME|")"
+  elif echo "$1" | grep -q "^$HOME"; then
+    printf "%s" "$(echo "$1" | sed "s|$HOME|$DOTFILES_DIR_FILES|")"
+  else
+    printf "%s" "$1"
+  fi
+}
+
+diff_cmd() {
+  path="$DOTFILES_DIR_FILES"
+
+  if [ -n "$1" ]; then
+    if echo "$1" | grep -q -v "^$HOME" && echo "$1" | grep -q -v "^$DOTFILES_DIR_FILES"; then
+      printf "The path \"%s\" is not a path on the dotfiles files directory or home directory\n" "$1"
+      exit 1
+    else
+      path="$1"
+    fi
+  fi
+
+  if [ -f "$path" ]; then
+    original_file="$(resolve_diff_original_path "$path")"
+    printf "Diffing \"%s\" against \"%s\"\n" "$path" "$original_file"
+
+    if [ ! -f "$original_file" ]; then
+      if echo "$original_file" | grep -q "^$DOTFILES_DIR_FILES"; then
+        printf "Path \"%s\" is not adopted, ignoring...\n" "$original_file"
+      elif echo "$original_file" | grep -q "^$HOME"; then
+        printf "Path \"%s\" being tracked does not exists on \"%s\", ignoring...\n" "$path" "$original_file"
+      fi
+    else
+      diff -u "$path" "$original_file" | diff-so-fancy
+    fi
+  elif [ -d "$path" ]; then
+    find "$path" -type f | while IFS= read -r file; do
+      original_file="$(resolve_diff_original_path "$file")"
+      printf "Diffing \"%s\" against \"%s\"\n" "$file" "$original_file"
+
+      if [ ! -f "$original_file" ]; then
+        if echo "$original_file" | grep -q "^$DOTFILES_DIR_FILES"; then
+          printf "Path \"%s\" is not adopted, ignoring...\n" "$original_file"
+        elif echo "$original_file" | grep -q "^$HOME"; then
+          printf "Path \"%s\" being tracked does not exists on \"%s\", ignoring...\n" "$file" "$original_file"
+        fi
+      else
+        diff -u "$file" "$original_file" | diff-so-fancy
+      fi
+    done
+  else
+    printf "The path \"%s\" is invalid\n" "$path"
+    exit 1
+  fi
+}
+
+adopt_cmd() {
+  if echo "$1" | grep -q -v "^$HOME"; then
+    printf "The path \"%s\" is not a path on the home directory\n" "$1"
+    exit 1
+  fi
+
+  if [ -f "$1" ]; then
+    dotfiles_path="$(echo "$1" | sed "s|$HOME|$DOTFILES_DIR_FILES|")"
+
+    printf "Adopting \"%s\" to \"%s\"\n" "$1" "$dotfiles_path"
+    mkdir -p "$(dirname "$dotfiles_path")"
+    cp "$1" "$dotfiles_path"
+  elif [ -d "$1" ]; then
+    already_adopted_only=0
+
+    case "$2" in
+      -ad|--already-adopted)
+        already_adopted_only=1
+      ;;
+    esac
+
+    find "$1" -type f | while IFS= read -r file; do
+      dotfiles_path="$(echo "$file" | sed "s|$HOME|$DOTFILES_DIR_FILES|")"
+
+      if [ $already_adopted_only -eq 1 ] && [ ! -f "$dotfiles_path" ]; then
+        continue
+      fi
+
+      printf "Adopting \"%s\" to \"%s\"\n" "$file" "$dotfiles_path"
+      mkdir -p "$(dirname "$dotfiles_path")"
+      cp "$file" "$dotfiles_path"
+    done
+  else
+    printf "The path \"%s\" is is invalid\n" "$1"
+    exit 1
+  fi
+}
+
+apply_cmd() {
+  if echo "$1" | grep -q -v "^$DOTFILES_DIR_FILES"; then
+    printf "The path \"%s\" is not a path on the dotfiles files directory\n" "$1"
+    exit 1
+  fi
+
+  if [ -f "$1" ]; then
+    home_path="$(echo "$1" | sed "s|$DOTFILES_DIR_FILES|$HOME|")"
+
+    printf "Applying \"%s\" to \"%s\"\n" "$1" "$home_path"
+    mkdir -p "$(dirname "$home_path")"
+    cp "$1" "$home_path"
+  elif [ -d "$1" ]; then
+    find "$1" -type f | while IFS= read -r file; do
+      home_path="$(echo "$file" | sed "s|$DOTFILES_DIR_FILES|$HOME|")"
+
+      printf "Applying \"%s\" to \"%s\"\n" "$file" "$home_path"
+      mkdir -p "$(dirname "$home_path")"
+      cp -f "$file" "$home_path"
+    done
+  else
+    printf "The path \"%s\" is is invalid\n" "$1"
+    exit 1
+  fi
+}
+
+help() {
+  echo "Usage: dots [-h|--help] [command] <path>"
+  echo ""
+  echo "Options:"
+  echo "  -h, --help               Display this help message."
+  echo "  -ad, --already-adopted   Re-adopt files that were already adopted."
+  echo "                           This option is only available for the adopt command and can only be used with a directory path."
+  echo ""
+  echo "Commands:"
+  echo "  diff <path>              Compare files in the dotfiles directory with the corresponding files in the home directory."
+  echo "                           Path is optional; if provided, it must be a subpath of the dotfiles directory or home directory."
+  echo "                           Can be a directory (recursively compared) or a specific file."
+  echo ""
+  echo "  apply <path>             Copy file contents from the dotfiles directory to the corresponding home directory."
+  echo "                           Path is optional; if provided, it must be a subpath of the dotfiles directory."
+  echo "                           Can be a directory or a file for a partial apply."
+  echo ""
+  echo "  adopt [path]             Copy files from the home directory to the dotfiles directory."
+  echo "                           Path is required; it must be a subpath of the home directory."
+  echo "                           Can be a directory or a file."
+  echo "                           If a directory is specified, use the -ad or --already-adopted flag to re-adopt files that were already adopted only."
+  echo ""
+  echo "Examples:"
+  echo "  dots -h"
+  echo "  dots --help"
+  echo "  dots diff"
+  echo "  dots diff  $DOTFILES_DIR_FILES/folder/name/"
+  echo "  dots diff  $HOME/folder/name/"
+  echo "  dots diff  $DOTFILES_DIR_FILES/file.txt"
+  echo "  dots diff  $HOME/file.txt"
+  echo "  dots apply $DOTFILES_DIR_FILES/folder/name/"
+  echo "  dots apply $DOTFILES_DIR_FILES/file.txt"
+  echo "  dots adopt $HOME/folder/name/"
+  echo "  dots adopt $HOME/file.txt"
+  echo "  dots adopt -ad $HOME/folder/name/"
+  echo "  dots adopt --already-adopted $HOME/folder/name/"
+}
+
+main() {
+  case "$1" in
+    diff)
+      if [ -n "$2" ]; then
+        diff_cmd "$(realpath "$2")"
+      else
+        diff_cmd "$DOTFILES_DIR_FILES"
+      fi
+    ;;
+    adopt)
+      if [ -z "$2" ]; then
+        printf "A path must be specified\n\n"
+        help
+        exit 1
+      fi
+
+      adopt_cmd "$(realpath "$2")" "$3"
+    ;;
+    apply)
+      if [ -n "$2" ]; then
+        apply_cmd "$(realpath "$2")"
+      else
+        apply_cmd "$DOTFILES_DIR_FILES"
+      fi
+    ;;
+    -h|--help)
+      help
+    ;;
+    *)
+      printf "Command \"%s\" is not valid\n\n" "$1"
+      help
+      exit 1
+    ;;
+  esac
+}
+
+main "$@"
