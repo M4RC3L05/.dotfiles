@@ -29,6 +29,8 @@
     "html": true,
     "deno": true,
     "fish": true,
-    "toml": true
+    "toml": true,
+    "sql": true,
+    "dockerfile": true
   }
 }

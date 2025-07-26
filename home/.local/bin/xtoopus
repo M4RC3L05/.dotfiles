@@ -12,6 +12,9 @@ for file in "$@"; do
   final_path="$(basename -s "$file_extension" "$parsed_path").ogg"
 
   echo "=> Converting $(basename "$parsed_path") => $final_path"
-  (set -x; ffmpeg -v warning -stats -i "$parsed_path" -c:a libopus -b:a 256k -vn "$final_path")
+  (
+    set -x
+    ffmpeg -v warning -stats -i "$parsed_path" -c:a libopus -b:a 256k -vn "$final_path"
+  )
   echo
 done

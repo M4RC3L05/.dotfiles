@@ -4,15 +4,33 @@ set -e
 
 EGET_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/eget-packages)"
 
-(set -x; nix profile upgrade --all)
-(set -x; nix profile wipe-history)
-(set -x; nix-collect-garbage -d)
-(set -x; mise upgrade --bump --cd "$HOME")
+(
+  set -x
+  nix profile upgrade --all
+)
+(
+  set -x
+  nix profile wipe-history
+)
+(
+  set -x
+  nix-collect-garbage -d
+)
+(
+  set -x
+  mise upgrade --bump --cd "$HOME"
+)
 
 if [ -n "$EGET_PACKAGES" ]; then
   echo "$EGET_PACKAGES" | while read -r package; do
-    (set -x; eget "$package" --upgrade-only --to "$HOME"/.local/bin/)
+    (
+      set -x
+      eget "$package" --upgrade-only --to "$HOME"/.local/bin/
+    )
   done
 fi
 
-(set -x; fish -c "fish_update_completions")
+(
+  set -x
+  fish -c "fish_update_completions"
+)

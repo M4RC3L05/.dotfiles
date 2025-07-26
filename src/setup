@@ -15,8 +15,14 @@ upgrade_package_manager_repos
 install_packages "$ID"
 
 log_info "Setup flatpak remotes"
-(set -x; flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo)
-(set -x; flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo)
+(
+  set -x
+  flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+)
+(
+  set -x
+  flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+)
 
 log_info "Install flatpak runtimes & apps"
 install_packages "flatpak-runtimes"
@@ -24,54 +30,120 @@ install_packages "flatpak-apps"
 
 if ! command -v nix > /dev/null 2>&1; then
   log_info "Setup nix"
-  (set -x; curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add)
+  (
+    set -x
+    curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add
+  )
 
   # shellcheck source=/dev/null
   . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
   nix_binary_path="$(readlink -f "$(which nix)")"
   nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
-  (set -x; nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index")
-  (set -x; "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile install nixpkgs#nix)
+  (
+    set -x
+    nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index"
+  )
+  (
+    set -x
+    "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile install nixpkgs#nix
+  )
 fi
 
 log_info "Install nix packages"
 install_packages "nix"
 
 log_info "Install eget packages"
-(set -x; mkdir -p "$HOME"/.local/bin/)
+(
+  set -x
+  mkdir -p "$HOME"/.local/bin/
+)
 install_packages "eget"
 
 log_info "Set gnome & gnome apps configs"
-(set -x; gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']")
+(
+  set -x
+  gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']"
+)
 
-(set -x; gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark")
-(set -x; gsettings set org.gnome.desktop.interface color-scheme "prefer-dark")
-(set -x; gsettings set org.gnome.desktop.interface accent-color "orange")
+(
+  set -x
+  gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
+)
+(
+  set -x
+  gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+)
+(
+  set -x
+  gsettings set org.gnome.desktop.interface accent-color "orange"
+)
 
-(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled "true")
-(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "2500")
-(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "false")
-(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from "18.0")
-(set -x; gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to "9.0")
+(
+  set -x
+  gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled "true"
+)
+(
+  set -x
+  gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "2500"
+)
+(
+  set -x
+  gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "false"
+)
+(
+  set -x
+  gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from "18.0"
+)
+(
+  set -x
+  gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to "9.0"
+)
 
-(set -x; gsettings set org.gnome.Console theme "auto")
-(set -x; gsettings set org.gnome.Console shell "['fish']")
+(
+  set -x
+  gsettings set org.gnome.Console theme "auto"
+)
+(
+  set -x
+  gsettings set org.gnome.Console shell "['fish']"
+)
 
-(set -x; gsettings set org.gnome.desktop.interface monospace-font-name 'Cascadia Code 10')
+(
+  set -x
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Cascadia Code 10'
+)
 
-(set -x; gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gnome/blobs-l.svg")
-(set -x; gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gnome/blobs-d.svg")
+(
+  set -x
+  gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gnome/blobs-l.svg"
+)
+(
+  set -x
+  gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gnome/blobs-d.svg"
+)
 
-(set -x; gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close")
+(
+  set -x
+  gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
+)
 
-(set -x; gsettings set org.gnome.mutter center-new-windows "true")
+(
+  set -x
+  gsettings set org.gnome.mutter center-new-windows "true"
+)
 
-(set -x; gsettings set org.gnome.Epiphany.web:/ hardware-acceleration-policy 'always' || true)
+(
+  set -x
+  gsettings set org.gnome.Epiphany.web:/ hardware-acceleration-policy 'always' || true
+)
 
 if ! systemctl is-enabled bluetooth > /dev/null 2>&1; then
   log_info "Enable bluetooth service"
-  (set -x; systemctl enable --now bluetooth)
+  (
+    set -x
+    systemctl enable --now bluetooth
+  )
 fi
 
 log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
@@ -80,25 +152,49 @@ log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup
 
 if ! systemctl is-enabled ufw > /dev/null 2>&1; then
   log_info "Enable firewall service"
-  (set -x; systemctl enable --now ufw)
+  (
+    set -x
+    systemctl enable --now ufw
+  )
 fi
 
 if sudo ufw status | grep -q "inactive"; then
   log_info "Enable ufw"
-  (set -x; sudo ufw enable)
+  (
+    set -x
+    sudo ufw enable
+  )
 fi
 
 log_info "Add localsend to firewall exclusion"
-(set -x; sudo ufw allow 53317/udp)
-(set -x; sudo ufw allow 53317/tcp)
+(
+  set -x
+  sudo ufw allow 53317/udp
+)
+(
+  set -x
+  sudo ufw allow 53317/tcp
+)
 
 log_info "Add syncthing to firewall exclusion"
-(set -x; sudo ufw allow 22000/udp)
-(set -x; sudo ufw allow 21027/udp)
+(
+  set -x
+  sudo ufw allow 22000/udp
+)
+(
+  set -x
+  sudo ufw allow 21027/udp
+)
 
 log_info "Early KMS nvidia & intel"
-(set -x; printf "hostonly=\"yes\"\\ncompress=\"lz4\"\\nforce_drivers+=\" i915 nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee "/etc/dracut.conf.d/myflags.conf" > /dev/null)
-(set -x; sudo reinstall-kernels)
+(
+  set -x
+  printf "hostonly=\"yes\"\\ncompress=\"lz4\"\\nforce_drivers+=\" i915 nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee "/etc/dracut.conf.d/myflags.conf" > /dev/null
+)
+(
+  set -x
+  sudo reinstall-kernels
+)
 
 log_info "Setup dotfiles & configs"
 (
@@ -108,10 +204,16 @@ log_info "Setup dotfiles & configs"
 
 if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   log_info "Enable dump package cron"
-  (set -x; systemctl --user enable --now dump-packages.timer)
+  (
+    set -x
+    systemctl --user enable --now dump-packages.timer
+  )
 fi
 
 log_info "Reload systemd user units"
-(set -x; systemctl --user daemon-reload)
+(
+  set -x
+  systemctl --user daemon-reload
+)
 
 log_success "All done, restart your computer."

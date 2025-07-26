@@ -5,5 +5,15 @@ set -e
 ROOT_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 
 echo "=> Running editorconfig checker"
-(set -x; ec -exclude .git "$ROOT_DIR")
+(
+  set -x
+  ec -exclude .git "$ROOT_DIR"
+)
+echo
+
+echo "=> Running shfmt checker"
+(
+  set -x
+  shfmt -p -d --apply-ignore -i 2 -ci -sr "$ROOT_DIR"
+)
 echo

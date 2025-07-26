@@ -4,7 +4,10 @@
 
 # shellcheck disable=SC2034
 # shellcheck source=/dev/null
-ID="$(. /etc/os-release; echo "$ID")"
+ID="$(
+  . /etc/os-release
+  echo "$ID"
+)"
 
 GREEN="\033[0;32m"
 BLUE="\033[0;34m"
@@ -22,16 +25,16 @@ log() {
   case "$1" in
     INFO)
       printf "%b[%s]%b %s\n" "$BLUE" "INFO" "$RESET" "$2"
-    ;;
+      ;;
     WARNING)
       printf "%b[%s]%b %s\n" "$YELLOW" "WARNING" "$RESET" "$2"
-    ;;
+      ;;
     SUCCESS)
       printf "%b[%s]%b %s\n" "$GREEN" "SUCCESS" "$RESET" "$2"
-    ;;
+      ;;
     ERROR)
       printf "%b[%s]%b %s\n" "$RED" "ERROR" "$RESET" "$2"
-    ;;
+      ;;
   esac
 }
 
@@ -55,42 +58,54 @@ resolve_packages_from_context() {
   case "$1" in
     endeavouros)
       cat "$PACKAGES_DIR"/os/arch-packages
-    ;;
+      ;;
     flatpak-apps)
       cat "$PACKAGES_DIR"/flatpak-apps
-    ;;
+      ;;
     flatpak-runtimes)
       cat "$PACKAGES_DIR"/flatpak-runtimes
-    ;;
+      ;;
     nix)
       cat "$PACKAGES_DIR"/nix-packages
-    ;;
+      ;;
     eget)
       cat "$PACKAGES_DIR"/eget-packages
-    ;;
+      ;;
     *)
       echo ""
-    ;;
+      ;;
   esac
 }
 
 install() {
   case "$1" in
     endeavouros)
-      (set -x; sudo pacman -S --needed --noconfirm "$2")
-    ;;
-    flatpak-apps|flatpak-runtimes)
-      (set -x; flatpak install --user -y --noninteractive "$2" "$3")
-    ;;
+      (
+        set -x
+        sudo pacman -S --needed --noconfirm "$2"
+      )
+      ;;
+    flatpak-apps | flatpak-runtimes)
+      (
+        set -x
+        flatpak install --user -y --noninteractive "$2" "$3"
+      )
+      ;;
     nix)
-      (set -x; nix --extra-experimental-features 'nix-command flakes' profile install nixpkgs#"$2")
-    ;;
+      (
+        set -x
+        nix --extra-experimental-features 'nix-command flakes' profile install nixpkgs#"$2"
+      )
+      ;;
     eget)
-      (set -x; eget "$2" --upgrade-only --to "$HOME"/.local/bin/)
-    ;;
+      (
+        set -x
+        eget "$2" --upgrade-only --to "$HOME"/.local/bin/
+      )
+      ;;
     *)
       log_warning "Context \"$1\" not recognized, will not install"
-    ;;
+      ;;
   esac
 }
 
@@ -116,9 +131,9 @@ install_packages() {
 
       if [ "$1" = "nix" ]; then
         case "$package_or_repo" in
-          *podman*|*syncthing*)
+          *podman* | *syncthing*)
             log_warning "Service \"$package_or_repo\" need to be manually enabled after restarting the computer"
-          ;;
+            ;;
         esac
       fi
 
@@ -130,7 +145,10 @@ install_packages() {
 upgrade_package_manager_repos() {
   case "$ID" in
     endeavouros)
-      (set -x; sudo pacman -Syyuu)
-    ;;
+      (
+        set -x
+        sudo pacman -Syyuu
+      )
+      ;;
   esac
 }
