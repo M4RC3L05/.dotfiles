@@ -1,3 +1,7 @@
+# Dev
+base-devel
+git
+
 # GNOME
 adw-gtk-theme
 gnome-shell-extension-appindicator

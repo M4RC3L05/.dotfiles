@@ -11,6 +11,7 @@ HISTCONTROL="ignoreboth"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+[[ -r "/usr/share/git/completion/git-prompt.sh" ]] && . "/usr/share/git/completion/git-prompt.sh"
 
 eval "$(batman --export-env)"
 eval "$(mise activate bash)"
