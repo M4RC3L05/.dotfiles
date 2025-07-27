@@ -65,9 +65,6 @@ resolve_packages_from_context() {
     flatpak-runtimes)
       cat "$PACKAGES_DIR"/flatpak-runtimes
       ;;
-    nix)
-      cat "$PACKAGES_DIR"/nix-packages
-      ;;
     eget)
       cat "$PACKAGES_DIR"/eget-packages
       ;;
@@ -91,16 +88,10 @@ install() {
         flatpak install --user -y --noninteractive "$2" "$3"
       )
       ;;
-    nix)
-      (
-        set -x
-        nix --extra-experimental-features 'nix-command flakes' profile install nixpkgs#"$2"
-      )
-      ;;
     eget)
       (
         set -x
-        eget "$2" --upgrade-only --to "$HOME"/.local/bin/
+        /home/linuxbrew/.linuxbrew/bin/eget "$2" --upgrade-only --to "$HOME"/.local/bin/
       )
       ;;
     *)
@@ -127,14 +118,6 @@ install_packages() {
 
       if echo "$package_or_repo" | grep -qE '^\s*#'; then
         continue
-      fi
-
-      if [ "$1" = "nix" ]; then
-        case "$package_or_repo" in
-          *podman* | *syncthing*)
-            log_warning "Service \"$package_or_repo\" need to be manually enabled after restarting the computer"
-            ;;
-        esac
       fi
 
       install "$1" "$package_or_repo" "$package"
