@@ -10,6 +10,7 @@ set show-all-if-ambiguous on
 set completion-ignore-case on
 set completion-map-case on
 set skip-completed-text on
+set blink-matching-paren on
 
 "\e[A": history-search-backward
 "\e[B": history-search-forward
