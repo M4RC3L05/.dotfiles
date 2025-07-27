@@ -8,13 +8,9 @@ alias kubectl="kubecolor"
 
 HISTCONTROL="ignoreboth"
 
-. "$HOME/.nix-profile/etc/profile.d/nix.sh"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
-  . "$HOME/.nix-profile/etc/profile.d/bash_completion.sh"
-fi
-
-. "$HOME/.nix-profile/share/git/contrib/completion/git-prompt.sh"
+[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 
 eval "$(batman --export-env)"
 eval "$(mise activate bash)"

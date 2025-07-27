@@ -28,30 +28,23 @@ log_info "Install flatpak runtimes & apps"
 install_packages "flatpak-runtimes"
 install_packages "flatpak-apps"
 
-if ! command -v nix > /dev/null 2>&1; then
-  log_info "Setup nix"
+if ! command -v brew > /dev/null 2>&1; then
+  log_info "Setup brew"
   (
     set -x
-    curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add
-  )
-
-  # shellcheck source=/dev/null
-  . "$HOME"/.nix-profile/etc/profile.d/nix.sh
-
-  nix_binary_path="$(readlink -f "$(which nix)")"
-  nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
-  (
-    set -x
-    nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   )
   (
     set -x
-    "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile install nixpkgs#nix
+    /home/linuxbrew/.linuxbrew/bin/brew analytics off
   )
 fi
 
-log_info "Install nix packages"
-install_packages "nix"
+log_info "Install brew packages"
+(
+  set -x
+  /home/linuxbrew/.linuxbrew/bin/brew bundle check --file "$PACKAGES_DIR/brew-packages" || /home/linuxbrew/.linuxbrew/bin/brew bundle install --file "$PACKAGES_DIR/brew-packages"
+)
 
 log_info "Install eget packages"
 (
@@ -106,7 +99,7 @@ log_info "Set gnome & gnome apps configs"
 )
 (
   set -x
-  gsettings set org.gnome.Console shell "['fish']"
+  gsettings set org.gnome.Console shell "['/home/linuxbrew/.linuxbrew/bin/fish']"
 )
 
 (

@@ -6,15 +6,19 @@ EGET_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/eget-packages)"
 
 (
   set -x
-  nix profile upgrade --all
+  brew update
 )
 (
   set -x
-  nix profile wipe-history
+  brew upgrade
 )
 (
   set -x
-  nix-collect-garbage -d
+  brew cleanup
+)
+(
+  set -x
+  brew autoremove
 )
 (
   set -x

@@ -2,13 +2,7 @@
 
 PACKAGES_DIR="$HOME/.dotfiles/src/packages"
 FLATPAK_APPS_FILE_PATH="$PACKAGES_DIR/flatpak-apps"
-NIX_PACKAGES_FILE_PATH="$PACKAGES_DIR/nix-packages"
+BREW_PACKAGES_FILE_PATH="$PACKAGES_DIR/brew-packages"
 
 flatpak list --user --columns=origin,application --app | tail -n +1 > "$FLATPAK_APPS_FILE_PATH"
-
-true > "$NIX_PACKAGES_FILE_PATH"
-nix profile list | while read -r line; do
-  if echo "$line" | grep -q "^Flake attribute:"; then
-    echo "$line" | awk -F ': ' '{print $2}' | sed 's/^[^.]*\.[^.]*\.//' | sed 's/[[:space:]]//g' >> "$NIX_PACKAGES_FILE_PATH"
-  fi
-done
+/home/linuxbrew/.linuxbrew/bin/brew bundle dump --force --file "$BREW_PACKAGES_FILE_PATH"
