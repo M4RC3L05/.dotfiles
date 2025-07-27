@@ -91,6 +91,7 @@ install() {
     dra)
       (
         set -x
+        # shellcheck disable=SC2086
         dra download $2 $3
       )
       ;;
@@ -106,7 +107,6 @@ install_packages() {
   if [ -z "$packages" ]; then
     log_warning "No packages to install for \"$1\""
   else
-
 
     echo "$packages" | while read -r package_or_repo package; do
       if [ "$package_or_repo" = "youtube_music-origin" ]; then

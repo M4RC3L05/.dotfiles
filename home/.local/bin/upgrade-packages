@@ -13,6 +13,7 @@ if [ -n "$DRA_PACKAGES" ]; then
   echo "$DRA_PACKAGES" | while read -r package; do
     (
       set -x
+      # shellcheck disable=SC2086
       dra download $package
     )
   done
