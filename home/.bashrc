@@ -4,15 +4,14 @@ alias cat="bat --plain"
 alias eza="eza --icons auto --color auto --git"
 alias ls="eza"
 alias proxyK8sServer="ssh -NL 6443:127.0.0.1:6443 mainserver"
-alias kubectl="kubecolor"
 
 HISTCONTROL="ignoreboth"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 [[ -r "/usr/share/git/completion/git-prompt.sh" ]] && . "/usr/share/git/completion/git-prompt.sh"
 
+eval "$(doggo completions bash)"
 eval "$(batman --export-env)"
 eval "$(mise activate bash)"
 

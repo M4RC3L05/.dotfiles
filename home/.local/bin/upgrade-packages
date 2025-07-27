@@ -2,34 +2,18 @@
 
 set -e
 
-EGET_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/eget-packages)"
+DRA_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/dra-packages)"
 
-(
-  set -x
-  brew update
-)
-(
-  set -x
-  brew upgrade
-)
-(
-  set -x
-  brew cleanup
-)
-(
-  set -x
-  brew autoremove
-)
 (
   set -x
   mise upgrade --bump --cd "$HOME"
 )
 
-if [ -n "$EGET_PACKAGES" ]; then
-  echo "$EGET_PACKAGES" | while read -r package; do
+if [ -n "$DRA_PACKAGES" ]; then
+  echo "$DRA_PACKAGES" | while read -r package; do
     (
       set -x
-      eget "$package" --upgrade-only --to "$HOME"/.local/bin/
+      dra download $package
     )
   done
 fi

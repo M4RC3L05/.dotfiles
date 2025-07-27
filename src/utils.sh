@@ -65,8 +65,8 @@ resolve_packages_from_context() {
     flatpak-runtimes)
       cat "$PACKAGES_DIR"/flatpak-runtimes
       ;;
-    eget)
-      cat "$PACKAGES_DIR"/eget-packages
+    dra)
+      cat "$PACKAGES_DIR"/dra-packages
       ;;
     *)
       echo ""
@@ -88,10 +88,10 @@ install() {
         flatpak install --user -y --noninteractive "$2" "$3"
       )
       ;;
-    eget)
+    dra)
       (
         set -x
-        /home/linuxbrew/.linuxbrew/bin/eget "$2" --upgrade-only --to "$HOME"/.local/bin/
+        dra download $2 $3
       )
       ;;
     *)
@@ -106,6 +106,8 @@ install_packages() {
   if [ -z "$packages" ]; then
     log_warning "No packages to install for \"$1\""
   else
+
+
     echo "$packages" | while read -r package_or_repo package; do
       if [ "$package_or_repo" = "youtube_music-origin" ]; then
         log_warning "Install $package_or_repo $package from github manually"

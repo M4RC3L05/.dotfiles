@@ -6,7 +6,6 @@ status is-interactive; and begin
   # Aliases
   alias cat "bat --plain"
   alias eza "eza --icons auto --color auto --git"
-  alias kubectl kubecolor
   alias ls eza
   alias proxyK8sServer "ssh -NL 6443:127.0.0.1:6443 mainserver"
 
@@ -19,7 +18,7 @@ status is-interactive; and begin
   set -g __fish_git_prompt_showuntrackedfiles true
   set -g __fish_git_prompt_showupstream informative
 
-  /home/linuxbrew/.linuxbrew/bin/brew shellenv | source
+  doggo completions fish | source
   batman --export-env | source
   mise activate fish | source
 end

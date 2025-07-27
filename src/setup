@@ -28,30 +28,12 @@ log_info "Install flatpak runtimes & apps"
 install_packages "flatpak-runtimes"
 install_packages "flatpak-apps"
 
-if ! command -v brew > /dev/null 2>&1; then
-  log_info "Setup brew"
-  (
-    set -x
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  )
-  (
-    set -x
-    /home/linuxbrew/.linuxbrew/bin/brew analytics off
-  )
-fi
-
-log_info "Install brew packages"
-(
-  set -x
-  /home/linuxbrew/.linuxbrew/bin/brew bundle check --file "$PACKAGES_DIR/brew-packages" || /home/linuxbrew/.linuxbrew/bin/brew bundle install --file "$PACKAGES_DIR/brew-packages"
-)
-
-log_info "Install eget packages"
+log_info "Install dra packages"
 (
   set -x
   mkdir -p "$HOME"/.local/bin/
 )
-install_packages "eget"
+install_packages "dra"
 
 log_info "Set gnome & gnome apps configs"
 (
@@ -99,7 +81,7 @@ log_info "Set gnome & gnome apps configs"
 )
 (
   set -x
-  gsettings set org.gnome.Console shell "['/home/linuxbrew/.linuxbrew/bin/fish']"
+  gsettings set org.gnome.Console shell "['fish']"
 )
 
 (
@@ -172,11 +154,7 @@ log_info "Add localsend to firewall exclusion"
 log_info "Add syncthing to firewall exclusion"
 (
   set -x
-  sudo ufw allow 22000/udp
-)
-(
-  set -x
-  sudo ufw allow 21027/udp
+  sudo ufw allow syncthing
 )
 
 log_info "Early KMS nvidia & intel"
@@ -195,6 +173,12 @@ log_info "Setup dotfiles & configs"
   "$(dirname "$0")"/../home/.local/bin/dots apply
 )
 
+log_info "Reload systemd user units"
+(
+  set -x
+  systemctl --user daemon-reload
+)
+
 if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   log_info "Enable dump package cron"
   (
@@ -203,10 +187,20 @@ if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
   )
 fi
 
-log_info "Reload systemd user units"
-(
-  set -x
-  systemctl --user daemon-reload
-)
+if ! systemctl --user is-enabled podman > /dev/null 2>&1; then
+  log_info "Enable podman service"
+  (
+    set -x
+    systemctl --user enable --now podman
+  )
+fi
+
+if ! systemctl --user is-enabled syncthing > /dev/null 2>&1; then
+  log_info "Enable syncthing service"
+  (
+    set -x
+    systemctl --user enable --now syncthing
+  )
+fi
 
 log_success "All done, restart your computer."

@@ -1,0 +1,4 @@
+-i -a -o /home/main/.local/bin M4RC3L05/denotag
+-i -a -o /home/main/.local/bin M4RC3L05/the-office-quote
+-i -s docker-credential-secretservice-v{tag}.linux-amd64 -o /home/main/.local/bin/docker-credential-secretservice docker/docker-credential-helpers
+-i -a -o /home/main/.local/bin mr-karan/doggo

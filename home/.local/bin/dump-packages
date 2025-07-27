@@ -2,7 +2,5 @@
 
 PACKAGES_DIR="$HOME/.dotfiles/src/packages"
 FLATPAK_APPS_FILE_PATH="$PACKAGES_DIR/flatpak-apps"
-BREW_PACKAGES_FILE_PATH="$PACKAGES_DIR/brew-packages"
 
 flatpak list --user --columns=origin,application --app | tail -n +1 > "$FLATPAK_APPS_FILE_PATH"
-/home/linuxbrew/.linuxbrew/bin/brew bundle dump --force --file "$BREW_PACKAGES_FILE_PATH"

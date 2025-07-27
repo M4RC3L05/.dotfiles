@@ -38,7 +38,9 @@ diff_cmd() {
         printf "Path \"%s\" being tracked does not exists on \"%s\", ignoring...\n" "$path" "$original_file"
       fi
     else
-      diff -u "$path" "$original_file" | diff-so-fancy
+      set +e
+      delta --diff-so-fancy "$path" "$original_file"
+      set -e
     fi
   elif [ -d "$path" ]; then
     find "$path" -type f | while IFS= read -r file; do
@@ -52,7 +54,9 @@ diff_cmd() {
           printf "Path \"%s\" being tracked does not exists on \"%s\", ignoring...\n" "$file" "$original_file"
         fi
       else
-        diff -u "$file" "$original_file" | diff-so-fancy
+        set +e
+        delta --diff-so-fancy "$file" "$original_file"
+        set -e
       fi
     done
   else
