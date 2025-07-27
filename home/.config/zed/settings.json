@@ -13,8 +13,8 @@
   "buffer_font_family": "Cascadia Code",
   "theme": {
     "mode": "system",
-    "light": "Gruvbox Light",
-    "dark": "Gruvbox Dark"
+    "light": "One Light",
+    "dark": "One Dark"
   },
   "terminal": {
     "shell": {
