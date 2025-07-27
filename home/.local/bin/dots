@@ -39,7 +39,7 @@ diff_cmd() {
       fi
     else
       set +e
-      delta --diff-so-fancy "$path" "$original_file"
+      delta --diff-so-fancy --paging never "$path" "$original_file"
       set -e
     fi
   elif [ -d "$path" ]; then
@@ -55,7 +55,7 @@ diff_cmd() {
         fi
       else
         set +e
-        delta --diff-so-fancy "$file" "$original_file"
+        delta --diff-so-fancy --paging never "$file" "$original_file"
         set -e
       fi
     done
