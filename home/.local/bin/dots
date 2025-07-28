@@ -121,7 +121,7 @@ apply_cmd() {
 
       printf "Applying \"%s\" to \"%s\"\n" "$file" "$home_path"
       mkdir -p "$(dirname "$home_path")"
-      cp -f "$file" "$home_path"
+      cp "$file" "$home_path"
     done
   else
     printf "The path \"%s\" is is invalid\n" "$1"
