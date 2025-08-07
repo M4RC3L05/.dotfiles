@@ -177,13 +177,26 @@ main() {
       fi
       ;;
     adopt)
-      if [ -z "$2" ]; then
+      flag=""
+      path=""
+
+      case "$2" in
+        -ad | --already-adopted)
+          flag="-ad"
+          path="$3"
+          ;;
+        *)
+          path="$2"
+          ;;
+      esac
+
+      if [ -z "$path" ]; then
         printf "A path must be specified\n\n"
         help
         exit 1
       fi
 
-      adopt_cmd "$(realpath "$2")" "$3"
+      adopt_cmd "$(realpath "$path")" "$flag"
       ;;
     apply)
       if [ -n "$2" ]; then
