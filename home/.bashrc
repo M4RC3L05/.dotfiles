@@ -4,16 +4,20 @@ alias cat="bat --plain"
 alias eza="eza --icons auto --color auto --git"
 alias ls="eza"
 alias proxyK8sServer="ssh -NL 6443:127.0.0.1:6443 mainserver"
+alias kubectl="kubecolor"
 
 HISTCONTROL="ignoreboth"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+# Make sure homebrew paths are last.
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v -e "^/home/linuxbrew/.linuxbrew/bin$" -e "^/home/linuxbrew/.linuxbrew/sbin$" | tr '\n' ':')
+export PATH="${PATH%:}:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
+
+[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 [[ -r "/usr/share/git/completion/git-prompt.sh" ]] && . "/usr/share/git/completion/git-prompt.sh"
 
-eval "$(doggo completions bash)"
 eval "$(batman --export-env)"
-eval "$(mise activate bash)"
 
 exit_status() {
   local exit_statuses=("$@")

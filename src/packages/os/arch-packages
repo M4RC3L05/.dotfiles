@@ -34,13 +34,12 @@ gst-plugins-good
 gst-plugins-ugly
 
 ## Tools
-vulkan-tools
-vulkan-mesa-layers
+ffmpeg
+intel-gpu-tools
 libva-utils
 vdpauinfo
-nvtop
-intel-gpu-tools
-ffmpeg
+vulkan-mesa-layers
+vulkan-tools
 
 # Firewall
 gufw
@@ -54,38 +53,8 @@ gnome-software
 
 # Dev
 base-devel
-git
 bash-completion
-bat
-bat-extras
-btop
-dive
-docker
-docker-buildx
-docker-compose
-dra
-eza
-fastfetch
-fish
-git-delta
-hyperfine
-jq
-k9s
-kubectl
-mise
-msedit
-nvtop
-oha
-podman
-qemu-user-static
-qemu-user-static-binfmt
-rsync
-syncthing
-tealdeer
-tokei
-ttf-cascadia-code
-ttf-cascadia-code-nerd
-ttf-cascadia-mono-nerd
-wget
-yt-dlp
-zip
+curl
+file
+git
+procps-ng

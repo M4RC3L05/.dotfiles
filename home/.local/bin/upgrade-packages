@@ -6,6 +6,23 @@ DRA_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/dra-packages)"
 
 (
   set -x
+  brew update
+)
+(
+  set -x
+  brew upgrade
+)
+(
+  set -x
+  brew cleanup
+)
+(
+  set -x
+  brew autoremove
+)
+
+(
+  set -x
   mise upgrade --bump --cd "$HOME"
 )
 
