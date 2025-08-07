@@ -12,7 +12,7 @@
   defaultBranch = "main"
 
 [interactive]
-  diffFilter = "delta --color-only --side-by-side --line-numbers --navigate"
+  diffFilter = "delta --color-only"
 
 [merge]
   conflictstyle = zdiff3
