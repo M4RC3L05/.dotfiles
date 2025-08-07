@@ -1,6 +1,6 @@
 [core]
   editor = "micro"
-  pager = "delta"
+  pager = "delta --side-by-side --line-numbers --navigate"
 
 [filter "lfs"]
   clean = "git-lfs clean -- %f"
@@ -12,12 +12,7 @@
   defaultBranch = "main"
 
 [interactive]
-  diffFilter = "delta --color-only"
-
-[delta]
-  navigate = true
-  line-numbers = true
-  side-by-side = true
+  diffFilter = "delta --color-only --side-by-side --line-numbers --navigate"
 
 [merge]
   conflictstyle = zdiff3
