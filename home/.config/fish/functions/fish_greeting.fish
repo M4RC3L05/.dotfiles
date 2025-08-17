@@ -1,4 +1,4 @@
 function fish_greeting
-  quotes the-office
+  quotes all
   echo
 end

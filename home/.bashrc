@@ -38,5 +38,5 @@ GIT_PS1_SHOWCOLORHINTS="true"
 GIT_PS1_SHOWUPSTREAM="verbose"
 PROMPT_COMMAND='__git_ps1 "\[\e]0;\w\a\]\[\033[92m\]\u\[\033[0m\]@\h \[\033[32m\]\w\[\033[0m\]" "$(exit_status "${PIPESTATUS[@]}")\\\$ "'
 
-quotes the-office
+quotes all
 echo
