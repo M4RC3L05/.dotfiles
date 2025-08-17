@@ -2,7 +2,7 @@
 
 set -e
 
-DRA_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/dra-packages)"
+EGET_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/eget-packages)"
 
 (
   set -x
@@ -26,12 +26,11 @@ DRA_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/dra-packages)"
   mise upgrade --bump --cd "$HOME"
 )
 
-if [ -n "$DRA_PACKAGES" ]; then
-  echo "$DRA_PACKAGES" | while read -r package; do
+if [ -n "$EGET_PACKAGES" ]; then
+  echo "$EGET_PACKAGES" | while read -r package; do
     (
       set -x
-      # shellcheck disable=SC2086
-      dra download $package
+      eget "$package" --upgrade-only --to "$HOME"/.local/bin/
     )
   done
 fi
