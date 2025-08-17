@@ -15,14 +15,8 @@ upgrade_package_manager_repos
 install_packages "$ID"
 
 log_info "Setup flatpak remotes"
-(
-  set -x
-  flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-)
-(
-  set -x
-  flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-)
+add_flatpak_remote "flathub-beta" "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"
+add_flatpak_remote "flathub" "https://dl.flathub.org/repo/flathub.flatpakrepo"
 
 log_info "Install flatpak runtimes & apps"
 install_packages "flatpak-runtimes"
@@ -77,102 +71,38 @@ log_info "Install eget packages"
 install_packages "eget"
 
 log_info "Set gnome & gnome apps configs"
-(
-  set -x
-  gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']"
-)
+set_gnome_setting "org.gnome.mutter" "experimental-features" "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']"
 
-(
-  set -x
-  gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
-)
-(
-  set -x
-  gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
-)
-(
-  set -x
-  gsettings set org.gnome.desktop.interface accent-color "orange"
-)
+set_gnome_setting "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
+set_gnome_setting "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+set_gnome_setting "org.gnome.desktop.interface" "accent-color" "orange"
+set_gnome_setting "org.gnome.desktop.interface" "monospace-font-name" "Cascadia Code 10"
 
-(
-  set -x
-  gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled "true"
-)
-(
-  set -x
-  gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "2500"
-)
-(
-  set -x
-  gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "false"
-)
-(
-  set -x
-  gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from "18.0"
-)
-(
-  set -x
-  gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to "9.0"
-)
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-enabled" "true"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-temperature" "2500"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-schedule-automatic" "false"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-schedule-from" "18.0"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-schedule-to" "9.0"
 
-(
-  set -x
-  gsettings set org.gnome.Console theme "auto"
-)
-(
-  set -x
-  gsettings set org.gnome.Console shell "['/home/main/.nix-profile/bin/fish']"
-)
+set_gnome_setting "org.gnome.Console" "theme" "auto"
+set_gnome_setting "org.gnome.Console" "shell" "['/home/main/.nix-profile/bin/fish']"
 
-(
-  set -x
-  gsettings set org.gnome.desktop.interface monospace-font-name 'Cascadia Code 10'
-)
+set_gnome_setting "org.gnome.desktop.background" "picture-uri" "file:///usr/share/backgrounds/gnome/blobs-l.svg"
+set_gnome_setting "org.gnome.desktop.background" "picture-uri-dark" "file:///usr/share/backgrounds/gnome/blobs-d.svg"
 
-(
-  set -x
-  gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/gnome/blobs-l.svg"
-)
-(
-  set -x
-  gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/gnome/blobs-d.svg"
-)
+set_gnome_setting "org.gnome.desktop.wm.preferences" "button-layout" "appmenu:minimize,maximize,close"
 
-(
-  set -x
-  gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
-)
+set_gnome_setting "org.gnome.mutter" "center-new-windows" "true"
 
-(
-  set -x
-  gsettings set org.gnome.mutter center-new-windows "true"
-)
-
-(
-  set -x
-  gsettings set org.gnome.Epiphany.web:/ hardware-acceleration-policy 'always' || true
-)
-
-if ! systemctl is-enabled bluetooth > /dev/null 2>&1; then
-  log_info "Enable bluetooth service"
-  (
-    set -x
-    systemctl enable --now bluetooth
-  )
-fi
+log_info "Enable bluetooth service"
+enable_service "bluetooth"
 
 log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
 # Install https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension manually
 log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
 
-if ! systemctl is-enabled ufw > /dev/null 2>&1; then
-  log_info "Enable firewall service"
-  (
-    set -x
-    systemctl enable --now ufw
-  )
-fi
+log_info "Enable ufw service"
+enable_service "ufw"
 
 if sudo ufw status | grep -q "inactive"; then
   log_info "Enable ufw"
@@ -183,24 +113,12 @@ if sudo ufw status | grep -q "inactive"; then
 fi
 
 log_info "Add localsend to firewall exclusion"
-(
-  set -x
-  sudo ufw allow 53317/udp
-)
-(
-  set -x
-  sudo ufw allow 53317/tcp
-)
+allow_ufw_rule "53317/udp"
+allow_ufw_rule "53317/tcp"
 
 log_info "Add syncthing to firewall exclusion"
-(
-  set -x
-  sudo ufw allow 22000/udp
-)
-(
-  set -x
-  sudo ufw allow 21027/udp
-)
+allow_ufw_rule "22000/udp"
+allow_ufw_rule "21027/udp"
 
 log_info "Early KMS nvidia & intel"
 (
@@ -224,28 +142,13 @@ log_info "Reload systemd user units"
   systemctl --user daemon-reload
 )
 
-if ! systemctl --user is-enabled dump-packages.timer > /dev/null 2>&1; then
-  log_info "Enable dump package cron"
-  (
-    set -x
-    systemctl --user enable --now dump-packages.timer
-  )
-fi
+log_info "Enable dump package cron"
+enable_service "dump-packages.timer" "user"
 
-if ! systemctl --user is-enabled podman > /dev/null 2>&1; then
-  log_info "Enable podman service"
-  (
-    set -x
-    systemctl --user enable --now podman
-  )
-fi
+log_info "Enable podman service"
+enable_service "podman" "user"
 
-if ! systemctl --user is-enabled syncthing > /dev/null 2>&1; then
-  log_info "Enable podman syncthing"
-  (
-    set -x
-    systemctl --user enable --now syncthing
-  )
-fi
+log_info "Enable podman syncthing"
+enable_service "syncthing" "user"
 
 log_success "All done, restart your computer."

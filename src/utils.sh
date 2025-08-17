@@ -145,3 +145,54 @@ upgrade_package_manager_repos() {
       ;;
   esac
 }
+
+enable_service() {
+  service="$1"
+  user="$2"
+
+  if [ -n "$user" ]; then
+    if ! systemctl --user is-enabled "$service" > /dev/null 2>&1; then
+      (
+        set -x
+        systemctl --user enable --now "$service"
+      )
+    fi
+  else
+    if ! systemctl is-enabled "$service" > /dev/null 2>&1; then
+      (
+        set -x
+        systemctl enable --now "$service"
+      )
+    fi
+  fi
+}
+
+add_flatpak_remote() {
+  name="$1"
+  url="$2"
+
+  (
+    set -x
+    flatpak remote-add --user --if-not-exists "$name" "$url"
+  )
+}
+
+allow_ufw_rule() {
+  name="$1"
+
+  (
+    set -x
+    sudo ufw allow "$name"
+  )
+}
+
+set_gnome_setting() {
+  path="$1"
+  key="$2"
+  value="$3"
+
+  (
+    set -x
+    gsettings set "$path" "$key" "$value"
+  )
+}
