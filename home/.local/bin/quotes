@@ -37,6 +37,10 @@ main() {
         source="$(find "$CONFIG_DIR" -type f -name '*-quotes.yaml' -exec basename {} -quotes.yaml \; | shuf | head -n 1)"
         file="$CONFIG_DIR/$source-quotes.yaml"
         display_source="$(printf "%s" "$source" | sed 's/[-_]/ /g' | awk '{ for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2); print }')"
+      elif [ -z "$source" ]; then
+        printf "A source must be provided\n\n"
+        help
+        exit 1
       elif [ -f "$CONFIG_DIR/$source-quotes.yaml" ]; then
         file="$CONFIG_DIR/$source-quotes.yaml"
       else
