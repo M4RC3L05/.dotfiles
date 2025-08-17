@@ -8,7 +8,13 @@ alias kubectl="kubecolor"
 
 HISTCONTROL="ignoreboth"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+. "$HOME/.nix-profile/etc/profile.d/nix.sh"
+
+if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
+  . "$HOME/.nix-profile/etc/profile.d/bash_completion.sh"
+fi
+
+. "$HOME/.nix-profile/share/git/contrib/completion/git-prompt.sh"
 
 # Make sure homebrew paths are last.
 export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v -e "^/home/linuxbrew/.linuxbrew/bin$" -e "^/home/linuxbrew/.linuxbrew/sbin$" | tr '\n' ':')

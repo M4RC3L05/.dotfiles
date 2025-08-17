@@ -65,8 +65,11 @@ resolve_packages_from_context() {
     flatpak-runtimes)
       cat "$PACKAGES_DIR"/flatpak-runtimes
       ;;
-    dra)
-      cat "$PACKAGES_DIR"/dra-packages
+    nix)
+      cat "$PACKAGES_DIR"/nix-packages
+      ;;
+    eget)
+      cat "$PACKAGES_DIR"/eget-packages
       ;;
     *)
       echo ""
@@ -88,11 +91,16 @@ install() {
         flatpak install --user -y --noninteractive "$2" "$3"
       )
       ;;
-    dra)
+    nix)
       (
         set -x
-        # shellcheck disable=SC2086
-        dra download $2 $3
+        nix --extra-experimental-features 'nix-command flakes' profile install nixpkgs#"$2"
+      )
+      ;;
+    eget)
+      (
+        set -x
+        eget "$2" --upgrade-only --to "$HOME"/.local/bin/
       )
       ;;
     *)

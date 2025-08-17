@@ -19,20 +19,7 @@ status is-interactive; and begin
   set -g __fish_git_prompt_showuntrackedfiles true
   set -g __fish_git_prompt_showupstream informative
 
-  /home/linuxbrew/.linuxbrew/bin/brew shellenv | source
-
-  # Make sure homebrew paths are last.
-  set -e PATH[(contains -i "/home/linuxbrew/.linuxbrew/bin" $PATH)]
-  set -e PATH[(contains -i "/home/linuxbrew/.linuxbrew/sbin" $PATH)]
-  fish_add_path --global --append --path "/home/linuxbrew/.linuxbrew/bin" "/home/linuxbrew/.linuxbrew/sbin"
-
-  if test -d (brew --prefix)"/share/fish/completions"
-    set -p fish_complete_path (brew --prefix)/share/fish/completions
-  end
-
-  if test -d (brew --prefix)"/share/fish/vendor_completions.d"
-    set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
-  end
+  source "$HOME"/.nix-profile/etc/profile.d/nix.fish
 
   batman --export-env | source
 end

@@ -6,19 +6,15 @@ EGET_PACKAGES="$(cat "$HOME"/.dotfiles/src/packages/eget-packages)"
 
 (
   set -x
-  brew update
+  nix profile upgrade --all
 )
 (
   set -x
-  brew upgrade
+  nix profile wipe-history
 )
 (
   set -x
-  brew cleanup
-)
-(
-  set -x
-  brew autoremove
+  nix-collect-garbage -d
 )
 
 (
@@ -38,4 +34,30 @@ fi
 (
   set -x
   fish -c "fish_update_completions"
+)
+
+(
+  set -x
+  find ~/.nix-profile/share/systemd/user/ -type l -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.config/systemd/user' {} \;
+)
+(
+  set -x
+  systemctl --user daemon-reload
+)
+(
+  set -x
+  systemctl --user restart podman
+)
+(
+  set -x
+  systemctl --user restart syncthing
+)
+
+(
+  set -x
+  find ~/.nix-profile/share/fonts/ -type f -name "*.ttf" -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.local/share/fonts' {} \;
+)
+(
+  set -x
+  fc-cache -fv
 )

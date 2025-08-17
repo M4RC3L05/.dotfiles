@@ -39,6 +39,7 @@ libva-utils
 vdpauinfo
 vulkan-mesa-layers
 vulkan-tools
+nvtop
 
 # Firewall
 gufw
