@@ -27,6 +27,7 @@ brew "syncthing", restart_service: :changed
 brew "tealdeer"
 brew "tokei"
 brew "wget"
+brew "yq"
 brew "yt-dlp"
 cask "font-cascadia-code"
 cask "font-cascadia-code-nf"

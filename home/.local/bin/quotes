@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+
+set -e
+
+CONFIG_DIR="$HOME/.config/@m4rc3l05/quotes"
+
+help() {
+  echo "Usage: quotes [source]"
+  echo ""
+  echo "Options:"
+  echo "  -h, --help                Display this help message."
+  echo ""
+  echo "Commands:"
+  echo "  source                    The source to be used for the quotes."
+  echo "                            Pass \`all\` to randomly select a source"
+  echo "                            Suported sources:"
+  echo "                              - the-office"
+  echo "                              - allways-sunny"
+  echo ""
+  echo "Examples:"
+  echo "  quotes -h"
+  echo "  quotes --help"
+  echo "  quotes the-office"
+}
+
+main() {
+  case "$1" in
+    -h | --help)
+      help
+      ;;
+    *)
+      display_source=""
+      source="$1"
+      file=""
+
+      if [ "$source" = "all" ]; then
+        source="$(find "$CONFIG_DIR" -type f -name '*-quotes.yaml' -exec basename {} -quotes.yaml \; | shuf | head -n 1)"
+        file="$CONFIG_DIR/$source-quotes.yaml"
+        display_source="$(printf "%s" "$source" | sed 's/[-_]/ /g' | awk '{ for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2); print }')"
+      elif [ -f "$CONFIG_DIR/$source-quotes.yaml" ]; then
+        file="$CONFIG_DIR/$source-quotes.yaml"
+      else
+        printf "Not a valid source \"%s\"\n\n" "$source"
+        help
+        exit 1
+      fi
+
+      if [ -n "$display_source" ]; then
+        printf "%s\n" "$display_source"
+        echo "---"
+      fi
+
+      yq 'shuffle | .[0].text' "$file"
+      ;;
+  esac
+}
+
+main "$@"
