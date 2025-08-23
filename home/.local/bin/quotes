@@ -3,6 +3,7 @@
 set -e
 
 CONFIG_DIR="$HOME/.config/@m4rc3l05/quotes"
+SOURCES="$(find "$CONFIG_DIR" -type f -name '*-quotes.yaml' -exec basename {} -quotes.yaml \;)"
 
 help() {
   echo "Usage: quotes [source]"
@@ -14,10 +15,7 @@ help() {
   echo "  source                    The source to be used for the quotes."
   echo "                            Pass \`all\` to randomly select a source"
   echo "                            Suported sources:"
-  echo "                              - the-office"
-  echo "                              - allways-sunny"
-  echo "                              - parks-and-rec"
-  echo "                              - community"
+  echo "$SOURCES" | sed 's/^/                              - /'
   echo ""
   echo "Examples:"
   echo "  quotes -h"
@@ -36,7 +34,7 @@ main() {
       file=""
 
       if [ "$source" = "all" ]; then
-        source="$(find "$CONFIG_DIR" -type f -name '*-quotes.yaml' -exec basename {} -quotes.yaml \; | shuf | head -n 1)"
+        source="$(echo "$SOURCES" | shuf | head -n 1)"
         file="$CONFIG_DIR/$source-quotes.yaml"
         display_source="$(printf "%s" "$source" | sed 's/[-_]/ /g' | awk '{ for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2); print }')"
       elif [ -z "$source" ]; then
