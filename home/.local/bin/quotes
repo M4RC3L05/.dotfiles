@@ -17,6 +17,7 @@ help() {
   echo "                              - the-office"
   echo "                              - allways-sunny"
   echo "                              - parks-and-rec"
+  echo "                              - community"
   echo ""
   echo "Examples:"
   echo "  quotes -h"
