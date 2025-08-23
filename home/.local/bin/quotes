@@ -16,6 +16,7 @@ help() {
   echo "                            Suported sources:"
   echo "                              - the-office"
   echo "                              - allways-sunny"
+  echo "                              - parks-and-rec"
   echo ""
   echo "Examples:"
   echo "  quotes -h"
