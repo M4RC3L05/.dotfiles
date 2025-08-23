@@ -21,5 +21,6 @@ status is-interactive; and begin
 
   source "$HOME"/.nix-profile/etc/profile.d/nix.fish
 
+  mise activate fish | source
   batman --export-env | source
 end

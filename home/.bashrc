@@ -23,6 +23,7 @@ export PATH="${PATH%:}:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew
 [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 [[ -r "/usr/share/git/completion/git-prompt.sh" ]] && . "/usr/share/git/completion/git-prompt.sh"
 
+eval "$(mise activate bash)"
 eval "$(batman --export-env)"
 
 exit_status() {
