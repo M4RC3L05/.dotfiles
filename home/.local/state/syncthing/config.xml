@@ -1,5 +1,5 @@
 <configuration version="37">
-    <folder id="~/Music" label="music" path="~/Music" type="receiveonly" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" fsWatcherTimeoutS="0" ignorePerms="false" autoNormalize="true">
+    <folder id="~/Music" label="music" path="~/Music" type="sendonly" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" fsWatcherTimeoutS="0" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="FKZBDBW-V4DFUGQ-WWPWROA-FHN2ID4-VDF2HGU-VY7BLBK-TINNE2F-MH7E5A3" introducedBy="">
             <encryptionPassword></encryptionPassword>
