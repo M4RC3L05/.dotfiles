@@ -1,0 +1,77 @@
+#!/usr/bin/env sh
+
+set -e
+
+# shellcheck source=/dev/null
+. "$(dirname "$0")"/utils.sh
+
+if [ "$(id -u)" -eq 0 ]; then
+  log_error "This script cannot be run as root. It will call sudo as needed"
+  exit 1
+fi
+
+log_info "Upgrade and install os packages"
+upgrade_package_manager_repos
+install_packages "$ID"
+
+log_info "Set gnome & gnome apps configs"
+set_gnome_setting "org.gnome.mutter" "experimental-features" "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']"
+
+set_gnome_setting "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
+set_gnome_setting "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+set_gnome_setting "org.gnome.desktop.interface" "accent-color" "orange"
+set_gnome_setting "org.gnome.desktop.interface" "monospace-font-name" "Cascadia Code 10"
+
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-enabled" "true"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-temperature" "2500"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-schedule-automatic" "false"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-schedule-from" "18.0"
+set_gnome_setting "org.gnome.settings-daemon.plugins.color" "night-light-schedule-to" "9.0"
+
+set_gnome_setting "org.gnome.Console" "theme" "auto"
+set_gnome_setting "org.gnome.Console" "shell" "['/home/main/.nix-profile/bin/fish']"
+
+set_gnome_setting "org.gnome.desktop.background" "picture-uri" "file:///usr/share/backgrounds/gnome/blobs-l.svg"
+set_gnome_setting "org.gnome.desktop.background" "picture-uri-dark" "file:///usr/share/backgrounds/gnome/blobs-d.svg"
+
+set_gnome_setting "org.gnome.desktop.wm.preferences" "button-layout" "appmenu:minimize,maximize,close"
+
+set_gnome_setting "org.gnome.mutter" "center-new-windows" "true"
+
+log_info "Enable bluetooth service"
+enable_service "bluetooth"
+
+log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
+# Install https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension manually
+log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
+
+log_info "Enable ufw service"
+enable_service "ufw"
+
+if sudo ufw status | grep -q "inactive"; then
+  log_info "Enable ufw"
+  (
+    set -x
+    sudo ufw enable
+  )
+fi
+
+log_info "Add localsend to firewall exclusion"
+allow_ufw_rule "53317/udp"
+allow_ufw_rule "53317/tcp"
+
+log_info "Add syncthing to firewall exclusion"
+allow_ufw_rule "22000/udp"
+allow_ufw_rule "21027/udp"
+
+log_info "Early KMS nvidia & intel"
+(
+  set -x
+  printf "hostonly=\"yes\"\\ncompress=\"lz4\"\\nforce_drivers+=\" i915 nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee "/etc/dracut.conf.d/myflags.conf" > /dev/null
+)
+(
+  set -x
+  sudo reinstall-kernels
+)
+
+log_success "OS setup completed."

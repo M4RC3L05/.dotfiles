@@ -1,0 +1,90 @@
+#!/usr/bin/env sh
+
+set -e
+
+# shellcheck source=/dev/null
+. "$(dirname "$0")"/utils.sh
+
+if [ "$(id -u)" -eq 0 ]; then
+  log_error "This script cannot be run as root. It will call sudo as needed"
+  exit 1
+fi
+
+log_info "Setup flatpak remotes"
+add_flatpak_remote "flathub-beta" "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"
+add_flatpak_remote "flathub" "https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+log_info "Install flatpak runtimes & apps"
+install_packages "flatpak-runtimes"
+install_packages "flatpak-apps"
+
+if ! command -v nix > /dev/null 2>&1; then
+  log_info "Setup nix"
+  (
+    set -x
+    curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add
+  )
+
+  # shellcheck source=/dev/null
+  . "$HOME"/.nix-profile/etc/profile.d/nix.sh
+
+  nix_binary_path="$(readlink -f "$(which nix)")"
+  nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
+  (
+    set -x
+    nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index"
+  )
+  (
+    set -x
+    "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile add nixpkgs#nix
+  )
+fi
+
+log_info "Install nix packages"
+install_packages "nix"
+
+log_info "Setup nix services"
+(
+  set -x
+  find ~/.nix-profile/share/systemd/user/ -type l -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.config/systemd/user' {} \;
+)
+
+log_info "Setup nix fonts"
+(
+  set -x
+  find ~/.nix-profile/share/fonts/ -type f -name "*.ttf" -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.local/share/fonts' {} \;
+)
+(
+  set -x
+  fc-cache -fv
+)
+
+log_info "Install eget packages"
+(
+  set -x
+  mkdir -p "$HOME"/.local/bin/
+)
+install_packages "eget"
+
+log_info "Setup dotfiles & configs"
+(
+  set -x
+  "$(dirname "$0")"/../home/.local/bin/dots apply
+)
+
+log_info "Reload systemd user units"
+(
+  set -x
+  systemctl --user daemon-reload
+)
+
+log_info "Enable dump package cron"
+enable_service "dump-packages.timer" "user"
+
+log_info "Enable podman service"
+enable_service "podman" "user"
+
+log_info "Enable podman syncthing"
+enable_service "syncthing" "user"
+
+log_success "User setup completed."
