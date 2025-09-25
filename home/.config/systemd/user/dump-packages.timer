@@ -2,7 +2,7 @@
 WantedBy=timers.target
 
 [Timer]
-OnCalendar=*-*-* *:*:0/10
+OnCalendar=*-*-* *:*:0/30
 AccuracySec=1s
 
 [Unit]
