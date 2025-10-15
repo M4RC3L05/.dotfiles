@@ -10,81 +10,104 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
+log_info "Set gnome & gnome apps configs"
+gsettings set "org.gnome.mutter" "experimental-features" "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']"
+
+gsettings set "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
+gsettings set "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+gsettings set "org.gnome.desktop.interface" "accent-color" "orange"
+gsettings set "org.gnome.desktop.interface" "monospace-font-name" "Cascadia Code 10"
+
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-enabled" "true"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-temperature" "2500"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-automatic" "false"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-from" "18.0"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-to" "9.0"
+
+gsettings set "org.gnome.Console" "theme" "auto"
+gsettings set "org.gnome.Console" "shell" "['/home/main/.nix-profile/bin/fish']"
+
+gsettings set "org.gnome.desktop.background" "picture-uri" "file:///usr/share/backgrounds/gnome/blobs-l.svg"
+gsettings set "org.gnome.desktop.background" "picture-uri-dark" "file:///usr/share/backgrounds/gnome/blobs-d.svg"
+
+gsettings set "org.gnome.desktop.wm.preferences" "button-layout" "appmenu:minimize,maximize,close"
+
+gsettings set "org.gnome.mutter" "center-new-windows" "true"
+
+log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
+# Install https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension manually
+log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
+
 log_info "Setup flatpak remotes"
-add_flatpak_remote "flathub-beta" "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"
-add_flatpak_remote "flathub" "https://dl.flathub.org/repo/flathub.flatpakrepo"
+flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 log_info "Install flatpak runtimes & apps"
-install_packages "flatpak-runtimes"
-install_packages "flatpak-apps"
+flatpak install --user -y --noninteractive flathub org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark \
+  app.drey.KeyRack ca.desrt.dconf-editor com.bitwarden.desktop \
+  com.brave.Browser com.discordapp.Discord com.github.Matoking.protontricks \
+  com.github.neithern.g4music com.github.tchx84.Flatseal com.mattjakeman.ExtensionManager \
+  com.usebottles.bottles com.valvesoftware.Steam com.vysp3r.ProtonPlus \
+  io.github.mrvladus.List io.gitlab.news_flash.NewsFlash net.nokyan.Resources \
+  org.gnome.Boxes org.gnome.Calculator org.gnome.Calendar org.gnome.Contacts \
+  org.gnome.Loupe org.gnome.Papers org.gnome.Showtime org.gnome.TextEditor \
+  org.gnome.seahorse.Application org.libreoffice.LibreOffice org.localsend.localsend_app \
+  org.mozilla.firefox org.prismlauncher.PrismLauncher org.raspberrypi.rpi-imager
+
+log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
 
 if ! command -v nix > /dev/null 2>&1; then
   log_info "Setup nix"
-  (
-    set -x
-    curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add
-  )
+  curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add
 
   # shellcheck source=/dev/null
   . "$HOME"/.nix-profile/etc/profile.d/nix.sh
 
   nix_binary_path="$(readlink -f "$(which nix)")"
   nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
-  (
-    set -x
-    nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index"
-  )
-  (
-    set -x
-    "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile add nixpkgs#nix
-  )
+  nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index"
+  "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile add nixpkgs#nix
 fi
 
 log_info "Install nix packages"
-install_packages "nix"
+nix --extra-experimental-features 'nix-command flakes' profile add nixpkgs#act nixpkgs#bash-completion nixpkgs#bat \
+  nixpkgs#bat-extras.batman nixpkgs#bitwarden-cli nixpkgs#btop \
+  nixpkgs#cascadia-code nixpkgs#delta nixpkgs#dive nixpkgs#docker \
+  nixpkgs#docker-buildx nixpkgs#docker-credential-helpers nixpkgs#doggo \
+  nixpkgs#eget nixpkgs#eza nixpkgs#fastfetch nixpkgs#fish nixpkgs#git \
+  nixpkgs#hyperfine nixpkgs#jq nixpkgs#k9s nixpkgs#kubecolor nixpkgs#kubectl \
+  nixpkgs#micro nixpkgs#mise nixpkgs#nix nixpkgs#oha nixpkgs#podman nixpkgs#rsync \
+  nixpkgs#syncthing nixpkgs#tealdeer nixpkgs#tokei nixpkgs#wget nixpkgs#yq-go nixpkgs#yt-dlp
 
 log_info "Setup nix services"
-(
-  set -x
-  find ~/.nix-profile/share/systemd/user/ -type l -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.config/systemd/user' {} \;
-)
+find ~/.nix-profile/share/systemd/user/ -type l -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.config/systemd/user' {} \;
 
 log_info "Setup nix fonts"
-(
-  set -x
-  find ~/.nix-profile/share/fonts/ -type f -name "*.ttf" -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.local/share/fonts' {} \;
-)
-(
-  set -x
-  fc-cache -fv
-)
+find ~/.nix-profile/share/fonts/ -type f -name "*.ttf" -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.local/share/fonts' {} \;
+fc-cache -fv
 
 log_info "Install eget packages"
-(
-  set -x
-  mkdir -p "$HOME"/.local/bin/
-)
-install_packages "eget"
+mkdir -p "$HOME"/.local/bin/
+eget M4RC3L05/denotag --upgrade-only --to "$HOME"/.local/bin/
 
 log_info "Setup dotfiles & configs"
-(
-  set -x
-  "$(dirname "$0")"/../home/.local/bin/dots apply
-)
+"$(dirname "$0")"/../home/.local/bin/dots apply
 
 log_info "Reload systemd user units"
-(
-  set -x
-  systemctl --user daemon-reload
-)
+systemctl --user daemon-reload
 
-log_info "Enable dump package cron"
-enable_service "dump-packages.timer" "user"
+if ! systemctl --user is-active --quiet podman; then
+  log_info "Enable podman service"
+  systemctl --user enable --now podman
+fi
 
-log_info "Enable podman service"
-enable_service "podman" "user"
+if ! systemctl --user is-active --quiet syncthing; then
+  log_info "Enable syncthing service"
+  systemctl --user enable --now syncthing
+fi
 
-log_info "Enable podman syncthing"
-enable_service "syncthing" "user"
+log_info "Mask gnome ssh agent"
+systemctl --user mask gcr-ssh-agent.service
+systemctl --user mask gcr-ssh-agent.socket
 
 log_success "User setup completed."
