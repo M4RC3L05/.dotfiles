@@ -19,8 +19,6 @@ status is-interactive; and begin
   set -g __fish_git_prompt_showuntrackedfiles true
   set -g __fish_git_prompt_showupstream informative
 
-  source "$HOME"/.nix-profile/etc/profile.d/nix.fish
-
   mise activate fish | source
   batman --export-env | source
 end

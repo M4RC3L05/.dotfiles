@@ -8,20 +8,7 @@ alias kubectl="kubecolor"
 
 HISTCONTROL="ignoreboth"
 
-. "$HOME/.nix-profile/etc/profile.d/nix.sh"
-
-if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
-  . "$HOME/.nix-profile/etc/profile.d/bash_completion.sh"
-fi
-
-. "$HOME/.nix-profile/share/git/contrib/completion/git-prompt.sh"
-
-# Make sure homebrew paths are last.
-export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v -e "^/home/linuxbrew/.linuxbrew/bin$" -e "^/home/linuxbrew/.linuxbrew/sbin$" | tr '\n' ':')
-export PATH="${PATH%:}:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
-
-[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
-[[ -r "/usr/share/git/completion/git-prompt.sh" ]] && . "/usr/share/git/completion/git-prompt.sh"
+. "/usr/share/git/completion/git-prompt.sh"
 
 eval "$(mise activate bash)"
 eval "$(batman --export-env)"

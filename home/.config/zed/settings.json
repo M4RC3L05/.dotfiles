@@ -1,4 +1,6 @@
 {
+  "base_keymap": "VSCode",
+  "icon_theme": "Zed (Default)",
   "telemetry": {
     "metrics": false,
     "diagnostics": false

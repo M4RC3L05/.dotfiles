@@ -25,7 +25,7 @@ gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-fr
 gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-to" "9.0"
 
 gsettings set "org.gnome.Console" "theme" "auto"
-gsettings set "org.gnome.Console" "shell" "['/home/main/.nix-profile/bin/fish']"
+gsettings set "org.gnome.Console" "shell" "['/usr/bin/fish']"
 
 gsettings set "org.gnome.desktop.background" "picture-uri" "file:///usr/share/backgrounds/gnome/blobs-l.svg"
 gsettings set "org.gnome.desktop.background" "picture-uri-dark" "file:///usr/share/backgrounds/gnome/blobs-d.svg"
@@ -56,45 +56,15 @@ flatpak install --user -y --noninteractive flathub org.gtk.Gtk3theme.adw-gtk3 or
 
 log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
 
-if ! command -v nix > /dev/null 2>&1; then
-  log_info "Setup nix"
-  curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes --no-modify-profile --no-channel-add
-
-  # shellcheck source=/dev/null
-  . "$HOME"/.nix-profile/etc/profile.d/nix.sh
-
-  nix_binary_path="$(readlink -f "$(which nix)")"
-  nix_profile_index="$(nix --extra-experimental-features 'nix-command flakes' profile list | grep "$(echo "$nix_binary_path" | sed 's|^/nix/store/\([^/]*\)/.*$|\1|g')" | awk '{print $3}')"
-  nix --extra-experimental-features 'nix-command flakes' profile remove "$nix_profile_index"
-  "$nix_binary_path" --extra-experimental-features 'nix-command flakes' profile add nixpkgs#nix
-fi
-
-log_info "Install nix packages"
-nix --extra-experimental-features 'nix-command flakes' profile add nixpkgs#act nixpkgs#bash-completion nixpkgs#bat \
-  nixpkgs#bat-extras.batman nixpkgs#bitwarden-cli nixpkgs#btop \
-  nixpkgs#cascadia-code nixpkgs#delta nixpkgs#dive nixpkgs#docker \
-  nixpkgs#docker-buildx nixpkgs#docker-credential-helpers nixpkgs#doggo \
-  nixpkgs#eget nixpkgs#eza nixpkgs#fastfetch nixpkgs#fish nixpkgs#git \
-  nixpkgs#hyperfine nixpkgs#jq nixpkgs#k9s nixpkgs#kubecolor nixpkgs#kubectl \
-  nixpkgs#micro nixpkgs#mise nixpkgs#nix nixpkgs#oha nixpkgs#podman nixpkgs#rsync \
-  nixpkgs#syncthing nixpkgs#tealdeer nixpkgs#tokei nixpkgs#wget nixpkgs#yq-go nixpkgs#yt-dlp
-
-log_info "Setup nix services"
-find ~/.nix-profile/share/systemd/user/ -type l -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.config/systemd/user' {} \;
-
-log_info "Setup nix fonts"
-find ~/.nix-profile/share/fonts/ -type f -name "*.ttf" -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.local/share/fonts' {} \;
-fc-cache -fv
-
-log_info "Install eget packages"
+log_info "Install github packages"
 mkdir -p "$HOME"/.local/bin/
-eget M4RC3L05/denotag --upgrade-only --to "$HOME"/.local/bin/
+dra download -i -s "docker-credential-secretservice-v{tag}.linux-amd64" -o "$HOME"/.local/bin/docker-credential-secretservice docker/docker-credential-helpers
+dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
+dra download -i -s "doggo_{tag}_Linux_x86_64.tar.gz" -o "$HOME"/.local/bin/doggo mr-karan/doggo
+dra download -i -s "kubecolor_{tag}_linux_amd64.tar.gz" -o "$HOME"/.local/bin/kubecolor kubecolor/kubecolor
 
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
-
-log_info "Reload systemd user units"
-systemctl --user daemon-reload
 
 if ! systemctl --user is-active --quiet podman; then
   log_info "Enable podman service"

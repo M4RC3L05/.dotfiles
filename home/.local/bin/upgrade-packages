@@ -1,54 +1,16 @@
 #!/usr/bin/env sh
 
-set -e
-
-(
-  set -x
-  nix profile upgrade --all
-)
-(
-  set -x
-  nix profile wipe-history
-)
-(
-  set -x
-  nix-collect-garbage -d
-)
-
 (
   set -x
   mise upgrade --bump --cd "$HOME"
 )
 
-eget M4RC3L05/denotag --upgrade-only --to "$HOME"/.local/bin/
+dra download -i -s "docker-credential-secretservice-v{tag}.linux-amd64" -o "$HOME"/.local/bin/docker-credential-secretservice docker/docker-credential-helpers
+dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
+dra download -i -s "doggo_{tag}_Linux_x86_64.tar.gz" -o "$HOME"/.local/bin/doggo mr-karan/doggo
+dra download -i -s "kubecolor_{tag}_linux_amd64.tar.gz" -o "$HOME"/.local/bin/kubecolor kubecolor/kubecolor
 
 (
   set -x
   fish -c "fish_update_completions"
-)
-
-(
-  set -x
-  find ~/.nix-profile/share/systemd/user/ -type l -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.config/systemd/user' {} \;
-)
-(
-  set -x
-  systemctl --user daemon-reload
-)
-(
-  set -x
-  systemctl --user restart podman
-)
-(
-  set -x
-  systemctl --user restart syncthing
-)
-
-(
-  set -x
-  find ~/.nix-profile/share/fonts/ -type f -name "*.ttf" -exec sh -c 'cp -f "$(readlink -f "$0")" ~/.local/share/fonts' {} \;
-)
-(
-  set -x
-  fc-cache -fv
 )
