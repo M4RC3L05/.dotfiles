@@ -53,6 +53,7 @@ user_pref("privacy.clearSiteData.siteSettings", true);
 //// Passwords
 user_pref("signon.rememberSignons", false);
 user_pref("signon.autofillForms", false);
+user_pref("signon.management.page.breach-alerts.enabled", false);
 
 //// Autofill
 user_pref("extensions.formautofill.addresses.enabled", false);
