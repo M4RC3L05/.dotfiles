@@ -125,3 +125,5 @@ user_pref("browser.tabs.groups.smart.enabled", false);
 user_pref("browser.ml.chat.page", false);
 user_pref("browser.ml.linkPreview.enabled", false);
 user_pref("extensions.ml.enabled", false);
+user_pref("browser.ml.pageAssist.enabled", false);
+user_pref("browser.tabs.groups.smart.userEnable", false);
