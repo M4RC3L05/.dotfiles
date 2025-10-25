@@ -107,3 +107,19 @@ user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", 
 user_pref("browser.aboutwelcome.enabled", false);
 user_pref("browser.preferences.moreFromMozilla", false);
 user_pref("browser.preferences.experimental", false);
+
+//// AI
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.page.footerBadge", false);
+user_pref("browser.ml.chat.page.menuBadge", false);
+user_pref("browser.ml.chat.shortcuts", false);
+user_pref("browser.ml.chat.shortcuts.custom", false);
+user_pref("browser.ml.chat.sidebar", false);
+user_pref("browser.ml.checkForMemory", false);
+user_pref("browser.ml.enable", false);
+user_pref("browser.ml.linkPreview.shift", false);
+user_pref("browser.ml.chat.menu", false);
+user_pref("browser.tabs.groups.smart.enabled", false);
+user_pref("browser.ml.chat.page", false);
+user_pref("browser.ml.linkPreview.enabled", false);
+user_pref("extensions.ml.enabled", false);
