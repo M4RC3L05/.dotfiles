@@ -12,10 +12,6 @@
             }
           },
           "toOverwrite": {
-            "filters": [
-              "www.twitch.tv##.consent-banner.kclbMN.Layout-sc-1xcs6mc-0",
-              "www.twitch.tv##.ceAbGI.Layout-sc-1xcs6mc-0"
-            ],
             "filterLists": [
               "user-filters",
               "ublock-filters",
