@@ -66,6 +66,13 @@ dra download -i -s "kubecolor_{tag}_linux_amd64.tar.gz" -o "$HOME"/.local/bin/ku
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
 
+log_info "Install VSCode extensions"
+code --install-extension denoland.vscode-deno
+code --install-extension editorconfig.editorconfig
+code --install-extension golang.go
+code --install-extension mads-hartmann.bash-ide-vscode
+code --install-extension tamasfe.even-better-toml
+
 if ! systemctl --user is-active --quiet podman; then
   log_info "Enable podman service"
   systemctl --user enable --now podman

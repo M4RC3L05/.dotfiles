@@ -18,7 +18,7 @@ sudo pacman -S --needed --noconfirm adw-gtk-theme gnome-console gnome-background
   gst-libav gst-plugin-va gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly \
   ffmpeg intel-gpu-tools libva-utils vdpauinfo vulkan-mesa-layers vulkan-tools nvtop \
   gufw \
-  zed \
+  code \
   flatpak gnome-software \
   base-devel bash-completion curl file git procps-ng \
   ttf-cascadia-code ttf-cascadia-code-nerd ttf-cascadia-mono-nerd \

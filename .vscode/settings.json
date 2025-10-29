@@ -1,0 +1,14 @@
+{
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": false
+  },
+  "[html]": {
+    "editor.formatOnSave": false
+  },
+  "[shellscript]": {
+    "editor.formatOnSave": false
+  }
+}
