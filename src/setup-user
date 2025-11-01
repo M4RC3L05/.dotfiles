@@ -57,7 +57,7 @@ flatpak install --user -y --noninteractive flathub org.gtk.Gtk3theme.adw-gtk3 or
 log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
 
 log_info "Install github packages"
-mkdir -p "$HOME"/.local/bin/
+mkdir -v -p "$HOME"/.local/bin/
 dra download -i -s "docker-credential-secretservice-v{tag}.linux-amd64" -o "$HOME"/.local/bin/docker-credential-secretservice docker/docker-credential-helpers
 dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
 dra download -i -s "doggo_{tag}_Linux_x86_64.tar.gz" -o "$HOME"/.local/bin/doggo mr-karan/doggo
