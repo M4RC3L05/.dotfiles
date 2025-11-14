@@ -18,6 +18,8 @@ user_pref("browser.newtabpage.enabled", true);
 //// Firefox Home Content
 user_pref("browser.newtabpage.activity-stream.showSearch", true);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
+user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false);
+user_pref("browser.newtabpage.activity-stream.system.showSponsoredCheckboxes", false);
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
 user_pref("browser.newtabpage.activity-stream.feeds.section.highlights", false);
 user_pref("browser.newtabpage.activity-stream.section.highlights.includeBookmarks", false);
