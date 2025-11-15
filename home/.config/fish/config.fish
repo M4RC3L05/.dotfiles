@@ -19,6 +19,6 @@ status is-interactive; and begin
   set -g __fish_git_prompt_showuntrackedfiles true
   set -g __fish_git_prompt_showupstream informative
 
-  mise activate fish | source
+  /home/linuxbrew/.linuxbrew/bin/brew shellenv | source
   batman --export-env | source
 end

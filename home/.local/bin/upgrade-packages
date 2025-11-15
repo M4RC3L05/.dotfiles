@@ -1,16 +1,13 @@
 #!/usr/bin/env sh
 
-(
-  set -x
-  mise upgrade --bump --cd "$HOME"
-)
+echo "=> Update brew packages"
+brew update && brew upgrade && brew cleanup && brew autoremove
 
-dra download -i -s "docker-credential-secretservice-v{tag}.linux-amd64" -o "$HOME"/.local/bin/docker-credential-secretservice docker/docker-credential-helpers
+echo "=> Update mise packages"
+mise upgrade --bump --cd "$HOME"
+
+echo "=> Update github packages"
 dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
-dra download -i -s "doggo_{tag}_Linux_x86_64.tar.gz" -o "$HOME"/.local/bin/doggo mr-karan/doggo
-dra download -i -s "kubecolor_{tag}_linux_amd64.tar.gz" -o "$HOME"/.local/bin/kubecolor kubecolor/kubecolor
 
-(
-  set -x
-  fish -c "fish_update_completions"
-)
+echo "=> Update fish completions"
+fish -c "fish_update_completions"

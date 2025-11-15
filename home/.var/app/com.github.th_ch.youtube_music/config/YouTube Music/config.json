@@ -5,10 +5,10 @@
 	},
 	"window-maximized": false,
 	"window-position": {
-		"x": 2867,
+		"x": 2815,
 		"y": 32
 	},
-	"url": "https://music.youtube.com/watch?v=6GCNUeTFSbA&list=RDAMVMQAo_Ycocl1E&index=0",
+	"url": "https://music.youtube.com/watch?v=EVFO99KOsEc&list=RDEMVOzRQTMI_ZrcuvlDNKc2dg&index=0",
 	"options": {
 		"tray": true,
 		"appVisible": true,
@@ -53,7 +53,7 @@
 	},
 	"__internal__": {
 		"migrations": {
-			"version": "3.10.0"
+			"version": "3.11.0"
 		}
 	}
 }

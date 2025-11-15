@@ -25,7 +25,7 @@ gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-fr
 gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-to" "9.0"
 
 gsettings set "org.gnome.Console" "theme" "auto"
-gsettings set "org.gnome.Console" "shell" "['/usr/bin/fish']"
+gsettings set "org.gnome.Console" "shell" "['/home/linuxbrew/.linuxbrew/bin/fish']"
 
 gsettings set "org.gnome.desktop.background" "picture-uri" "file:///usr/share/backgrounds/gnome/blobs-l.svg"
 gsettings set "org.gnome.desktop.background" "picture-uri-dark" "file:///usr/share/backgrounds/gnome/blobs-d.svg"
@@ -56,32 +56,21 @@ flatpak install --user -y --noninteractive flathub org.gtk.Gtk3theme.adw-gtk3 or
 
 log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
 
+if ! command -v brew > /dev/null 2>&1; then
+  log_info "Setup brew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /home/linuxbrew/.linuxbrew/bin/brew analytics off
+fi
+
+log_info "Install brew packages"
+/home/linuxbrew/.linuxbrew/bin/brew bundle check --file "$(dirname "$0")/brew-packages" || /home/linuxbrew/.linuxbrew/bin/brew bundle install --cleanup --file "$(dirname "$0")/brew-packages"
+
 log_info "Install github packages"
 mkdir -v -p "$HOME"/.local/bin/
-dra download -i -s "docker-credential-secretservice-v{tag}.linux-amd64" -o "$HOME"/.local/bin/docker-credential-secretservice docker/docker-credential-helpers
 dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
-dra download -i -s "doggo_{tag}_Linux_x86_64.tar.gz" -o "$HOME"/.local/bin/doggo mr-karan/doggo
-dra download -i -s "kubecolor_{tag}_linux_amd64.tar.gz" -o "$HOME"/.local/bin/kubecolor kubecolor/kubecolor
 
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
-
-log_info "Install VSCode extensions"
-code --install-extension denoland.vscode-deno
-code --install-extension editorconfig.editorconfig
-code --install-extension golang.go
-code --install-extension mads-hartmann.bash-ide-vscode
-code --install-extension tamasfe.even-better-toml
-
-if ! systemctl --user is-active --quiet podman; then
-  log_info "Enable podman service"
-  systemctl --user enable --now podman
-fi
-
-if ! systemctl --user is-active --quiet syncthing; then
-  log_info "Enable syncthing service"
-  systemctl --user enable --now syncthing
-fi
 
 log_info "Mask gnome ssh agent"
 systemctl --user mask gcr-ssh-agent.service

@@ -16,14 +16,8 @@ sudo pacman -S --needed --noconfirm adw-gtk-theme gnome-console gnome-background
   intel-media-driver linux-firmware libvpl vpl-gpu-rt vulkan-intel lib32-vulkan-intel libvdpau-va-gl \
   nvidia-open nvidia-open-lts nvidia-utils libva-nvidia-driver lib32-nvidia-utils \
   gst-libav gst-plugin-va gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly \
-  ffmpeg intel-gpu-tools libva-utils vdpauinfo vulkan-mesa-layers vulkan-tools nvtop \
-  gufw \
-  code \
-  flatpak gnome-software \
-  base-devel bash-completion curl file git procps-ng \
-  ttf-cascadia-code ttf-cascadia-code-nerd ttf-cascadia-mono-nerd \
-  act bat-extras bat bitwarden-cli btop git-delta dive docker docker-buildx eza fastfetch fish hyperfine \
-  jq k9s kubectl micro mise oha podman rsync syncthing tealdeer tokei wget go-yq yt-dlp wl-clipboard dra
+  ffmpeg intel-gpu-tools libva-utils vdpauinfo vulkan-mesa-layers vulkan-tools \
+  gufw code flatpak gnome-software base-devel bash-completion curl file git procps-ng
 
 if ! systemctl is-active --quiet bluetooth; then
   log_info "Enable bluetooth service"
@@ -45,7 +39,8 @@ sudo ufw allow "53317/udp"
 sudo ufw allow "53317/tcp"
 
 log_info "Add syncthing to firewall exclusion"
-sudo ufw allow syncthing
+sudo ufw allow "22000/udp"
+sudo ufw allow "21027/udp"
 
 log_info "Early KMS nvidia & intel"
 printf "hostonly=\"yes\"\\ncompress=\"lz4\"\\nforce_drivers+=\" i915 nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee "/etc/dracut.conf.d/myflags.conf" > /dev/null
