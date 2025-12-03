@@ -67,7 +67,7 @@ log_info "Install brew packages"
 
 log_info "Install github packages"
 mkdir -v -p "$HOME"/.local/bin/
-dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
+/home/linuxbrew/.linuxbrew/bin/dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
 
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
