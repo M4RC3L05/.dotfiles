@@ -44,6 +44,7 @@ user_pref("browser.urlbar.suggest.engines", false);
 // Privacy & Security
 //// Enhanced Tracking Protection
 user_pref("browser.contentblocking.category", "strict");
+user_pref("privacy.trackingprotection.allow_list.baseline.enabled", true);
 user_pref("privacy.trackingprotection.allow_list.convenience.enabled", false);
 
 //// Cookies and Site Data
@@ -129,3 +130,6 @@ user_pref("browser.ml.linkPreview.enabled", false);
 user_pref("extensions.ml.enabled", false);
 user_pref("browser.ml.pageAssist.enabled", false);
 user_pref("browser.tabs.groups.smart.userEnable", false);
+
+//// Customization
+user_pref("browser.uiCustomization.state", '{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":[],"nav-bar":["sidebar-button","back-button","forward-button","stop-reload-button","customizableui-special-spring2","urlbar-container","vertical-spacer","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","unified-extensions-button","downloads-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","screenshot-button"],"dirtyAreaCache":["nav-bar","TabsToolbar","vertical-tabs","toolbar-menubar","PersonalToolbar"],"currentVersion":23,"newElementCount":3}');
