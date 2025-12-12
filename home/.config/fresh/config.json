@@ -1,5 +1,6 @@
 {
   "theme": "dark",
+  "check_for_updates": true,
   "editor": {
     "tab_size": 2,
     "auto_indent": false,
@@ -7,14 +8,17 @@
     "relative_line_numbers": false,
     "scroll_offset": 3,
     "syntax_highlighting": true,
-    "line_wrap": false,
+    "line_wrap": true,
     "highlight_timeout_ms": 5,
     "snapshot_interval": 100,
     "large_file_threshold_bytes": 1048576,
     "estimated_line_length": 80,
     "enable_inlay_hints": true,
     "recovery_enabled": true,
-    "auto_save_interval_secs": 2
+    "auto_save_interval_secs": 2,
+    "highlight_context_bytes": 10000,
+    "mouse_hover_enabled": true,
+    "mouse_hover_delay_ms": 500
   },
   "file_explorer": {
     "respect_gitignore": true,
@@ -23,15 +27,19 @@
     "custom_ignore_patterns": [],
     "width": 0.3
   },
+  "terminal": {
+    "jump_to_end_on_output": true
+  },
   "keybindings": [],
   "keybinding_maps": {},
   "active_keybinding_map": "default",
   "languages": {
-    "rust": {
+    "typescript": {
       "extensions": [
-        "rs"
+        "ts",
+        "tsx"
       ],
-      "grammar": "rust",
+      "grammar": "typescript",
       "comment_prefix": "//",
       "auto_indent": true,
       "highlighter": "auto",
@@ -47,6 +55,21 @@
       "highlighter": "auto",
       "textmate_grammar": null
     },
+    "cpp": {
+      "extensions": [
+        "cpp",
+        "cc",
+        "cxx",
+        "hpp",
+        "hh",
+        "hxx"
+      ],
+      "grammar": "cpp",
+      "comment_prefix": "//",
+      "auto_indent": true,
+      "highlighter": "auto",
+      "textmate_grammar": null
+    },
     "javascript": {
       "extensions": [
         "js",
@@ -58,12 +81,32 @@
       "highlighter": "auto",
       "textmate_grammar": null
     },
-    "typescript": {
+    "c": {
       "extensions": [
-        "ts",
-        "tsx"
+        "c",
+        "h"
       ],
-      "grammar": "typescript",
+      "grammar": "c",
+      "comment_prefix": "//",
+      "auto_indent": true,
+      "highlighter": "auto",
+      "textmate_grammar": null
+    },
+    "csharp": {
+      "extensions": [
+        "cs"
+      ],
+      "grammar": "c_sharp",
+      "comment_prefix": "//",
+      "auto_indent": true,
+      "highlighter": "auto",
+      "textmate_grammar": null
+    },
+    "rust": {
+      "extensions": [
+        "rs"
+      ],
+      "grammar": "rust",
       "comment_prefix": "//",
       "auto_indent": true,
       "highlighter": "auto",
@@ -71,11 +114,9 @@
     }
   },
   "lsp": {
-    "javascript": {
-      "command": "deno",
-      "args": [
-        "lsp"
-      ],
+    "csharp": {
+      "command": "csharp-ls",
+      "args": [],
       "enabled": true,
       "auto_start": false,
       "process_limits": {
@@ -84,21 +125,8 @@
         "enabled": true
       }
     },
-    "typescript": {
-      "command": "deno",
-      "args": [
-        "lsp"
-      ],
-      "enabled": true,
-      "auto_start": false,
-      "process_limits": {
-        "max_memory_mb": 7842,
-        "max_cpu_percent": 90,
-        "enabled": true
-      }
-    },
-    "python": {
-      "command": "pylsp",
+    "cpp": {
+      "command": "clangd",
       "args": [],
       "enabled": true,
       "auto_start": false,
@@ -110,6 +138,17 @@
     },
     "c": {
       "command": "clangd",
+      "args": [],
+      "enabled": true,
+      "auto_start": false,
+      "process_limits": {
+        "max_memory_mb": 7842,
+        "max_cpu_percent": 90,
+        "enabled": true
+      }
+    },
+    "go": {
+      "command": "gopls",
       "args": [],
       "enabled": true,
       "auto_start": false,
@@ -132,8 +171,21 @@
         "enabled": true
       }
     },
-    "css": {
-      "command": "vscode-css-languageserver-bin",
+    "typescript": {
+      "command": "deno",
+      "args": [
+        "lsp"
+      ],
+      "enabled": true,
+      "auto_start": false,
+      "process_limits": {
+        "max_memory_mb": 7842,
+        "max_cpu_percent": 90,
+        "enabled": true
+      }
+    },
+    "html": {
+      "command": "vscode-html-languageserver-bin",
       "args": [
         "--stdio"
       ],
@@ -159,8 +211,8 @@
         "enabled": true
       }
     },
-    "cpp": {
-      "command": "clangd",
+    "python": {
+      "command": "pylsp",
       "args": [],
       "enabled": true,
       "auto_start": false,
@@ -170,21 +222,23 @@
         "enabled": true
       }
     },
-    "go": {
-      "command": "gopls",
-      "args": [],
-      "enabled": true,
-      "auto_start": false,
-      "process_limits": {
-        "max_memory_mb": 7842,
-        "max_cpu_percent": 90,
-        "enabled": true
-      }
-    },
-    "html": {
-      "command": "vscode-html-languageserver-bin",
+    "css": {
+      "command": "vscode-css-languageserver-bin",
       "args": [
         "--stdio"
+      ],
+      "enabled": true,
+      "auto_start": false,
+      "process_limits": {
+        "max_memory_mb": 7842,
+        "max_cpu_percent": 90,
+        "enabled": true
+      }
+    },
+    "javascript": {
+      "command": "deno",
+      "args": [
+        "lsp"
       ],
       "enabled": true,
       "auto_start": false,
