@@ -10,5 +10,8 @@
   },
   "[shellscript]": {
     "editor.formatOnSave": false
+  },
+  "[yaml]": {
+    "editor.formatOnSave": false
   }
 }
