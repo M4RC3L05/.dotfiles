@@ -25,7 +25,7 @@ gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-fr
 gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-to" "9.0"
 
 gsettings set "org.gnome.Console" "theme" "auto"
-gsettings set "org.gnome.Console" "shell" "['/home/linuxbrew/.linuxbrew/bin/fish']"
+gsettings set "org.gnome.Console" "shell" "['/usr/bin/fish']"
 
 gsettings set "org.gnome.desktop.background" "picture-uri" "file:///usr/share/backgrounds/gnome/blobs-l.svg"
 gsettings set "org.gnome.desktop.background" "picture-uri-dark" "file:///usr/share/backgrounds/gnome/blobs-d.svg"
@@ -38,29 +38,51 @@ log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
 # Install https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension manually
 log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
 
-log_info "Setup flatpak remotes"
-flatpak remote-add --system --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak remote-modify --system --enable flathub-beta
-flatpak remote-modify --system --enable flathub
+# log_info "Setup flatpak remotes"
+flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak remote-modify --user --enable flathub-beta
+flatpak remote-modify --user --enable flathub
 
+log_info "Install flatpak runtimes & apps"
+flatpak install --user -y --noninteractive flathub \
+  org.gtk.Gtk3theme.adw-gtk3 \
+  org.gtk.Gtk3theme.adw-gtk3-dark \
+  app.drey.KeyRack ca.desrt.dconf-editor com.bitwarden.desktop \
+  com.brave.Browser com.discordapp.Discord com.github.Matoking.protontricks \
+  com.github.neithern.g4music com.github.tchx84.Flatseal com.mattjakeman.ExtensionManager \
+  com.usebottles.bottles com.valvesoftware.Steam com.vysp3r.ProtonPlus \
+  io.gitlab.news_flash.NewsFlash net.nokyan.Resources \
+  org.gnome.Boxes org.gnome.Calculator org.gnome.Calendar org.gnome.Contacts \
+  org.gnome.Loupe org.gnome.Papers org.gnome.Showtime org.gnome.TextEditor \
+  org.gnome.seahorse.Application org.libreoffice.LibreOffice org.localsend.localsend_app \
+  org.mozilla.firefox org.prismlauncher.PrismLauncher org.raspberrypi.rpi-imager
 log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
 
-if ! command -v brew > /dev/null 2>&1; then
-  log_info "Setup brew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  /home/linuxbrew/.linuxbrew/bin/brew analytics off
-fi
-
-log_info "Install brew packages"
-/home/linuxbrew/.linuxbrew/bin/brew bundle check --file "$(dirname "$0")/brew-packages" || /home/linuxbrew/.linuxbrew/bin/brew bundle install --cleanup --file "$(dirname "$0")/brew-packages"
-
-log_info "Install github packages"
-mkdir -v -p "$HOME"/.local/bin/
-/home/linuxbrew/.linuxbrew/bin/dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
+log_info "Install vscode extensions"
+code --force --install-extension bierner.markdown-mermaid
+code --force --install-extension denoland.vscode-deno
+code --force --install-extension editorconfig.editorconfig
+code --force --install-extension golang.go
+code --force --install-extension mads-hartmann.bash-ide-vscode
+code --force --install-extension tamasfe.even-better-toml
+code --force --install-extension yzhang.markdown-all-in-one
 
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
+
+log_info "Install manual bins"
+"$(dirname "$0")"/../home/.local/bin/manual-bin-install
+
+if ! systemctl --user is-active --quiet podman.socket; then
+  log_info "Enable podman service"
+  systemctl --user enable --now podman.socket
+fi
+
+if ! systemctl --user is-active --quiet syncthing; then
+  log_info "Enable syncthing service"
+  systemctl --user enable --now syncthing
+fi
 
 log_info "Mask gnome ssh agent"
 systemctl --user mask gcr-ssh-agent.service

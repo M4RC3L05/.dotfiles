@@ -1,13 +1,4 @@
 #!/usr/bin/env sh
 
-echo "=> Update brew packages"
-brew update && brew upgrade && brew cleanup && brew autoremove
-
-echo "=> Update mise packages"
-mise upgrade --bump --cd "$HOME"
-
-echo "=> Update github packages"
-dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
-
 echo "=> Update fish completions"
 fish -c "fish_update_completions"
