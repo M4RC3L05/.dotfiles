@@ -20,7 +20,8 @@ sudo pacman -S --needed --noconfirm adw-gtk-theme gnome-console gnome-background
   gufw code flatpak gnome-software base-devel bash-completion curl file git procps-ng \
   ttf-cascadia-code ttf-cascadia-code-nerd ttf-cascadia-mono-nerd \
   act bat-extras bat bitwarden-cli btop git-delta dive docker docker-buildx eza fastfetch fish hyperfine \
-  jq k9s kubectl micro mise oha podman rsync syncthing tealdeer tokei wget go-yq yt-dlp wl-clipboard dra
+  jq k9s kubectl micro mise oha podman rsync syncthing tealdeer tokei wget go-yq yt-dlp wl-clipboard dra \
+  nvtop
 
 if ! systemctl is-active --quiet bluetooth; then
   log_info "Enable bluetooth service"
