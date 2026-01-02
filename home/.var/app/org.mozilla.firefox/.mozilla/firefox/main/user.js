@@ -47,7 +47,8 @@ user_pref("browser.urlbar.suggest.engines", false);
 // Privacy & Security
 //// Enhanced Tracking Protection
 user_pref("browser.contentblocking.category", "strict");
-user_pref("privacy.trackingprotection.allow_list.baseline.enabled", true);
+user_pref("privacy.trackingprotection.allow_list.hasUserInteractedWithETPSettings", true);
+user_pref("privacy.trackingprotection.allow_list.hasMigratedCategoryPrefs", true);
 user_pref("privacy.trackingprotection.allow_list.convenience.enabled", false);
 
 //// Cookies and Site Data
