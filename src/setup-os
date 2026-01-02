@@ -12,16 +12,23 @@ fi
 
 log_info "Upgrade and install os packages"
 sudo pacman -Syyuu
-sudo pacman -S --needed --noconfirm adw-gtk-theme gnome-console gnome-backgrounds libedataserverui4 folks \
-  intel-media-driver linux-firmware libvpl vpl-gpu-rt vulkan-intel lib32-vulkan-intel libvdpau-va-gl \
-  nvidia-open nvidia-open-lts nvidia-utils libva-nvidia-driver lib32-nvidia-utils \
-  gst-libav gst-plugin-va gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly \
-  ffmpeg intel-gpu-tools libva-utils vdpauinfo vulkan-mesa-layers vulkan-tools \
-  gufw code flatpak gnome-software base-devel bash-completion curl file git procps-ng \
+sudo pacman -S --needed --noconfirm \
+  linux-firmware base-devel \
+  \
+  intel-media-driver vulkan-intel libvpl vpl-gpu-rt libvdpau-va-gl \
+  \
+  nvidia-open nvidia-open-lts nvidia-utils libva-nvidia-driver \
+  \
+  gst-libav gst-plugin-va gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugin-pipewire \
+  \
+  adw-gtk-theme gnome-console gnome-backgrounds libedataserverui4 folks gnome-software \
+  \
+  intel-gpu-tools nvtop libva-utils vdpauinfo vulkan-mesa-layers vulkan-tools \
+  \
+  ffmpeg gufw code flatpak bash-completion curl file git procps-ng \
   ttf-cascadia-code ttf-cascadia-code-nerd ttf-cascadia-mono-nerd \
   act bat-extras bat bitwarden-cli btop git-delta dive docker docker-buildx eza fastfetch fish hyperfine \
-  jq k9s kubectl micro mise oha podman rsync syncthing tealdeer tokei wget go-yq yt-dlp wl-clipboard dra \
-  nvtop
+  jq k9s kubectl micro mise oha podman rsync syncthing tealdeer tokei wget go-yq yt-dlp wl-clipboard dra
 
 if ! systemctl is-active --quiet bluetooth; then
   log_info "Enable bluetooth service"
