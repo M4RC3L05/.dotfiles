@@ -82,7 +82,7 @@ inst \
 echo "==> Install command completions"
 mkdir -vp "$HOME"/.local/share/bash-completion/completions
 mkdir -vp "$HOME"/.config/fish/completions
-doggo completions bash > "$HOME"/.local/share/bash-completion/completions/doggo
-doggo completions fish > ~/.config/fish/completions/doggo.fish
-kubecolor completion bash > "$HOME"/.local/share/bash-completion/completions/kubecolor
-kubecolor completion fish > ~/.config/fish/completions/kubecolor.fish
+"$HOME"/.local/bin/doggo completions bash > "$HOME"/.local/share/bash-completion/completions/doggo
+"$HOME"/.local/bin/doggo completions fish > ~/.config/fish/completions/doggo.fish
+"$HOME"/.local/bin/kubecolor completion bash > "$HOME"/.local/share/bash-completion/completions/kubecolor
+"$HOME"/.local/bin/kubecolor completion fish > ~/.config/fish/completions/kubecolor.fish
