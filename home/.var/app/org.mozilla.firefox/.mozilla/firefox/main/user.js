@@ -1,6 +1,7 @@
 // General
 user_pref("browser.places.importBookmarksHTML", true);
 user_pref("browser.bookmarks.file", "~/.mozilla/firefox/main/bookmarks.html");
+user_pref("middlemouse.paste", false);
 
 //// Browser layout
 user_pref("sidebar.revamp", false);
