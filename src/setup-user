@@ -34,7 +34,10 @@ gsettings set "org.gnome.desktop.wm.preferences" "button-layout" "appmenu:minimi
 
 gsettings set "org.gnome.mutter" "center-new-windows" "true"
 
-gsettings set org.gnome.desktop.interface gtk-enable-primary-paste "false"
+gsettings set "org.gnome.desktop.interface" "gtk-enable-primary-paste" "false"
+
+gsettings set "org.gnome.desktop.search-providers" "enabled" "['org.gnome.Calendar.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.Contacts.desktop']"
+gsettings set "org.gnome.desktop.search-providers" "disabled" "[]"
 
 log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
 # Install https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension manually
