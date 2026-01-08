@@ -53,8 +53,8 @@ inst_bin() {
 echo "==> Install manual binaries"
 mkdir -v -p "$HOME"/.local/bin/
 inst_bin \
-  https://github.com/docker/docker-credential-helpers/releases/download/v0.9.4/docker-credential-secretservice-v0.9.4.linux-amd64 \
-  747dbdca622f880003559369edf7bcbdc764d9f5f13af6f4ad616e4267812947 \
+  https://github.com/docker/docker-credential-helpers/releases/download/v0.9.5/docker-credential-secretservice-v0.9.5.linux-amd64 \
+  911d1d985254731b9cff2e272cf073d831cc865b4c00143c2f85d790ef761deb \
   docker-credential-secretservice \
   "$HOME"/.local/bin
 
