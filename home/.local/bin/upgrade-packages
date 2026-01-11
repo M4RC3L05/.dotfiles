@@ -6,6 +6,7 @@ echo "=> Update brew"
 /home/linuxbrew/.linuxbrew/bin/brew cleanup
 /home/linuxbrew/.linuxbrew/bin/brew autoremove
 
+# https://github.com/ublue-os/brew
 /home/linuxbrew/.linuxbrew/bin/brew unlink systemd
 /home/linuxbrew/.linuxbrew/bin/brew unlink dbus
 /home/linuxbrew/.linuxbrew/bin/brew unlink python
