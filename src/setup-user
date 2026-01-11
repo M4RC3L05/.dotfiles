@@ -64,30 +64,24 @@ flatpak install --user -y --noninteractive flathub \
   org.mozilla.firefox org.prismlauncher.PrismLauncher org.raspberrypi.rpi-imager
 log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
 
-log_info "Install vscode extensions"
-code --force --install-extension bierner.markdown-mermaid
-code --force --install-extension denoland.vscode-deno
-code --force --install-extension editorconfig.editorconfig
-code --force --install-extension golang.go
-code --force --install-extension mads-hartmann.bash-ide-vscode
-code --force --install-extension tamasfe.even-better-toml
-code --force --install-extension yzhang.markdown-all-in-one
+if ! command -v brew > /dev/null 2>&1; then
+  log_info "Setup brew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /home/linuxbrew/.linuxbrew/bin/brew analytics off
+fi
+
+log_info "Install brew packages"
+/home/linuxbrew/.linuxbrew/bin/brew bundle check --file "$(dirname "$0")/brew-packages" || /home/linuxbrew/.linuxbrew/bin/brew bundle install --cleanup --file "$(dirname "$0")/brew-packages"
+
+log_info "Install github packages"
+mkdir -v -p "$HOME"/.local/bin/
+/home/linuxbrew/.linuxbrew/bin/dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
 
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
 
-log_info "Install manual bins"
-"$(dirname "$0")"/../home/.local/bin/manual-bin-install
-
-if ! systemctl --user is-active --quiet podman.socket; then
-  log_info "Enable podman service"
-  systemctl --user enable --now podman.socket
-fi
-
-if ! systemctl --user is-active --quiet syncthing; then
-  log_info "Enable syncthing service"
-  systemctl --user enable --now syncthing
-fi
+log_info "Enable syncthing service"
+/home/linuxbrew/.linuxbrew/bin/brew services start syncthing
 
 log_info "Mask gnome ssh agent"
 systemctl --user mask gcr-ssh-agent.service

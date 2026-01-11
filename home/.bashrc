@@ -8,7 +8,27 @@ alias kubectl="kubecolor"
 
 HISTCONTROL="ignoreboth"
 
-. "/usr/share/git/completion/git-prompt.sh"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv | grep -Ev '\bPATH=')"
+HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}"
+export PATH="${PATH}:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin"
+
+if ! test -L /home/linuxbrew/.linuxbrew/etc/bash_completion.d/brew; then
+  /home/linuxbrew/.linuxbrew/bin/brew completions link > /dev/null
+fi
+
+if test -d /home/linuxbrew/.linuxbrew/etc/bash_completion.d; then
+  for rc in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*; do
+    if test -r "$rc"; then
+      . "$rc"
+    fi
+  done
+  unset rc
+fi
+
+if [ -f "/home/linuxbrew/.linuxbrew/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+  __GIT_PROMPT_DIR="/home/linuxbrew/.linuxbrew/opt/bash-git-prompt/share"
+  source "/home/linuxbrew/.linuxbrew/opt/bash-git-prompt/share/gitprompt.sh"
+fi
 
 eval "$(mise activate bash)"
 eval "$(batman --export-env)"
