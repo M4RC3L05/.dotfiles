@@ -1,4 +1,6 @@
 {
+  "chat.disableAIFeatures": true,
+  "deno.enable": false,
   "diffEditor.ignoreTrimWhitespace": true,
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.fontFamily": "'Cascadia Code', 'monospace', monospace",
@@ -9,18 +11,19 @@
   "editor.tabSize": 2,
   "extensions.ignoreRecommendations": true,
   "files.autoSave": "onFocusChange",
+  "telemetry.editStats.enabled": false,
+  "telemetry.feedback.enabled": false,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "fish",
   "terminal.integrated.fontFamily": "'Cascadia Code NF', 'monospace', monospace",
   "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.suggest.enabled": false,
   "window.autoDetectColorScheme": true,
   "window.dialogStyle": "custom",
   "window.titleBarStyle": "custom",
   "workbench.list.smoothScrolling": true,
   "workbench.preferredDarkColorTheme": "Default Dark Modern",
   "workbench.preferredLightColorTheme": "Default Light Modern",
-  "deno.enable": false,
-  "chat.disableAIFeatures": true,
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "workbench.startupEditor": "none"
 }
