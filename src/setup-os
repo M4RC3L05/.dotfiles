@@ -13,7 +13,7 @@ fi
 log_info "Upgrade and install os packages"
 sudo pacman -Syyuu
 sudo pacman -S --needed --noconfirm \
-  linux-firmware base-devel \
+  linux-firmware \
   \
   intel-media-driver vulkan-intel libvpl vpl-gpu-rt libvdpau-va-gl \
   \
