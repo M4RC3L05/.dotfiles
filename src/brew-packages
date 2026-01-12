@@ -1,5 +1,6 @@
 tap "ublue-os/tap"
 brew "act"
+brew "bash-git-prompt"
 brew "bat"
 brew "bat-extras"
 brew "bitwarden-cli"
@@ -23,7 +24,7 @@ brew "micro"
 brew "mise"
 brew "nvtop"
 brew "oha"
-brew "podman", restart_service: :changed
+brew "podman"
 brew "rsync"
 brew "syncthing", restart_service: :changed
 brew "tealdeer"
