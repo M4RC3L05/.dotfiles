@@ -36,6 +36,9 @@
         }
       }
     },
+    "DisableFirefoxStudies": true,
+    "DisableTelemetry": true,
+    "DontCheckDefaultBrowser": true,
     "ExtensionSettings": {
       "*": {
         "installation_mode": "blocked"
@@ -52,6 +55,17 @@
         "default_area": "navbar",
         "updates_disabled": false
       }
+    },
+    "FirefoxHome": {
+      "SponsoredStories": false,
+      "SponsoredTopSites": false,
+      "Stories": false
+    },
+    "GenerativeAI": {
+      "Enabled": false
+    },
+    "SearchEngines": {
+      "Remove": [ "Perplexity" ]
     }
   }
 }
