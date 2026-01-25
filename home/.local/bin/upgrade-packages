@@ -6,13 +6,6 @@ echo "=> Update brew"
 /home/linuxbrew/.linuxbrew/bin/brew cleanup
 /home/linuxbrew/.linuxbrew/bin/brew autoremove
 
-# https://github.com/ublue-os/brew
-/home/linuxbrew/.linuxbrew/bin/brew unlink systemd
-/home/linuxbrew/.linuxbrew/bin/brew unlink dbus
-/home/linuxbrew/.linuxbrew/bin/brew unlink python
-/home/linuxbrew/.linuxbrew/bin/brew unlink gsettings
-/home/linuxbrew/.linuxbrew/bin/brew unlink bash
-
 echo "=> Update github packages"
 /home/linuxbrew/.linuxbrew/bin/dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
 
