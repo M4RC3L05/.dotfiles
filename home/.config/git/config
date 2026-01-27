@@ -21,3 +21,13 @@
   email = "15786310+M4RC3L05@users.noreply.github.com"
   name = "m4rc3l05"
   useConfigOnly = true
+	signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC/nWEWNqQmQS0I6K4APd6g0Iz6OT3YaKiRfkc/K6KH+"
+
+[gpg]
+	format = ssh
+
+[commit]
+  gpgsign = true
+
+[tag]
+	gpgSign = true
