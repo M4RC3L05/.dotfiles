@@ -59,7 +59,7 @@ flatpak install --user -y --noninteractive flathub \
   com.usebottles.bottles com.valvesoftware.Steam com.vysp3r.ProtonPlus \
   io.gitlab.news_flash.NewsFlash net.nokyan.Resources \
   org.gnome.Boxes org.gnome.Calculator org.gnome.Calendar org.gnome.Contacts \
-  org.gnome.Loupe org.gnome.Papers org.gnome.Showtime org.gnome.TextEditor \
+  org.gnome.Loupe org.gnome.Papers io.github.diegopvlk.Cine org.gnome.TextEditor \
   org.gnome.seahorse.Application org.libreoffice.LibreOffice org.localsend.localsend_app \
   org.mozilla.firefox org.prismlauncher.PrismLauncher org.raspberrypi.rpi-imager
 log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
