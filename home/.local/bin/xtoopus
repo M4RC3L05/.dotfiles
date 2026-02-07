@@ -14,7 +14,7 @@ for file in "$@"; do
   echo "=> Converting $(basename "$parsed_path") => $final_path"
   (
     set -x
-    ffmpeg -v warning -stats -i "$parsed_path" -c:a libopus -b:a 256k -vn "$final_path"
+    ffmpeg -v warning -stats -channel_layout stereo -i "$parsed_path" -c:a libopus -b:a 256k -vbr on -compression_level 10 -vn "$final_path"
   )
   echo
 done
