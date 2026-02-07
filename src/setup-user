@@ -62,7 +62,6 @@ flatpak install --user -y --noninteractive flathub \
   org.gnome.Loupe org.gnome.Papers io.github.diegopvlk.Cine org.gnome.TextEditor \
   org.gnome.seahorse.Application org.libreoffice.LibreOffice org.localsend.localsend_app \
   org.mozilla.firefox org.prismlauncher.PrismLauncher org.raspberrypi.rpi-imager
-log_warning "Flatpak: com.github.th_ch.youtube_music must be installed manually"
 
 if ! command -v brew > /dev/null 2>&1; then
   log_info "Setup brew"
