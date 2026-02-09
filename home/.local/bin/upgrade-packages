@@ -6,8 +6,5 @@ echo "=> Update brew"
 /home/linuxbrew/.linuxbrew/bin/brew cleanup
 /home/linuxbrew/.linuxbrew/bin/brew autoremove
 
-echo "=> Update github packages"
-/home/linuxbrew/.linuxbrew/bin/dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
-
 echo "=> Update fish completions"
 fish -c "fish_update_completions"

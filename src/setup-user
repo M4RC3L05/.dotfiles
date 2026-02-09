@@ -72,10 +72,6 @@ fi
 log_info "Install brew packages"
 /home/linuxbrew/.linuxbrew/bin/brew bundle check --file "$(dirname "$0")/brew-packages" || /home/linuxbrew/.linuxbrew/bin/brew bundle install --cleanup --file "$(dirname "$0")/brew-packages"
 
-log_info "Install github packages"
-mkdir -v -p "$HOME"/.local/bin/
-/home/linuxbrew/.linuxbrew/bin/dra download -i -s "denotag-x86_64-unknown-linux-gnu.tar.gz" -o "$HOME"/.local/bin/denotag M4RC3L05/denotag
-
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
 
