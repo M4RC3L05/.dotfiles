@@ -54,7 +54,7 @@ flatpak install --user -y --noninteractive flathub \
   org.gtk.Gtk3theme.adw-gtk3 \
   org.gtk.Gtk3theme.adw-gtk3-dark \
   app.drey.KeyRack ca.desrt.dconf-editor com.bitwarden.desktop \
-  com.brave.Browser com.discordapp.Discord com.github.Matoking.protontricks \
+  com.discordapp.Discord com.github.Matoking.protontricks \
   com.github.neithern.g4music com.github.tchx84.Flatseal com.mattjakeman.ExtensionManager \
   com.usebottles.bottles com.valvesoftware.Steam com.vysp3r.ProtonPlus \
   io.gitlab.news_flash.NewsFlash net.nokyan.Resources \
