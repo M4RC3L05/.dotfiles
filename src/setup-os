@@ -25,7 +25,7 @@ sudo pacman -S --needed --noconfirm \
   \
   intel-gpu-tools libva-utils vdpauinfo vulkan-mesa-layers vulkan-tools \
   \
-  gufw flatpak bash-completion fish
+  gufw flatpak bash-completion
 
 if ! systemctl is-active --quiet bluetooth; then
   log_info "Enable bluetooth service"
