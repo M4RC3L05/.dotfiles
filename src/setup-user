@@ -82,4 +82,34 @@ log_info "Mask gnome ssh agent"
 systemctl --user mask gcr-ssh-agent.service
 systemctl --user mask gcr-ssh-agent.socket
 
+# https://github.com/bitwarden/clients/blob/5dc49f21d2e5aa145fe9611222b4c0c5659db1c5/apps/desktop/src/key-management/biometrics/os-biometrics-linux.service.ts#L147-L150
+# https://github.com/bitwarden/clients/blob/5dc49f21d2e5aa145fe9611222b4c0c5659db1c5/apps/desktop/src/key-management/biometrics/os-biometrics-linux.service.ts#L154
+log_info "Setup bitwarden polkit"
+POLKIT_POLICY=$(cat << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+
+<policyconfig>
+    <action id="com.bitwarden.Bitwarden.unlock">
+      <description>Unlock Bitwarden</description>
+      <message>Authenticate to unlock Bitwarden</message>
+      <defaults>
+        <allow_any>no</allow_any>
+        <allow_inactive>no</allow_inactive>
+        <allow_active>auth_self</allow_active>
+      </defaults>
+    </action>
+</policyconfig>
+EOF
+)
+POLICY_PATH="/usr/share/polkit-1/actions"
+POLICY_FILENAME="com.bitwarden.Bitwarden.policy"
+COMPLETE_POLICY_PATH="$POLICY_PATH/$POLICY_FILENAME"
+
+sudo rm -f "$COMPLETE_POLICY_PATH"
+sudo bash -c "echo '$POLKIT_POLICY' > $COMPLETE_POLICY_PATH"
+sudo chown root:root "$COMPLETE_POLICY_PATH"
+
 log_success "User setup completed."
