@@ -22,8 +22,8 @@
   "window.dialogStyle": "custom",
   "window.titleBarStyle": "custom",
   "workbench.list.smoothScrolling": true,
-  "workbench.preferredDarkColorTheme": "Default Dark Modern",
-  "workbench.preferredLightColorTheme": "Default Light Modern",
+  "workbench.preferredDarkColorTheme": "Dark 2026",
+  "workbench.preferredLightColorTheme": "Light 2026",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "workbench.startupEditor": "none"
 }
