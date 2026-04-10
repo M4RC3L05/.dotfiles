@@ -19,7 +19,7 @@ sudo pacman -S --needed --noconfirm \
   \
   nvidia-open nvidia-open-lts nvidia-utils libva-nvidia-driver \
   \
-  gst-libav gst-plugin-va gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugin-pipewire \
+  gst-libav gst-plugin-va gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugin-pipewire gst-plugin-gtk4 \
   \
   adw-gtk-theme gnome-console gnome-backgrounds libedataserverui4 folks bazaar \
   \
