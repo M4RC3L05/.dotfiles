@@ -54,4 +54,9 @@ log_info "Early KMS nvidia & intel"
 printf "hostonly=\"yes\"\\ncompress=\"lz4\"\\nforce_drivers+=\" i915 nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee "/etc/dracut.conf.d/myflags.conf" > /dev/null
 sudo reinstall-kernels
 
+log_info "Enable deep sleep"
+sudo mkdir -p /etc/systemd/sleep.conf.d
+printf "[Sleep]\nMemorySleepMode=deep" | sudo tee "/etc/systemd/sleep.conf.d/mem-deep.conf" > /dev/nu
+systemctl daemon-reload
+
 log_success "OS setup completed."
