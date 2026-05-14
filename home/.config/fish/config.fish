@@ -19,7 +19,7 @@ status is-interactive; and begin
   set -g __fish_git_prompt_showuntrackedfiles true
   set -g __fish_git_prompt_showupstream informative
 
-  brew shellenv | grep -Ev 'fish_add_path --global --move --path "' | source
+  /home/linuxbrew/.linuxbrew/bin/brew shellenv | grep -Ev 'fish_add_path --global --move --path "' | source
   fish_add_path --append --global --move --path "/home/linuxbrew/.linuxbrew/bin" "/home/linuxbrew/.linuxbrew/sbin";
 
   batman --export-env | source
