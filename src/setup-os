@@ -56,7 +56,7 @@ sudo reinstall-kernels
 
 log_info "Enable deep sleep"
 sudo mkdir -p /etc/systemd/sleep.conf.d
-printf "[Sleep]\nMemorySleepMode=deep" | sudo tee "/etc/systemd/sleep.conf.d/mem-deep.conf" > /dev/nu
+printf "[Sleep]\nMemorySleepMode=deep" | sudo tee "/etc/systemd/sleep.conf.d/mem-deep.conf" > /dev/null
 systemctl daemon-reload
 
 log_success "OS setup completed."
