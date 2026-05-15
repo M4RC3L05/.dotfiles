@@ -28,6 +28,7 @@ brew "mise"
 brew "nvtop"
 brew "oha"
 brew "podman"
+brew "rsync"
 brew "syncthing", restart_service: :changed
 brew "tealdeer"
 brew "tokei"
