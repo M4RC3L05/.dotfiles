@@ -14,7 +14,12 @@
   "telemetry.editStats.enabled": false,
   "telemetry.feedback.enabled": false,
   "telemetry.telemetryLevel": "off",
-  "terminal.integrated.defaultProfile.linux": "fish",
+  "terminal.integrated.profiles.linux": {
+    "homebrew-fish": {
+      "path": "/home/linuxbrew/.linuxbrew/bin/fish"
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "homebrew-fish",
   "terminal.integrated.fontFamily": "'Cascadia Code NF', 'monospace', monospace",
   "terminal.integrated.smoothScrolling": true,
   "terminal.integrated.suggest.enabled": false,
