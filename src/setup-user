@@ -42,24 +42,18 @@ log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
 log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
 
 # log_info "Setup flatpak remotes"
+flatpak remote-delete --system flathub
+flatpak remote-delete --system flathub-beta
 flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak remote-modify --user --enable flathub-beta
 flatpak remote-modify --user --enable flathub
 
-log_info "Install flatpak runtimes & apps"
+log_info "Install flatpak runtimes"
 flatpak install --user -y --noninteractive flathub \
+  org.gnome.Loupe.HEIC \
   org.gtk.Gtk3theme.adw-gtk3 \
-  org.gtk.Gtk3theme.adw-gtk3-dark \
-  ca.desrt.dconf-editor com.bitwarden.desktop \
-  com.discordapp.Discord \
-  com.github.neithern.g4music com.github.tchx84.Flatseal com.mattjakeman.ExtensionManager \
-  com.usebottles.bottles com.valvesoftware.Steam \
-  io.gitlab.news_flash.NewsFlash net.nokyan.Resources \
-  org.gnome.Calculator org.gnome.Calendar org.gnome.Contacts \
-  org.gnome.Loupe org.gnome.Papers io.github.diegopvlk.Cine org.gnome.TextEditor \
-  org.gnome.seahorse.Application org.libreoffice.LibreOffice org.localsend.localsend_app \
-  org.mozilla.firefox org.prismlauncher.PrismLauncher org.raspberrypi.rpi-imager net.cozic.joplin_desktop
+  org.gtk.Gtk3theme.adw-gtk3-dark
 
 if ! command -v brew > /dev/null 2>&1; then
   log_info "Setup brew"
@@ -68,7 +62,7 @@ if ! command -v brew > /dev/null 2>&1; then
 fi
 
 log_info "Install brew packages"
-PATH="$PATH:/home/linuxbrew/.linuxbrew/bin" /home/linuxbrew/.linuxbrew/bin/brew bundle install --file "$(dirname "$0")/brew-packages"
+PATH="$(dirname "$0")/shims:$PATH:/home/linuxbrew/.linuxbrew/bin" /home/linuxbrew/.linuxbrew/bin/brew bundle install --file "$(dirname "$0")/brew-packages"
 
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply

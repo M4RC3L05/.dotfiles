@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+echo "=> Invoked flatpak wrapper with args: $*"
+
+normalized_args=""
+
+for a in "$@"; do
+  if [ "$a" = "--system" ]; then
+  	normalized_args="$normalized_args --user"
+  else
+  	normalized_args="$normalized_args $(printf '%s' "$a")"
+  fi
+  
+done
+
+echo "Final command: /usr/bin/flatpak$normalized_args"
+
+# shellcheck disable=SC2046
+set -- $(printf "%s\n" "$normalized_args")
+exec /usr/bin/flatpak "$@"
