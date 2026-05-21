@@ -15,17 +15,43 @@ sudo pacman -Syyuu
 sudo pacman -S --needed --noconfirm \
   linux-firmware \
   \
-  intel-media-driver vulkan-intel libvpl vpl-gpu-rt libvdpau-va-gl \
+  intel-media-driver \
+  libvdpau-va-gl \
+  vpl-gpu-rt \
+  vulkan-intel libvpl \
   \
-  nvidia-open nvidia-open-lts nvidia-utils libva-nvidia-driver \
+  libva-nvidia-driver \
+  nvidia-open \
+  nvidia-open-lts \
+  nvidia-utils \
   \
-  gst-libav gst-plugin-va gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugin-pipewire gst-plugin-gtk4 \
+  gst-libav \
+  gst-plugin-gtk4 \
+  gst-plugin-pipewire \
+  gst-plugin-va \
+  gst-plugins-bad \
+  gst-plugins-base \
+  gst-plugins-good \
+  gst-plugins-ugly \
   \
-  adw-gtk-theme gnome-console gnome-backgrounds libedataserverui4 folks bazaar \
+  adw-gtk-theme \
+  bazaar \
+  folks \
+  gnome-backgrounds \
+  gnome-console \
+  libedataserverui4 \
   \
-  intel-gpu-tools libva-utils vdpauinfo vulkan-mesa-layers vulkan-tools \
+  intel-gpu-tools \
+  libva-utils \
+  vdpauinfo \
+  vulkan-mesa-layers \
+  vulkan-tools \
   \
-  gufw flatpak bash-completion wl-clipboard glib2
+  bash-completion \
+  flatpak \
+  glib2 \
+  gufw \
+  wl-clipboard
 
 if ! systemctl is-active --quiet bluetooth; then
   log_info "Enable bluetooth service"
