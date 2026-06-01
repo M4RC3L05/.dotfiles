@@ -8,21 +8,20 @@ alias kubectl="kubecolor"
 
 HISTCONTROL="ignoreboth"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv | grep -Ev '\bPATH=')"
-HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}"
-export PATH="${PATH}:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin"
-
-if ! test -L /home/linuxbrew/.linuxbrew/etc/bash_completion.d/brew; then
-  /home/linuxbrew/.linuxbrew/bin/brew completions link > /dev/null
+if [[ -z "${HOMEBREW_PREFIX:-}" && -d /home/linuxbrew/.linuxbrew && ! "$PATH" =~ "/home/linuxbrew.linuxbrew" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv | grep -Ev '\bPATH=')"
+  HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}"
+  export PATH="${PATH}:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin"
 fi
 
-if test -d /home/linuxbrew/.linuxbrew/etc/bash_completion.d; then
-  for rc in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*; do
-    if test -r "$rc"; then
-      . "$rc"
-    fi
-  done
-  unset rc
+if ! test -L "${HOMEBREW_PREFIX}/etc/bash_completion.d/brew"; then
+  brew completions link > /dev/null
+fi
+
+if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+  # Force run bash completions from brew
+  unset BASH_COMPLETION_VERSINFO
+  . "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
 fi
 
 eval "$(mise activate bash)"

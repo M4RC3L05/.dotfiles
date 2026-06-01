@@ -19,8 +19,6 @@ status is-interactive; and begin
   set -g __fish_git_prompt_showuntrackedfiles true
   set -g __fish_git_prompt_showupstream informative
 
-  /home/linuxbrew/.linuxbrew/bin/brew shellenv | grep -Ev 'fish_add_path --global --move --path "' | source
-  fish_add_path --append --global --move --path "/home/linuxbrew/.linuxbrew/bin" "/home/linuxbrew/.linuxbrew/sbin";
-
+  mise activate fish | source
   batman --export-env | source
 end
