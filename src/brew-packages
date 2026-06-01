@@ -28,6 +28,7 @@ brew "micro"
 brew "mise"
 brew "nvtop"
 brew "oha"
+brew "opus-tools"
 brew "podman"
 brew "rsync"
 brew "syncthing", restart_service: :changed
