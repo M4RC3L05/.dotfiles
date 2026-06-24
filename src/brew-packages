@@ -1,50 +1,91 @@
-tap "jr-k/d4s"
-tap "m4rc3l05/tap"
-tap "ublue-os/tap"
+tap "jr-k/d4s", trusted: true
+tap "m4rc3l05/tap", trusted: true
+tap "ublue-os/tap", trusted: true
+# Run your GitHub Actions locally
 brew "act"
+# Programmable completion for Bash 4.2+
 brew "bash-completion@2"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Bash scripts that integrate bat with various command-line tools
 brew "bat-extras"
+# Secure and free password manager for all of your devices
 brew "bitwarden-cli"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Tool for exploring each layer in a docker image
 brew "dive"
+# Pack, ship and run any application as a lightweight container
 brew "docker"
+# Docker CLI plugin for extended build capabilities with BuildKit
 brew "docker-buildx"
+# Isolated development environments using Docker
 brew "docker-compose"
+# Platform keystore credential helper for Docker
 brew "docker-credential-helper"
+# Command-line DNS Client for Humans
 brew "doggo"
+# Modern, maintained replacement for ls
 brew "eza"
+# Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
+# Distributed revision control system
 brew "git"
+# Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Kubernetes package manager
 brew "helm"
+# Command-line benchmarking tool
 brew "hyperfine"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
+# Colorize your kubectl output
 brew "kubecolor"
+# Kubernetes command-line interface
 brew "kubernetes-cli"
+# Modern and intuitive terminal-based text editor
 brew "micro"
+# Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Interactive GPU process monitor
 brew "nvtop"
+# HTTP load generator, inspired by rakyll/hey with tui animation
 brew "oha"
+# Utilities to encode, inspect, and decode .opus files
 brew "opus-tools"
+# Tool for managing OCI containers and pods
 brew "podman"
+# Utility that provides fast incremental file transfer
 brew "rsync"
+# Open source continuous file synchronization application
 brew "syncthing", restart_service: :changed
+# Very fast implementation of tldr in Rust
 brew "tealdeer"
+# Program that allows you to count code, quickly
 brew "tokei"
+# Internet file retriever
 brew "wget"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
+# Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Compression and file packaging/archive utility
 brew "zip"
+# Master Docker like a pro, right from your terminal
 brew "jr-k/d4s/d4s"
+# Tag editor built with deno
 brew "m4rc3l05/tap/denotag"
 cask "font-cascadia-code"
 cask "font-cascadia-code-nf"
 cask "font-cascadia-mono"
 cask "font-cascadia-mono-pl"
+# Open-source code editor
 cask "ublue-os/tap/vscodium-linux"
+vscode "a-h.templ"
 vscode "denoland.vscode-deno"
 vscode "editorconfig.editorconfig"
 vscode "golang.go"
