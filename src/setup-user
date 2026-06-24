@@ -42,8 +42,8 @@ log_warning "GNOME: Set the legacy gtk theme using gnome-tweaks"
 log_warning "GNOME: \`legacy-theme-auto-switcher-gnome-extension\` must be setup manually"
 
 # log_info "Setup flatpak remotes"
-flatpak remote-delete --system flathub
-flatpak remote-delete --system flathub-beta
+flatpak remote-delete --system flathub || true
+flatpak remote-delete --system flathub-beta || true
 flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak remote-modify --user --enable flathub-beta
