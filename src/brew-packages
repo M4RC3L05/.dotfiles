@@ -76,15 +76,15 @@ brew "yt-dlp"
 # Compression and file packaging/archive utility
 brew "zip"
 # Master Docker like a pro, right from your terminal
-brew "jr-k/d4s/d4s"
+brew "jr-k/d4s/d4s", trusted: true
 # Tag editor built with deno
-brew "m4rc3l05/tap/denotag"
+brew "m4rc3l05/tap/denotag", trusted: true
 cask "font-cascadia-code"
 cask "font-cascadia-code-nf"
 cask "font-cascadia-mono"
 cask "font-cascadia-mono-pl"
 # Open-source code editor
-cask "ublue-os/tap/vscodium-linux"
+cask "ublue-os/tap/vscodium-linux", trusted: true
 vscode "a-h.templ"
 vscode "denoland.vscode-deno"
 vscode "editorconfig.editorconfig"
