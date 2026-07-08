@@ -14,7 +14,7 @@ log_info "Set gnome & gnome apps configs"
 gsettings set "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
 gsettings set "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
 gsettings set "org.gnome.desktop.interface" "accent-color" "orange"
-gsettings set "org.gnome.desktop.interface" "monospace-font-name" "Cascadia Code 10"
+gsettings set "org.gnome.desktop.interface" "monospace-font-name" "Cascadia Code NF 10"
 
 gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-enabled" "true"
 gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-temperature" "2500"
