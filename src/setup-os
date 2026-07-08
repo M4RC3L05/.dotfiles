@@ -47,11 +47,14 @@ sudo pacman -S --needed --noconfirm \
   vulkan-mesa-layers \
   vulkan-tools \
   \
-  bash-completion \
   flatpak \
   glib2 \
   gufw \
   wl-clipboard
+
+log_info "Remove os packages"
+# We will use homebrew one.
+pacman -Qi bash-completion &>/dev/null && sudo pacman -Rns --noconfirm bash-completion
 
 if ! systemctl is-active --quiet bluetooth; then
   log_info "Enable bluetooth service"
