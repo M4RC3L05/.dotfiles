@@ -81,6 +81,8 @@ cask "font-cascadia-code"
 cask "font-cascadia-code-nf"
 cask "font-cascadia-mono"
 cask "font-cascadia-mono-pl"
+# Media tagging viewer & editor
+cask "m4rc3l05/tap/taggar"
 # Open-source code editor
 cask "ublue-os/tap/vscodium-linux", trusted: true
 vscode "a-h.templ"
