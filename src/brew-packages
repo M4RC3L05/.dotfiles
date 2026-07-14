@@ -77,8 +77,6 @@ brew "yt-dlp"
 brew "zip"
 # Master Docker like a pro, right from your terminal
 brew "jr-k/d4s/d4s", trusted: true
-# Tag editor built with deno
-brew "m4rc3l05/tap/denotag", trusted: true
 cask "font-cascadia-code"
 cask "font-cascadia-code-nf"
 cask "font-cascadia-mono"
