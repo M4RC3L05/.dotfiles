@@ -1,8 +1,7 @@
 tap "jr-k/d4s", trusted: true
-tap "m4rc3l05/tap", trusted: true
 tap "ublue-os/tap", trusted: true
-# Run your GitHub Actions locally
-brew "act"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
 # Programmable completion for Bash 4.2+
 brew "bash-completion@2"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -59,10 +58,10 @@ brew "oha"
 brew "opus-tools"
 # Tool for managing OCI containers and pods
 brew "podman"
+# ReplayGain 2.0 tagging utility
+brew "rsgain"
 # Utility that provides fast incremental file transfer
 brew "rsync"
-# Open source continuous file synchronization application
-brew "syncthing", restart_service: :changed
 # Very fast implementation of tldr in Rust
 brew "tealdeer"
 # Program that allows you to count code, quickly
@@ -71,8 +70,6 @@ brew "tokei"
 brew "wget"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
-# Feature-rich command-line audio/video downloader
-brew "yt-dlp"
 # Compression and file packaging/archive utility
 brew "zip"
 # Master Docker like a pro, right from your terminal
@@ -81,8 +78,6 @@ cask "font-cascadia-code"
 cask "font-cascadia-code-nf"
 cask "font-cascadia-mono"
 cask "font-cascadia-mono-pl"
-# Media tagging viewer & editor
-cask "m4rc3l05/tap/taggar"
 # Open-source code editor
 cask "ublue-os/tap/vscodium-linux", trusted: true
 vscode "a-h.templ"
@@ -94,13 +89,16 @@ vscode "tamasfe.even-better-toml"
 flatpak "com.bitwarden.desktop"
 flatpak "com.discordapp.Discord"
 flatpak "com.github.tchx84.Flatseal"
+flatpak "com.makemkv.MakeMKV"
 flatpak "com.mattjakeman.ExtensionManager"
 flatpak "com.usebottles.bottles"
 flatpak "com.valvesoftware.Steam"
 flatpak "io.github.diegopvlk.Cine"
 flatpak "io.gitlab.news_flash.NewsFlash"
+flatpak "moe.kopuz.kopuz"
 flatpak "net.cozic.joplin_desktop"
 flatpak "net.nokyan.Resources"
+flatpak "nl.andreasknoben.Laser"
 flatpak "org.gnome.Calculator"
 flatpak "org.gnome.Calendar"
 flatpak "org.gnome.Contacts"
@@ -110,4 +108,6 @@ flatpak "org.gnome.seahorse.Application"
 flatpak "org.libreoffice.LibreOffice"
 flatpak "org.localsend.localsend_app"
 flatpak "org.mozilla.firefox"
+flatpak "org.musicbrainz.Picard"
 flatpak "org.prismlauncher.PrismLauncher"
+flatpak "org.videolan.VLC"
