@@ -24,6 +24,7 @@ sudo pacman -S --needed --noconfirm \
   nvidia-open \
   nvidia-open-lts \
   nvidia-utils \
+  nvidia-hook \
   \
   gst-libav \
   gst-plugin-gtk4 \
