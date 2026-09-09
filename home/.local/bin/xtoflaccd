@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+set -ex
+
+ffmpeg \
+  -hide_banner \
+  -v warning \
+  -stats \
+  -i "$1" \
+  -c:v copy \
+  -c:a flac \
+  -map_metadata -1 \
+  -af "aresample=resampler=soxr:precision=28:dither_method=triangular_hp:out_sample_fmt=s16:out_sample_rate=44100" \
+  -compression_level 12 \
+  "${1%.*}".tmp.flac
