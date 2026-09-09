@@ -67,9 +67,6 @@ PATH="$(dirname "$0")/shims:$PATH:/home/linuxbrew/.linuxbrew/bin" /home/linuxbre
 log_info "Setup dotfiles & configs"
 "$(dirname "$0")"/../home/.local/bin/dots apply
 
-log_info "Enable syncthing service"
-/home/linuxbrew/.linuxbrew/bin/brew services start syncthing
-
 log_info "Mask gnome ssh agent"
 systemctl --user mask gcr-ssh-agent.service
 systemctl --user mask gcr-ssh-agent.socket

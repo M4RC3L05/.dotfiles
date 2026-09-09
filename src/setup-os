@@ -76,10 +76,6 @@ log_info "Add localsend to firewall exclusion"
 sudo ufw allow "53317/udp"
 sudo ufw allow "53317/tcp"
 
-log_info "Add syncthing to firewall exclusion"
-sudo ufw allow "22000/udp"
-sudo ufw allow "21027/udp"
-
 log_info "Early KMS nvidia & intel"
 printf "hostonly=\"yes\"\\ncompress=\"lz4\"\\nforce_drivers+=\" i915 nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee "/etc/dracut.conf.d/myflags.conf" > /dev/null
 sudo reinstall-kernels
