@@ -50,7 +50,7 @@ gsettings set "org.gnome.desktop.interface" "gtk-enable-primary-paste" "false"
 
 gsettings set "org.gnome.desktop.search-providers" "enabled" "['org.gnome.Calendar.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.Contacts.desktop']"
 gsettings set "org.gnome.desktop.search-providers" "disabled" "[]"
-gsettings set org.gnome.shell enabled-extensions "[]"
+gsettings set org.gnome.shell enabled-extensions "['caffeine@patapon.info']"
 
 log_success "User setup completed."
 log_success "All done, restart your computer."
