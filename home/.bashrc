@@ -1,3 +1,7 @@
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
 [[ $- != *i* ]] && return
 
 alias cat="bat --plain"
