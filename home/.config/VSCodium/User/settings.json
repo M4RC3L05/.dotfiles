@@ -16,7 +16,8 @@
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.profiles.linux": {
     "homebrew-fish": {
-      "path": "/home/linuxbrew/.linuxbrew/bin/fish"
+      "path": "/home/linuxbrew/.linuxbrew/bin/fish",
+      "args": ["--login", "--interactive"]
     }
   },
   "terminal.integrated.defaultProfile.linux": "homebrew-fish",
