@@ -28,6 +28,8 @@ brew "doggo"
 brew "eza"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# Play, record, convert, and stream many audio and video codecs
+brew "ffmpeg-full"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Command-line fuzzy finder written in Go
