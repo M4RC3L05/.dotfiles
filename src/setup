@@ -10,9 +10,47 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-# shellcheck source=/dev/null
-. "$(dirname "$0")"/setup-os
-# shellcheck source=/dev/null
-. "$(dirname "$0")"/setup-user
+log_info "Install brew packages"
+/home/linuxbrew/.linuxbrew/bin/brew analytics off
+/home/linuxbrew/.linuxbrew/bin/brew bundle install --file "$(dirname "$0")/brew-packages"
 
+log_info "Install flatpak runtimes"
+flatpak install -y --noninteractive flathub \
+  org.gnome.Loupe.HEIC \
+  org.gtk.Gtk3theme.adw-gtk3 \
+  org.gtk.Gtk3theme.adw-gtk3-dark
+
+log_info "Setup dotfiles & configs"
+"$(dirname "$0")"/../home/.local/bin/dots apply
+
+log_info "Mask gnome ssh agent"
+systemctl --user mask gcr-ssh-agent.service
+systemctl --user mask gcr-ssh-agent.socket
+
+log_info "Set gnome & gnome apps configs"
+gsettings set "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
+gsettings set "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+gsettings set "org.gnome.desktop.interface" "accent-color" "orange"
+gsettings set "org.gnome.desktop.interface" "monospace-font-name" "Cascadia Code NF 10"
+
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-enabled" "true"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-temperature" "2500"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-automatic" "false"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-from" "18.0"
+gsettings set "org.gnome.settings-daemon.plugins.color" "night-light-schedule-to" "9.0"
+
+gsettings set "org.gnome.desktop.background" "picture-uri" "file:///usr/share/backgrounds/gnome/blobs-l.svg"
+gsettings set "org.gnome.desktop.background" "picture-uri-dark" "file:///usr/share/backgrounds/gnome/blobs-d.svg"
+
+gsettings set "org.gnome.desktop.wm.preferences" "button-layout" "appmenu:minimize,maximize,close"
+
+gsettings set "org.gnome.mutter" "center-new-windows" "true"
+
+gsettings set "org.gnome.desktop.interface" "gtk-enable-primary-paste" "false"
+
+gsettings set "org.gnome.desktop.search-providers" "enabled" "['org.gnome.Calendar.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.Contacts.desktop']"
+gsettings set "org.gnome.desktop.search-providers" "disabled" "[]"
+gsettings set org.gnome.shell enabled-extensions "[]"
+
+log_success "User setup completed."
 log_success "All done, restart your computer."
