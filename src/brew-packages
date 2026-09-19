@@ -30,12 +30,18 @@ brew "eza"
 brew "fastfetch"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
+# Command-line fuzzy finder written in Go
+brew "fzf"
 # Distributed revision control system
 brew "git"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Render markdown on the CLI
+brew "glow"
 # Kubernetes package manager
 brew "helm"
+# Improved top (interactive process viewer)
+brew "htop"
 # Command-line benchmarking tool
 brew "hyperfine"
 # Lightweight and flexible command-line JSON processor
@@ -58,22 +64,38 @@ brew "oha"
 brew "opus-tools"
 # Tool for managing OCI containers and pods
 brew "podman"
+# Rsync for cloud storage
+brew "rclone"
+# Fast, efficient and secure backup program
+brew "restic"
 # ReplayGain 2.0 tagging utility
 brew "rsgain"
 # Utility that provides fast incremental file transfer
 brew "rsync"
+# SMART hard drive monitoring
+brew "smartmontools"
+# Compressed read-only file system for Linux
+brew "squashfs"
+# Command-line packet analyzer
+brew "tcpdump"
 # Very fast implementation of tldr in Rust
 brew "tealdeer"
+# Terminal multiplexer
+brew "tmux"
 # Program that allows you to count code, quickly
 brew "tokei"
 # Internet file retriever
 brew "wget"
+# Tool for managing your YubiKey configuration
+brew "ykman"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
 # Compression and file packaging/archive utility
 brew "zip"
 # Master Docker like a pro, right from your terminal
 brew "jr-k/d4s/d4s", trusted: true
+# System management tool for bootc-based installations
+cask "ublue-os/tap/chairlift", trusted: true
 cask "font-cascadia-code"
 cask "font-cascadia-code-nf"
 cask "font-cascadia-mono"
@@ -94,7 +116,10 @@ flatpak "com.mattjakeman.ExtensionManager"
 flatpak "com.usebottles.bottles"
 flatpak "com.valvesoftware.Steam"
 flatpak "io.github.diegopvlk.Cine"
+flatpak "io.github.kolunmi.Bazaar"
 flatpak "io.gitlab.news_flash.NewsFlash"
+flatpak "io.missioncenter.MissionCenter"
+flatpak "it.mijorus.smile"
 flatpak "moe.kopuz.kopuz"
 flatpak "net.cozic.joplin_desktop"
 flatpak "net.nokyan.Resources"
@@ -102,12 +127,19 @@ flatpak "nl.andreasknoben.Laser"
 flatpak "org.gnome.Calculator"
 flatpak "org.gnome.Calendar"
 flatpak "org.gnome.Contacts"
+flatpak "org.gnome.FileRoller"
+flatpak "org.gnome.Firmware"
+flatpak "org.gnome.Logs"
 flatpak "org.gnome.Loupe"
+flatpak "org.gnome.NautilusPreviewer"
+flatpak "org.gnome.Papers"
+flatpak "org.gnome.SimpleScan"
 flatpak "org.gnome.TextEditor"
+flatpak "org.gnome.baobab"
 flatpak "org.gnome.seahorse.Application"
 flatpak "org.libreoffice.LibreOffice"
 flatpak "org.localsend.localsend_app"
 flatpak "org.mozilla.firefox"
 flatpak "org.musicbrainz.Picard"
-flatpak "org.prismlauncher.PrismLauncher"
 flatpak "org.videolan.VLC"
+flatpak "page.tesk.Refine"
