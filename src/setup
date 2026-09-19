@@ -27,6 +27,11 @@ log_info "Mask gnome ssh agent"
 systemctl --user mask gcr-ssh-agent.service
 systemctl --user mask gcr-ssh-agent.socket
 
+log_info "Enable deep sleep"
+sudo mkdir -p /etc/systemd/sleep.conf.d
+printf "[Sleep]\nMemorySleepMode=deep" | sudo tee "/etc/systemd/sleep.conf.d/mem-deep.conf" > /dev/null
+systemctl daemon-reload
+
 log_info "Set gnome & gnome apps configs"
 gsettings set "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
 gsettings set "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
