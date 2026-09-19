@@ -102,7 +102,6 @@ cask "font-cascadia-mono"
 cask "font-cascadia-mono-pl"
 # Open-source code editor
 cask "ublue-os/tap/vscodium-linux", trusted: true
-vscode "a-h.templ"
 vscode "denoland.vscode-deno"
 vscode "editorconfig.editorconfig"
 vscode "golang.go"
