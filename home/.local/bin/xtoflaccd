@@ -2,7 +2,7 @@
 
 set -ex
 
-ffmpeg \
+"$(brew --prefix ffmpeg-full)"/bin/ffmpeg \
   -hide_banner \
   -v warning \
   -stats \
