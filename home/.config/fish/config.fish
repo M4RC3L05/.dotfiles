@@ -1,3 +1,8 @@
+function fish_greeting
+  quotes all
+  echo
+end
+
 status is-login; and begin
   # Login shell initialisation
 end
