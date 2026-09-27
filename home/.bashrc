@@ -4,11 +4,7 @@ fi
 
 [[ $- != *i* ]] && return
 
-alias cat="bat --plain"
-alias eza="eza --icons auto --color auto --git"
-alias ls="eza"
-alias proxyK8sServer="ssh -NL 6443:127.0.0.1:6443 mainserver"
-alias kubectl="kubecolor"
+source ~/.config/shell/alias
 
 HISTCONTROL="ignoreboth"
 
@@ -16,8 +12,8 @@ if ! test -L "${HOMEBREW_PREFIX}/etc/bash_completion.d/brew"; then
   brew completions link > /dev/null
 fi
 
-if [[ -r "/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh" ]]; then
-  . "/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh"
+if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+  . "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
 fi
 
 eval "$(mise activate bash)"

@@ -4,11 +4,7 @@ end
 
 status is-interactive; and begin
   # Aliases
-  alias cat "bat --plain"
-  alias eza "eza --icons auto --color auto --git"
-  alias ls eza
-  alias proxyK8sServer "ssh -NL 6443:127.0.0.1:6443 mainserver"
-  alias kubectl kubecolor
+  source ~/.config/shell/alias
 
   # Interactive shell initialisation
   set -g __fish_git_prompt_char_upstream_ahead ↑
