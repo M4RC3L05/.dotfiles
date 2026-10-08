@@ -28,6 +28,8 @@ brew "doggo"
 brew "eza"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
 # Play, record, convert, and stream many audio and video codecs
 brew "ffmpeg-full"
 # User-friendly command-line shell for UNIX-like operating systems
@@ -78,6 +80,8 @@ brew "rsync"
 brew "smartmontools"
 # Compressed read-only file system for Linux
 brew "squashfs"
+# Open source continuous file synchronization application
+brew "syncthing"
 # Command-line packet analyzer
 brew "tcpdump"
 # Very fast implementation of tldr in Rust

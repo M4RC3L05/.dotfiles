@@ -13,6 +13,7 @@ fi
 log_info "Install brew packages"
 /home/linuxbrew/.linuxbrew/bin/brew analytics off
 /home/linuxbrew/.linuxbrew/bin/brew bundle install --file "$(dirname "$0")/brew-packages"
+/home/linuxbrew/.linuxbrew/bin/brew bundle cleanup --file "$(dirname "$0")/brew-packages" --force
 
 log_info "Install flatpak runtimes"
 flatpak install -y --noninteractive flathub \
