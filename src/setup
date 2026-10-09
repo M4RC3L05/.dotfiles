@@ -22,7 +22,7 @@ flatpak install -y --noninteractive flathub \
   org.gtk.Gtk3theme.adw-gtk3-dark
 
 log_info "Setup dotfiles & configs"
-"$(dirname "$0")"/../home/.local/bin/dots apply
+"$(dirname "$0")"/../home/.local/bin/dots sync
 
 log_info "Mask gnome ssh agent"
 systemctl --user mask gcr-ssh-agent.service
