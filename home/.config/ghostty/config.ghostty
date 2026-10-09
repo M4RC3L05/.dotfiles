@@ -37,4 +37,4 @@ window-width = 132
 window-height = 36
 
 
-command = /home/linuxbrew/.linuxbrew/bin/fish --login --interactive
+command = fish --login --interactive
