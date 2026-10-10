@@ -58,6 +58,11 @@ sudo chcon system_u:object_r:usr_t:s0 /etc/polkit-1/actions/com.bitwarden.Bitwar
 sudo systemctl restart polkit
 mkdir -v -p /home/main/.var/app/org.mozilla.firefox/.mozilla/native-messaging-hosts
 
+log_info "Set firewarlld config"
+firewall-cmd --set-default-zone=drop
+firewall-cmd --permanent --add-service=syncthing
+firewall-cmd --complete-reload
+
 log_info "Set gnome & gnome apps configs"
 gsettings set "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
 gsettings set "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
