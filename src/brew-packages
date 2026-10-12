@@ -6,8 +6,6 @@ brew "bat"
 brew "bat-extras"
 # Secure and free password manager for all of your devices
 brew "bitwarden-cli"
-# Resource monitor. C++ version and continuation of bashtop and bpytop
-brew "btop"
 # Tool for exploring each layer in a docker image
 brew "dive"
 # Pack, ship and run any application as a lightweight container
@@ -44,8 +42,6 @@ brew "kubernetes-cli"
 brew "micro"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
-# Interactive GPU process monitor
-brew "nvtop"
 # HTTP load generator, inspired by rakyll/hey with tui animation
 brew "oha"
 # Rsync for cloud storage
@@ -80,7 +76,6 @@ cask "font-cascadia-mono"
 cask "font-cascadia-mono-pl"
 # Open-source code editor
 cask "ublue-os/tap/vscodium-linux", trusted: true
-vscode "denoland.vscode-deno"
 vscode "editorconfig.editorconfig"
 vscode "golang.go"
 vscode "mads-hartmann.bash-ide-vscode"
@@ -99,7 +94,6 @@ flatpak "io.missioncenter.MissionCenter"
 flatpak "it.mijorus.smile"
 flatpak "moe.kopuz.kopuz"
 flatpak "net.cozic.joplin_desktop"
-flatpak "net.nokyan.Resources"
 flatpak "nl.andreasknoben.Laser"
 flatpak "org.gnome.Calculator"
 flatpak "org.gnome.Calendar"
@@ -112,7 +106,6 @@ flatpak "org.gnome.NautilusPreviewer"
 flatpak "org.gnome.Papers"
 flatpak "org.gnome.SimpleScan"
 flatpak "org.gnome.TextEditor"
-flatpak "org.gnome.baobab"
 flatpak "org.gnome.seahorse.Application"
 flatpak "org.libreoffice.LibreOffice"
 flatpak "org.localsend.localsend_app"
