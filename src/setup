@@ -88,5 +88,20 @@ gsettings set "org.gnome.desktop.search-providers" "enabled" "['org.gnome.Calend
 gsettings set "org.gnome.desktop.search-providers" "disabled" "[]"
 gsettings set "org.gnome.shell" "enabled-extensions" "['caffeine@patapon.info', 'legacyschemeautoswitcher@joshimukul29.gmail.com']"
 
+log_info "Set gnome keybindings"
+gsettings set org.gnome.settings-daemon.plugins.media-keys \
+  custom-keybindings \
+  "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/launch-smile/']"
+
+gsettings set \
+  org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/launch-smile/ \
+  name 'Launch Smile'
+gsettings set \
+  org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/launch-smile/ \
+  command 'flatpak run it.mijorus.smile'
+gsettings set \
+  org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/launch-smile/ \
+  binding '<Super>period'
+
 log_success "User setup completed."
 log_success "All done, restart your computer."
