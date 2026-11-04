@@ -1,4 +1,5 @@
 tap "jr-k/d4s", trusted: true
+tap "projectbluefin/tap", trusted: true
 tap "ublue-os/tap", trusted: true
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
@@ -30,6 +31,8 @@ brew "git-delta"
 brew "glow"
 # Kubernetes package manager
 brew "helm"
+# Improved top (interactive process viewer)
+brew "htop"
 # Command-line benchmarking tool
 brew "hyperfine"
 # Kubernetes CLI To Manage Your Clusters In Style!
@@ -38,6 +41,8 @@ brew "k9s"
 brew "kubecolor"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
+# Utility to list open files
+brew "lsof"
 # Modern and intuitive terminal-based text editor
 brew "micro"
 # Polyglot runtime manager (asdf rust clone)
@@ -52,8 +57,6 @@ brew "restic"
 brew "smartmontools"
 # Compressed read-only file system for Linux
 brew "squashfs"
-# Open source continuous file synchronization application
-brew "syncthing"
 # Command-line packet analyzer
 brew "tcpdump"
 # Very fast implementation of tldr in Rust
@@ -69,7 +72,7 @@ brew "yq"
 # Master Docker like a pro, right from your terminal
 brew "jr-k/d4s/d4s", trusted: true
 # System management tool for bootc-based installations
-cask "ublue-os/tap/chairlift", trusted: true
+cask "projectbluefin/tap/chairlift", trusted: true
 cask "font-cascadia-code"
 cask "font-cascadia-code-nf"
 cask "font-cascadia-mono"
@@ -83,10 +86,11 @@ vscode "tamasfe.even-better-toml"
 flatpak "com.bitwarden.desktop"
 flatpak "com.discordapp.Discord"
 flatpak "com.github.tchx84.Flatseal"
-flatpak "com.makemkv.MakeMKV"
 flatpak "com.mattjakeman.ExtensionManager"
+flatpak "com.poweriso.PowerISO"
 flatpak "com.usebottles.bottles"
 flatpak "com.valvesoftware.Steam"
+flatpak "io.github.deterous.redumper-gui"
 flatpak "io.github.diegopvlk.Cine"
 flatpak "io.github.kolunmi.Bazaar"
 flatpak "io.gitlab.news_flash.NewsFlash"
@@ -108,6 +112,7 @@ flatpak "org.gnome.SimpleScan"
 flatpak "org.gnome.TextEditor"
 flatpak "org.gnome.seahorse.Application"
 flatpak "org.libreoffice.LibreOffice"
+flatpak "org.libretro.RetroArch"
 flatpak "org.localsend.localsend_app"
 flatpak "org.mozilla.firefox"
 flatpak "org.musicbrainz.Picard"
