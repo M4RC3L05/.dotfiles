@@ -123,6 +123,7 @@ video/mkv=io.github.diegopvlk.Cine.desktop
 video/x-ogm=io.github.diegopvlk.Cine.desktop
 video/vnd.avi=io.github.diegopvlk.Cine.desktop
 application/pdf=org.gnome.Evince.desktop
+application/x-cdrdao-toc=codium.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;org.mozilla.firefox.desktop;
@@ -223,3 +224,4 @@ video/mkv=io.github.diegopvlk.Cine.desktop;
 video/x-ogm=io.github.diegopvlk.Cine.desktop;
 video/vnd.avi=io.github.diegopvlk.Cine.desktop;
 application/pdf=org.gnome.Evince.desktop;
+application/x-cdrdao-toc=codium.desktop;
