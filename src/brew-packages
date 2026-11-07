@@ -23,12 +23,8 @@ brew "doggo"
 brew "eza"
 # Play, record, convert, and stream many audio and video codecs
 brew "ffmpeg-full", link: true
-# Command-line fuzzy finder written in Go
-brew "fzf"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
-# Render markdown on the CLI
-brew "glow"
 # Kubernetes package manager
 brew "helm"
 # Improved top (interactive process viewer)
@@ -41,32 +37,16 @@ brew "k9s"
 brew "kubecolor"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
-# Utility to list open files
-brew "lsof"
 # Modern and intuitive terminal-based text editor
 brew "micro"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
 # HTTP load generator, inspired by rakyll/hey with tui animation
 brew "oha"
-# Rsync for cloud storage
-brew "rclone"
-# Fast, efficient and secure backup program
-brew "restic"
-# SMART hard drive monitoring
-brew "smartmontools"
-# Compressed read-only file system for Linux
-brew "squashfs"
-# Command-line packet analyzer
-brew "tcpdump"
 # Very fast implementation of tldr in Rust
 brew "tealdeer"
-# Terminal multiplexer
-brew "tmux"
 # Program that allows you to count code, quickly
 brew "tokei"
-# Tool for managing your YubiKey configuration
-brew "ykman"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
 # Master Docker like a pro, right from your terminal
