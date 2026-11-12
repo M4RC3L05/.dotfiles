@@ -51,6 +51,8 @@ brew "tokei"
 brew "yq"
 # Master Docker like a pro, right from your terminal
 brew "jr-k/d4s/d4s", trusted: true
+# Extra Wallpapers for Bluefin
+cask "ublue-os/tap/bluefin-wallpapers-extra", trusted: true
 # System management tool for bootc-based installations
 cask "projectbluefin/tap/chairlift", trusted: true
 cask "font-cascadia-code"
@@ -73,12 +75,14 @@ flatpak "com.valvesoftware.Steam"
 flatpak "io.github.deterous.redumper-gui"
 flatpak "io.github.diegopvlk.Cine"
 flatpak "io.github.kolunmi.Bazaar"
+flatpak "io.github.tunix.valhalla", remote: "flatpark", url: "https://dl.flatpark.org/"
 flatpak "io.gitlab.news_flash.NewsFlash"
 flatpak "io.missioncenter.MissionCenter"
 flatpak "it.mijorus.smile"
 flatpak "moe.kopuz.kopuz"
 flatpak "net.cozic.joplin_desktop"
 flatpak "nl.andreasknoben.Laser"
+flatpak "org.audacityteam.Audacity"
 flatpak "org.gnome.Calculator"
 flatpak "org.gnome.Calendar"
 flatpak "org.gnome.Contacts"
@@ -97,5 +101,6 @@ flatpak "org.localsend.localsend_app"
 flatpak "org.mozilla.firefox"
 flatpak "org.musicbrainz.Picard"
 flatpak "org.raspberrypi.rpi-imager"
+flatpak "org.tunaos.compass", remote: "flatpark", url: "https://dl.flatpark.org/"
 flatpak "org.videolan.VLC"
 flatpak "page.tesk.Refine"

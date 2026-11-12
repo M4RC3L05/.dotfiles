@@ -1,0 +1,24 @@
+{
+  "providers": {
+    "commands": {
+      "entrypoints": {
+        "clipboard-history": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "launcher": {
+    "close_on_focus_loss": true,
+    "pop_to_root_on_close": true,
+    "appearance": {
+      "tint": false
+    },
+    "wrap_navigation": false
+  },
+  "font": {
+    "normal": {
+      "family": "Adwaita Sans"
+    }
+  }
+}
