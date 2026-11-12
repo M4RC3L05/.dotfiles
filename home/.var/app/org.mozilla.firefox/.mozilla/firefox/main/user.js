@@ -44,6 +44,8 @@ user_pref("browser.urlbar.suggest.bookmark", true);
 user_pref("browser.urlbar.suggest.openpage", false);
 user_pref("browser.urlbar.suggest.topsites", false);
 user_pref("browser.urlbar.suggest.engines", false);
+user_pref("browser.urlbar.suggest.quicksuggest.all", false);
+user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false);
 
 // Privacy & Security
 //// Enhanced Tracking Protection
