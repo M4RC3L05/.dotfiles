@@ -13,8 +13,17 @@ main() {
       rsync -av --checksum --stats --info=ALL --human-readable --omit-dir-times --mkpath "$DOTFILES_DIR_FILES" "$HOME_NORMALIZED"
       ;;
     diff)
-      set -x
-      diff -ru ~/.dotfiles/home/ /home/main/ | grep -v '^Only in ' | delta
+      find "$DOTFILES_DIR_FILES" -type f -print |
+      while IFS= read -r src; do
+        rel=${src#"$DOTFILES_DIR_FILES"}
+        dst="$HOME_NORMALIZED$rel"
+
+        if [ ! -f "$dst" ]; then
+          printf 'Only in source: %s\n' "$rel"
+        else
+          diff -u "$src" "$dst" || :
+        fi
+      done | delta --paging=never
       ;;
     adopt)
       nomalized_path="$(realpath "$2")"
